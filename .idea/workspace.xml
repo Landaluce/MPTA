@@ -1,289 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a1685230-bb37-488f-aa31-81d1228f73dd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/PDF2TXT.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/word_count.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/BB&amp;T/BB&amp;T Proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2010 BOA PDF .webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2011 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2012 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2013 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2014 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2015 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of America/2016 BOA Proxy Statement.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Bank of NY Mellon/BYN Mellon Proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Capital One/Capital One 2016 Proxy.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/CITI proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/Citi 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/Citi 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/Citi 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/Citi 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/Citi 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Citigroup/Citi 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Comerica/Comerica proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Fifth Third/Fifth Third Proxy Statement 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Huntington/Huntington proxy 2016 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JP Morgan 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JPM 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JPM 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JPM 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JPM 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JPM 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/JP Morgan/JPM proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Keycorp/keycorp 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Keycorp/keycorp 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Keycorp/keycorp 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Keycorp/keycorp 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Keycorp/keycorp 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Keycorp/keycorp proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;I/M&amp;I: BMO proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/M&amp;T 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/M&amp;T 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/M&amp;T 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/M&amp;T 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/M&amp;T 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/M&amp;T 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/M&amp;T/MTB 2016 Proxy Statement.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/Northern Trust 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/Northern Trust 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/Northern trust 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/Northern trust 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/Northern trust 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/Nortthern trust 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Northern Trust/proxy Northern Trust 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC 2013 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/PNC Financial/PNC Bank  proxy 2016 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street 2014 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street 2015 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/State Street/State Street Proxy Statement 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/Sun Trust proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/SunTrust 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/SunTrust 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/SunTrust 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/SunTrust 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/Suntrust 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/SunTrust/Suntrust 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus 2014 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Synovus/Synovus proxy 2016 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/US Bancorp/USBancorp proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2011 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/WellsFargo/WF 2016 Proxy Statement.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByCompany/Zion/Zions Bank  First Quarter 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/BB&amp;T/BB&amp;T 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Bank of America/2010 BOA PDF .webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Bank of NY Mellon/BYN Mellon 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Capital One/Capital One 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Citigroup/Citi 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Comerica/Comerica 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Fifth Third/Fifth Third 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Huntington/Huntington 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/JP Morgan/JP Morgan 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/M&amp;I/M&amp;I: BMO 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/M&amp;T/M&amp;T 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Northern Trust/Northern trust 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/PNC Financial/PNC 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/State Street/State Street 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/SunTrust/Suntrust 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Synovus/Synovus 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/US Bancorp/USBancorp 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/WellsFargo/WF 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2010/Zion/Zions 2010.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/BB&amp;T/BB&amp;T 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Bank of America/2011 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Bank of NY Mellon/BYN Mellon 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Capital One/Capital One 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Citigroup/Citi 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Comerica/Comerica 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Fifth Third/Fifth Third 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Huntington/Huntington 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/JP Morgan/JPM 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Keycorp/keycorp 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/M&amp;I/M&amp;I: BMO 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/M&amp;T/M&amp;T 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Northern Trust/Northern trust 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/PNC Financial/PNC 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/State Street/State Street 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/SunTrust/Suntrust 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Synovus/Synovus 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/US Bancorp/USBancorp 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/WellsFargo/WF 2011 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2011/Zion/Zions 2011.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/BB&amp;T/BB&amp;T 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Bank of America/2012 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Bank of NY Mellon/BYN Mellon 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Capital One/Capital One 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Citigroup/Citi 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Comerica/Comerica 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Fifth Third/Fifth Third 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Huntington/Huntington 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/JP Morgan/JPM 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Keycorp/keycorp 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/M&amp;I/M&amp;I: BMO 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/M&amp;T/M&amp;T 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Northern Trust/Northern Trust 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/PNC Financial/PNC 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/State Street/State Street 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/SunTrust/SunTrust 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Synovus/Synovus 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/US Bancorp/USBancorp 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/WellsFargo/WF 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2012/Zion/Zions 2012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/BB&amp;T/BB&amp;T 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Bank of America/2013 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Bank of NY Mellon/BYN Mellon 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Capital One/Capital One 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Citigroup/Citi 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Comerica/Comerica 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Fifth Third/Fifth Third 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Huntington/Huntington 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/JP Morgan/JPM 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Keycorp/keycorp 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/M&amp;I/M&amp;I: BMO 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/M&amp;T/M&amp;T 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Northern Trust/Northern Trust 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/PNC Financial/PNC 2013 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/State Street/State Street 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/SunTrust/SunTrust 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Synovus/Synovus 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/US Bancorp/USBancorp 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/WellsFargo/WF 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2013/Zion/Zions 2013.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/BB&amp;T/BB&amp;T 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Bank of America/2014 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Bank of NY Mellon/BYN Mellon 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Capital One/Capital One 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Citigroup/Citi 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Comerica/Comerica 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Fifth Third/Fifth Third 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Huntington/Huntington 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/JP Morgan/JPM 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Keycorp/keycorp 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/M&amp;I/M&amp;I: BMO 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/M&amp;T/M&amp;T 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Northern Trust/Northern trust 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/PNC Financial/PNC 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/State Street/State Street 2014 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/SunTrust/SunTrust 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Synovus/Synovus 2014 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/US Bancorp/USBancorp 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/WellsFargo/WF 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2014/Zion/Zions 2014.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/BB&amp;T/BB&amp;T 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Bank of America/2015 BOA PDF.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Bank of NY Mellon/BYN Mellon 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Capital One/Capital One 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Citigroup/Citi 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Comerica/Comerica 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Fifth Third/Fifth Third 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Huntington/Huntington 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/JP Morgan/JPM 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Keycorp/keycorp 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/M&amp;I/M&amp;I: BMO 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/M&amp;T/M&amp;T 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Northern Trust/Nortthern trust 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/PNC Financial/PNC 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/State Street/State Street 2015 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/SunTrust/SunTrust 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Synovus/Synovus 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/US Bancorp/USBancorp 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/WellsFargo/WF 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2015/Zion/Zions 2015.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/BB&amp;T/BB&amp;T Proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Bank of America/2016 BOA Proxy Statement.webloc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Bank of NY Mellon/BYN Mellon Proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Capital One/Capital One 2016 Proxy.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Citigroup/CITI proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Comerica/Comerica proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Fifth Third/Fifth Third Proxy Statement 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Huntington/Huntington proxy 2016 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/JP Morgan/JPM proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Keycorp/keycorp proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/M&amp;I/M&amp;I: BMO proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/M&amp;T/MTB 2016 Proxy Statement.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Northern Trust/proxy Northern Trust 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/PNC Financial/PNC Bank  proxy 2016 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/State Street/State Street Proxy Statement 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/SunTrust/Sun Trust proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Synovus/Synovus proxy 2016 .pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/US Bancorp/USBancorp proxy 2016.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/WellsFargo/WF 2016 Proxy Statement.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Data Files/ByYear/2016/Zion/Zions Bank  First Quarter 2016.pdf" afterPath="" />
-    </list>
+    <list default="true" id="a1685230-bb37-488f-aa31-81d1228f73dd" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -303,7 +21,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="525">
-      <file leaf-file-name="PDF2TXT.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PDF2TXT.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PDF2TXT.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
@@ -313,10 +31,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="word_count.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="word_count.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/word_count.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1110">
+            <state relative-caret-position="210">
               <caret line="37" column="69" lean-forward="false" selection-start-line="37" selection-start-column="69" selection-end-line="37" selection-end-column="69" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
@@ -760,7 +478,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="148" y="74" width="1566" height="989" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22654155" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -768,9 +486,9 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32908458" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3276699" sideWeight="0.4969834" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276699" sideWeight="0.4969834" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.198146" sideWeight="0.4969834" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19781554" sideWeight="0.4969834" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -834,21 +552,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/word_count.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="37" column="69" lean-forward="false" selection-start-line="37" selection-start-column="69" selection-end-line="37" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PDF2TXT.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/word_count.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="37" column="69" lean-forward="false" selection-start-line="37" selection-start-column="69" selection-end-line="37" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
