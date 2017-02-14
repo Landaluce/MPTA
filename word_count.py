@@ -1,5 +1,4 @@
 import re
-from collections import Counter
 
 opportunity = ["advantage", "befalling", "break", "chance","connection",
                "contingency", "convenience", "cut", "fair shake", "favorable",
