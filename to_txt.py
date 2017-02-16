@@ -1,6 +1,6 @@
 import PyPDF2
 from docx import *
-
+#testing
 # input:  path to a pdf file (string)
 # return: file content in a string
 def docx_to_txt(filepath):
