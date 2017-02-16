@@ -12,6 +12,33 @@ threat = ["alarming fateful", "apocalyptic", "baleful", "baneful", "black",
           "sinister", "trial dire", "ugly", "unlucky", "unpropitious", "unsafe",
           "warning",]
 
+enactment = ["aggrandizement", "amplif", "augment", "cultivate", "develop", "develops",
+             "developing", "DILATION", "DISTENTION", "ENLARGE", "EXPAND", "EXPANDS", "EXPANSION",
+             "EXTENSION", "GRADUALLY INCREASE", "GRADUAL INCREASE", "GROW", "GROWS", "GROWTH",
+             "PLANTED", "PROGRESSION", "PROGRESS", "TURGESCENCE", "ACQUIRE", "ACQUISITION",
+             "AMALGAMAT", "COALESCE", "INVESTMENT BANKER", "MERGE", "POOL", "PROCEEDS", "SYNDICATE",
+             "PURCHASE", "accomplish", "achieve", "act", "action", "active", "activity", "alacrity", 
+             "alertness", "battle", "combat", "commission", "conflict", "contest", "encounter", "engage",
+             "engagement", "enterprise", "execute", "exercise", "exert", "exploit", "fight", "force",
+             "influence", "intervene", "intervention", "maneuver", "manipulate", "move", "occupy",
+             "operate", "operation", "perform", "proceed", "process", "react", "respond", "rush", 
+             "stir", "thrust", "transact", "undertake", "absorb", "affiliate", "ally", "assimilate",
+             "blend", "cement", "centralize", "coalesce", "combine", "compound", "conglomerate",
+             "consolidate", "converge", "fuse", "incorporate", "intermingle", "join", "league",
+             "marry", "meld", "mingle", "network", "pool", "synthesize", "team", "team up", "unite",
+             "access", "accrue", "achieve", "acquire", "amalgamate", "amass", "annex", "attain",
+             "procure", "secure", "accomplish", "achieve", "actualize", "attain", "complete", "consummate",
+             "effect", "enact", "execute", "finish", "fulfill", "manage", "realize", "resolve", "win",
+             "appeal", "attack", "attribute", "censure", "charge", "cite", "complain", "contend", "contest",
+             "denounce", "dispute", "impeach", "implicate", "impute", "incriminate", "inculpate", "indict",
+             "prosecute", "resist", "rival", "strive", "struggle", "vie", "lobby", "advance", "affect",
+             "agitate", "alter", "barnstorm", "boost", "campaign", "change", "crusade", "exert", "further",
+             "induce", "influence", "lobby", "modify", "persuade", "pitch", "plug", "politick", "press",
+             "pressure", "procure", "promote", "request", "solicit", "sway", "urge", "bankrupt",
+             "deconstruct", "disassemble", "disinherit", "dismantle", "divest", "divestiture", "forfeit",
+             "oust", "relinquish", "remove", "sacrifice", "sell", "separate", "Environment",
+             "environs", "industry", "market", "niche", "nook", "province", "purview", "region", "scope",
+             "sector", "terrain", "territory"]        
 
 # Delete useless words
 # input: Counter object
