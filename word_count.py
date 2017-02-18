@@ -1,3 +1,5 @@
+import csv
+import itertools
 import re
 
 opportunity = ["advantage", "befalling", "break", "chance","connection",
@@ -77,6 +79,74 @@ enactment = ["aggrandizement", "amplif", "augment", "cultivate", "develop", "dev
              "oust", "relinquish", "remove", "sacrifice", "sell", "separate", "Environment",
              "environs", "industry", "market", "niche", "nook", "province", "purview", "region", "scope",
              "sector", "terrain", "territory"]
+
+org_iden = ["abiding", "acclimated", "acclimation", "accountability", "accountable", "accustomed",
+            "all-inclusive", "authentic", "authenticity", "authorized", "base", "basics",
+            "bureaucracies", "bureaucracy", "bureaucrat", "centers", "central", "centralization",
+            "center", "changeless", "characteristic", "characteristically", "characteristics",
+            "chief", "chiefly", "chronic", "chronically", "climate", "climates", "clone", "clones",
+            "code", "codes", "common", "commonality", "commonly", "commonplace", "comprehensive",
+            "comprehensively", "comprise", "comprised", "comprises", "comprising", "concentrated",
+            "conditioned", "confined", "confining", "conform", "conformed", "conformity", "congruence",
+            "congruent", "consistencies", "consistency", "consistent", "constancy", "constant", "constantly",
+            "continuation", "continuities", "continuity", "conventional", "conventionally", "core",
+            "correct", "correctly", "custom", "customarily", "customary", "customs", "decorum",
+            "deep-seated", "destinies", "destiny", "domestic", "domesticated", "due-process",
+            "element", "elementary", "elements", "enduring", "entitled", "entitlement", "entitlements",
+            "entrenched", "entrenchment", "environment", "essence", "essential", "essentials",
+            "established", "establishment", "example", "examples", "exemplified", "exemplify",
+            "expected", "expectedly", "extensive", "extensively", "familiarize", "familiarized",
+            "familiarizes", "familiarizing", "foundation", "foundational", "foundations",
+            "fundamental", "fundamentals", "general", "generalities", "generality", "generalizable",
+            "generalization", "generalizations", "generalize", "generalized", "generally", "grassroots",
+            "grass-roots", "groove", "grooves", "grounding", "habit", "habits", "habitual",
+            "habitually", "habituated", "homebody", "home-grown", "homemade", "humanity", "humankind",
+            "identical", "identities", "identity", "incumbency", "incumbent", "incumbents",
+            "indigenous", "inevitability", "inevitable", "ingrained", "innate", "innately", "inner",
+            "inside", "interior", "internal", "internally", "intrinsic", "intrinsically", "invariability",
+            "invariable", "inveterate", "inveterately", "involuntary", "inward", "inwardly", "inwards",
+            "kernel", "kernels", "landmark", "landmarks", "lasting", "lawful", "legitimacy", "legitimate",
+            "legitimated", "legitimately", "legitimating", "limited", "long-standing", "main",
+            "mainly", "mainstream", "maintain", "maintained", "maintaining", "maintains",
+            "maintenance", "majorities", "majority", "mandate", "mandated", "mandates",
+            "mankind", "matter-of-fact", "methodical", "native", "native-born", "natives",
+            "natural", "naturalize", "naturalized", "naturally", "norm", "normal", "normalcy",
+            "normalities", "normality", "normative", "normatively", "norms", "nucleus",
+            "obligatory", "oblige", "obliged", "obliges", "obliging", "officeholder", 
+            "officeholders", "oneness", "ordered", "ordinary", "organize", "organized",
+            "organizes", "orthodox", "orthodoxy", "paradigm", "paradigms", "pattern",
+            "patterned", "patterns", "perennial", "perennially", "permanent", "permanently",
+            "persistent", "persistently", "plainly", "pre-arranged", "preconceived",
+            "predictability", "predictable", "predominant", "preordained", "prescribed",
+            "prevalence", "prevalent", "primarily", "primary", "proverbial", "proverbially",
+            "rampant", "rampantly", "ratified", "ratifies", "ratify", "ratifying", "recognized",
+            "recurrent", "recurrently", "regime", "regular", "regularities", "regularity",
+            "regularly", "reliability", "reliable", "reliably", "repeat", "repeated",
+            "repeatedly", "repeating", "repeats", "representative", "require", "required",
+            "requires", "requiring", "rhythmic", "rhythmically", "routine", "routinely",
+            "rule", "rules", "rut", "ruts", "sanction", "sanction able", "sanctioned",
+            "sanctioning", "sanctions", "single-issue", "stability", "stable", "standard",
+            "standard-bearer", "standardize", "standardized", "standardizing", "standards",
+            "steadfast", "steadfastly", "steadier", "steadiest", "steadily", "steady",
+            "substantiate", "substantiated", "substantiates", "substantiating", "substantive",
+            "substantively", "systematic", "systematically", "thematic", "thematically", "theme",
+            "themes", "trait", "traits", "typical", "typified", "typifies", "typify", "typifying",
+            "unadulterated", "unanimity", "unanimous", "unavoidable", "unavoidably", "unchangeable",
+            "underlying", "unexceptional", "unified", "unifies", "uniform", "uniformities", "uniformity",
+            "uniformly", "unify", "unifying", "uninterruptedly", "universal", "universalize", "universally",
+            "usual", "usually", "valid", "validated", "validly", "womankind"]
+
+#Uploading all Organizational Identity words into a list called new_list
+empt_list = []
+iter_count = 0
+with open('OrgID.csv', 'rb') as csvfile:
+    reader = csv.reader(csvfile, delimiter= ' ')
+    for row in reader:
+        empt_list.append(row)
+        iter_count += 1
+    org_iden = list(itertools.chain(*empt_list))
+    print org_iden
+    print iter_count
 
 def scrub_list(lst):
     for i in lst:
