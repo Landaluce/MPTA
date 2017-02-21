@@ -64,8 +64,8 @@ def main():
     #save_txt(jpm2001pdf, 'TestSuite/JP Morgan/JP Morgan2000.txt')
 
     # docx
-    jpm2001docx = docx_to_txt('DataFiles/ByCompany/JP Morgan/JP Morgan 2001.docx')
-    save_txt(jpm2001docx, 'TestSuite/JP Morgan/JP Morgan2001docx.txt')
+    jpm2001docx = docx_to_txt('DataFiles/ByCompany/JP Morgan/JP Morgan 2000.docx')
+    save_txt(jpm2001docx, 'TestSuite/JP Morgan/JP Morgan2000docx.txt')
 
 if __name__ == "__main__":
     main()

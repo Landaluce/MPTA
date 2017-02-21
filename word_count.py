@@ -20,7 +20,7 @@ org_iden = ['abreast', 'accede', 'acceded', 'accedes', 'acceding', 'accept', 'ac
 empt_list = []
 iter_count = 0
 with open('OrgID.csv', 'rb') as csvfile:
-    reader = csv.reader(csvfile, delimiter= ' ')
+    reader = csv.reader(csvfile, delimiter= ',')
     for row in reader:
         empt_list.append(row)
         iter_count += 1
@@ -102,7 +102,7 @@ def read_txt(filepath):
 def get_jpm():
     print "JPM"
     print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format("year", "threat", "enactment", "opportunity", "org identity")
-    for i in range(2001, 2009 + 1):
+    for i in range(2000, 2009 + 1):
         # docx
         text = read_txt("TestSuite/JP Morgan/JP Morgan" + str(i) + "docx.txt")
         # pdf
