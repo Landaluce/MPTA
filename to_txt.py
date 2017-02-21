@@ -5,7 +5,7 @@ from docx import *
 # return: file content in a string
 def docx_to_txt(filepath):
     document = opendocx(filepath)
-    return "".join(getdocumenttext(document)).encode("utf-8")
+    return " ".join(getdocumenttext(document)).encode("utf-8")
 
 
 # dont need it anymore
@@ -64,8 +64,8 @@ def main():
     #save_txt(jpm2001pdf, 'TestSuite/JP Morgan/JP Morgan2000.txt')
 
     # docx
-    #jpm2001docx = docx_to_txt('DataFiles/ByCompany/JP Morgan/JP Morgan 2009.docx')
-    #save_txt(jpm2001docx, 'TestSuite/JP Morgan/JP Morgan2009docx.txt')
+    jpm2001docx = docx_to_txt('DataFiles/ByCompany/JP Morgan/JP Morgan 2001.docx')
+    save_txt(jpm2001docx, 'TestSuite/JP Morgan/JP Morgan2001docx.txt')
 
 if __name__ == "__main__":
     main()
