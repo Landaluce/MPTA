@@ -112,9 +112,17 @@ def get_jpm():
             tup = find_words(text.decode('unicode_escape').encode('ascii','ignore'))
             print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format(str(i), str(tup[0]), str(tup[1]), str(tup[2]), str(tup[3]))
 
+def get_jpm_small():
+    text = read_txt("TestSuite/JPMorgan2000_3paragraphs.txt")
+    print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format("year", "threat", "enactment", "opportunity", "org identity")
+    if text:
+        text = utf8_to_ascii(text)
+        tup = find_words(text.decode('unicode_escape').encode('ascii', 'ignore'))
+        print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format("2000", str(tup[0]), str(tup[1]), str(tup[2]), str(tup[3]))
+
 
 def main():
-    get_jpm()
+    get_jpm_small()
 
     pass
 
