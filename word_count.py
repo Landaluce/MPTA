@@ -85,12 +85,12 @@ def find_words(text):
     th_count = 0
     for word in threat:
         th_count += len(re.findall(" " + word + " ", text))
-    tup = (th_count, en_count, op_count)
+    #tup = (th_count, en_count, op_count)
     or_count = 0
     for word in org_iden:
         or_count += len(re.findall(" " + word + " ", text))
-    tup = (th_count, en_count, op_count, or_count)
-    return tup
+    counts = [th_count, en_count, op_count, or_count]
+    return counts
 
 
 def read_txt(filepath):
@@ -99,6 +99,10 @@ def read_txt(filepath):
             return myfile.read().decode("utf-8").lower()
     except IOError:
         print "could not read", filepath
+
+
+
+
 
 # test case
 def get_jpm():
@@ -111,16 +115,16 @@ def get_jpm():
         #text = read_txt("TestSuite/JP Morgan/JP Morgan" + str(i) + ".txt")
         if text:
             text = utf8_to_ascii(text)
-            tup = find_words(text.decode('unicode_escape').encode('ascii','ignore'))
-            print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format(str(i), str(tup[0]), str(tup[1]), str(tup[2]), str(tup[3]))
+            counts = find_words(text.decode('unicode_escape').encode('ascii','ignore'))
+            print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format(str(i), str(counts[0]), str(counts[1]), str(counts[2]), str(counts[3]))
 
 def get_jpm_small():
     text = read_txt("TestSuite/JPMorgan2000_3paragraphs.txt")
     print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format("year", "threat", "enactment", "opportunity", "org identity")
     if text:
         text = utf8_to_ascii(text)
-        tup = find_words(text.decode('unicode_escape').encode('ascii', 'ignore'))
-        print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format("2000", str(tup[0]), str(tup[1]), str(tup[2]), str(tup[3]))
+        counts = find_words(text.decode('unicode_escape').encode('ascii', 'ignore'))
+        print '{:>8} {:>8} {:>8} {:>8} {:>10}'.format("2000", str(counts[0]), str(counts[1]), str(counts[2]), str(counts[3]))
 
 
 def main():
