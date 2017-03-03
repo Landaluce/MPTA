@@ -7,10 +7,10 @@ import os
 from WordCount import WordCount, hardiness
 
 
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
@@ -52,21 +52,22 @@ def index():
 
 @app.route('/FileManager')
 def FileManager():
-    user = {'nickname': 'Miguel'}  # fake user
-    posts = [  # fake array of posts
-        {
-            'author': {'nickname': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'nickname': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template("index.html",
+    content = "<table>"
+    count = 0
+    for corpus in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
+        content += "<tr>" \
+                        "<td><input type='checkbox' name='corpus" + str(count) +"' value='val' checked></td>" \
+                        "<td>" + corpus + "</td>" \
+                        "<td><input type=submit value=Download></td>" \
+                        "<td><input type=submit value=Delete></td>" \
+                   "</tr>"
+        count += 1
+    content += "</table>"
+    #content += "".join(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'], ))
+    return render_template("filemanager.html",
                            title='File Manager',
-                           user=user,
-                           posts=posts)
+                           content=content
+                           )
 
 
 @app.route('/Analyze')
