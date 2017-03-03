@@ -5,7 +5,7 @@ import re
 
 
 class WordCount(object):
-    def __init__(self, filepath, label=""):
+    def __init__(self):  # , filepath, label=""):
         self.opportunity = ['advancement', 'advantage', 'befalling', 'break', 'chance', 'connection', 'contingency',
                    'convenience',
                    'cut', 'expect', 'expectation', 'expects', 'expediency', 'fair shake', 'favorability', 'favorable',
@@ -198,13 +198,20 @@ class WordCount(object):
                 'whole', 'wholly', 'willing', 'willingly']
         self.lists_to_use = []
         self.list_names = []
+        self.corpora = []
+        self.corpora_names = []
         self.counts = []
-        self.file = filepath
-        self.label = label
-        self.corpus = self.get_corpus(self.file)
+        self.counters = []
+        # self.file = filepath
+        # self.label = label
+        #self.corpus = self.add_corpus(self.file)
 
-    def get_corpus(self, filepath):
-        return self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore')
+    def add_corpus(self, filepath, label=""):
+        if label == "":
+            self.corpora_names.append(ntpath.basename(filepath))
+        else:
+            self.corpora_names.append(ntpath.basename(label))
+        self.corpora.append(self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore'))
 
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
@@ -237,7 +244,7 @@ class WordCount(object):
                 iter_count += 1
             new_list = list(itertools.chain(*new_list))
             new_list = self.scrub_list(new_list)
-            self.add_list(new_list)
+            self.add_list(new_list,lst_name)
 
     def add_list(self, lst, lst_name):
         # need to check is list exists
@@ -245,38 +252,46 @@ class WordCount(object):
         self.list_names.append(lst_name)
 
     def count_words(self):
-        for lst in self.lists_to_use:
-            count = 0
-            for word in lst:
-                count += len(re.findall(" " + word + " ", self.corpus))
-            self.counts.append(count)
+        for corpus in self.corpora:
+            counts = []
+            for lst in self.lists_to_use:
+                count = 0
+                for word in lst:
+                    count += len(re.findall(" " + word + " ", corpus))
+                counts.append(count)
+            self.counters.append(counts)
 
-    def display(self, headers=False):
+    def to_html(self):
+        result = "<table border=1><tr>"
+        result += "<td>file</td>"
+        for name in self.list_names:
+            result += "<td>" + name + "</td>"
+        result += "</tr><tr>"
+        for i in range(len(self.corpora)):
+            result += "</tr><tr><td>" + self.corpora_names[i] + "</td>"
+            for counts in self.counters[i]:
+                result += "<td>" + str(counts) + "</td>"
+        result += "</tr></table?"
+        return result
 
-        if headers:
-            print '{:>8}'.format("file"),
-            for name in self.list_names:
-                print '{:>8}'.format(name),
-        print
-        if self.label != "":
-            print '{:>8}'.format(self.label),
-        else:
-            print '{:>8}'.format(ntpath.basename(self.file)),
-        for count in self.counts:
-            print '{:>8}'.format(count),
+    def display(self):
+        print '{:>8}'.format("file"),
+        for name in self.list_names:
+            print '{:>8}'.format(name),
+        for i in range(len(self.corpora)):
+            print '\n{:>8}'.format(self.corpora_names[i]),
+            for counts in self.counters[i]:
+                print '{:>8}'.format(counts),
 
-    def save_to_csv(self, headers=False):
-        if headers:
-            with open('results.csv', 'wb') as csvfile:
-                spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                spamwriter.writerow(["file"] + self.list_names)
-            csvfile.close()
+    def save_to_csv(self):
+        with open('results.csv', 'wb') as csvfile:
+            spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            spamwriter.writerow(["file"] + self.list_names)
+        csvfile.close()
         with open('results.csv', 'a') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            if self.label != "":
-                spamwriter.writerow([self.label] + self.counts)
-            else:
-                spamwriter.writerow([self.file] + self.counts)
+            for i in range(len(self.corpora)):
+                spamwriter.writerow([self.corpora_names[i]] + self.counters[i])
 
     def save_list(self, list_name):
         index = -1
@@ -301,20 +316,24 @@ def read_txt(filepath):
         print "could not read", filepath
 
 
-def hardiness(filepath, headers=False, label=""):
-    hardi = WordCount(filepath, label)
+def hardiness():
+    hardi = WordCount()
+    hardi.add_corpus("TestSuite/JPMorgan2000_3paragraphs.txt", label="JPMsort")
+    hardi.add_corpus("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
     hardi.add_list(hardi.threat, "threat")
     hardi.add_list(hardi.enactment, "enactment")
     hardi.add_list(hardi.opportunity, "opportunity")
     hardi.add_list(hardi.org_iden, "org_id")
     hardi.count_words()
-    hardi.display(headers=headers)
-    hardi.save_to_csv(headers=headers)
+    hardi.display()
+    hardi.save_to_csv()
+    return hardi.to_html()
 
 
 def main():
-    hardiness("TestSuite/JPMorgan2000_3paragraphs.txt", label="JPMsort", headers=True)
-    hardiness("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
+    hardiness()
+    #hardiness("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
+
 
 if __name__ == "__main__":
     main()
