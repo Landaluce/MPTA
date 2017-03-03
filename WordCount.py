@@ -260,14 +260,14 @@ class WordCount(object):
 
     def to_html(self):
         result = "<table border=1><tr>"
-        result += "<td>file</td>"
+        result += "<td align='center'>file</td>"
         for name in self.list_names:
-            result += "<td>" + name + "</td>"
+            result += "<td align='center'>" + name + "</td>"
         result += "</tr><tr>"
         for i in range(len(self.corpora)):
-            result += "</tr><tr><td>" + self.corpora_names[i] + "</td>"
+            result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
             for counts in self.counters[i]:
-                result += "<td>" + str(counts) + "</td>"
+                result += "<td align='center'>" + str(counts) + "</td>"
         result += "</tr></table?"
         return result
 
