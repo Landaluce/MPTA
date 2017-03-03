@@ -202,9 +202,6 @@ class WordCount(object):
         self.corpora_names = []
         self.counts = []
         self.counters = []
-        # self.file = filepath
-        # self.label = label
-        #self.corpus = self.add_corpus(self.file)
 
     def add_corpus(self, filepath, label=""):
         if label == "":
