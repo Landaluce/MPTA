@@ -63,9 +63,28 @@ def FileManager():
                    "</tr>"
         count += 1
     content += "</table>"
-    #content += "".join(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'], ))
     return render_template("filemanager.html",
                            title='File Manager',
+                           content=content
+                           )
+
+
+@app.route('/DictionaryManager')
+def DictionaryManager():
+    content = "<table>"
+    count = 0
+    for corpus in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
+        content += "<tr>" \
+                        "<td><input type='checkbox' name='corpus" + str(count) +"' value='val' checked></td>" \
+                        "<td>" + corpus + "</td>" \
+                        "<td><input type=submit value=Edit></td>" \
+                        "<td><input type=submit value=Download></td>" \
+                        "<td><input type=submit value=Delete></td>" \
+                  "</tr>"
+        count += 1
+    content += "</table>"
+    return render_template("filemanager.html",
+                           title='Dictionary Manager',
                            content=content
                            )
 
