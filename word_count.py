@@ -3,6 +3,7 @@ import itertools
 import re
 import csv
 
+
 opportunity = ['advancement', 'advantage', 'befalling', 'break', 'chance', 'connection', 'contingency', 'convenience',
                'cut', 'expect', 'expectation', 'expects', 'expediency', 'fair shake', 'favorability', 'favorable',
                'fighting chance', 'fitness', 'fling', 'fortuity', 'fortune', 'hope', 'luck', 'momentous', 'momentum',
@@ -156,7 +157,7 @@ org_iden = ['abreast', 'accede', 'acceded', 'accedes', 'acceding', 'accept', 'ac
 
 # print sorted(threat, key=len, reverse=True)
 
-
+#in the class
 # Uploading all Organizational Identity words into a list called new_list
 empt_list = []
 iter_count = 0
@@ -166,24 +167,23 @@ with open('OrgID.csv', 'rb') as csvfile:
         empt_list.append(row)
         iter_count += 1
     org_iden = list(itertools.chain(*empt_list))
-    # print org_iden
-    # print iter_count
+    #print org_iden
+    #print iter_count
 
 
+# in the class
 def scrub_list(lst):
     lst = list(map(lambda x: x.lower(), lst))
     lst = list(sorted(set(lst)))
     return lst
 
-
-# org = scrub_list(org_iden)
-# print org
+# in class
 # with open("Dictionaries/org_id", 'w') as file:
 #    file.write((", ").join(org))
 # file.close()
 # print (", ").join(enactment)
 
-
+# useless
 # Delete useless words
 # input: Counter object
 # return: Counter object
@@ -195,7 +195,7 @@ def stop_words(counter):
     return counter
 
 
-# don't need it anymore
+# in the class
 def utf8_to_ascii(text):
     text = text.replace(u'\u2014', '-')
     text = text.replace(u'\u2013', '-')
@@ -215,6 +215,7 @@ def utf8_to_ascii(text):
     return text
 
 
+# in the class
 def find_words(text):
     op_count = 0
     for word in opportunity:
@@ -225,14 +226,13 @@ def find_words(text):
     th_count = 0
     for word in threat:
         th_count += len(re.findall(" " + word + " ", text))
-    # tup = (th_count, en_count, op_count)
     or_count = 0
     for word in org_iden:
         or_count += len(re.findall(" " + word + " ", text))
     counts = [th_count, en_count, op_count, or_count]
     return counts
 
-
+# in class
 def read_txt(filepath):
     try:
         with open(filepath, 'r') as myfile:
@@ -240,7 +240,7 @@ def read_txt(filepath):
     except IOError:
         print "could not read", filepath
 
-
+# in class
 def save_to_csv(table):
     with open('results.csv', 'wb') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=',',
@@ -248,7 +248,7 @@ def save_to_csv(table):
         for i in table:
             spamwriter.writerow(i)
 
-
+# in class
 def display(table):
     for i in table:
         for j in i:
@@ -285,7 +285,7 @@ def get_jpm_small():
 
 
 def main():
-    results = get_jpm_small()
+    results = get_jpm()
     display(results)
     save_to_csv(results)
 
