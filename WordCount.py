@@ -204,13 +204,18 @@ class WordCount(object):
         self.corpora_names = []
         self.counts = []
         self.counters = []
+        self.total_word_counts = []
+        self.scores = []
+
 
     def add_corpus(self, filepath, label=""):
         if label == "":
             self.corpora_names.append(ntpath.basename(filepath))
         else:
             self.corpora_names.append(ntpath.basename(label))
-        self.corpora.append(self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore'))
+            corpus = self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore')
+        self.corpora.append(corpus)
+        self.total_word_counts.append(len(str(corpus).split(" ")))
 
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
@@ -260,15 +265,24 @@ class WordCount(object):
                 counts.append(count)
             self.counters.append(counts)
 
+    def generate_scores(self):
+        index = 0
+        for counts in self.counters:
+            sum = 0.0
+            for count in counts:
+                sum += count
+            self.scores.append(sum/self.total_word_counts[index])
+            index += 1
+
     def to_html(self):
         result = "<table border=1><tr>"
         result += "<td align='center'>file</td>"
-        for name in self.list_names:
+        for name in self.list_names + ["total word count", "score"]:
             result += "<td align='center'>" + name + "</td>"
         result += "</tr><tr>"
         for i in range(len(self.corpora_names)):
             result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
-            for counts in self.counters[i]:
+            for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
                 result += "<td align='center'>" + str(counts) + "</td>"
         result += "</tr></table?"
         return result
@@ -285,7 +299,7 @@ class WordCount(object):
     def save_to_csv(self):
         with open('results.csv', 'wb') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            spamwriter.writerow(["file"] + self.list_names)
+            spamwriter.writerow(["file"] + self.list_names + ["score"])
         csvfile.close()
         with open('results.csv', 'a') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)

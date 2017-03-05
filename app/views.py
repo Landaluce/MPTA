@@ -96,8 +96,6 @@ def DictionaryManager():
         obj = app.config['obj']
         i = 0
         file_content = ""
-        print obj.list_names
-        print obj.lists_to_use
         for name in obj.list_names:
             if name == file_name:
                 file_content = obj.lists_to_use[i]
@@ -134,8 +132,10 @@ def Analyze():
     obj = app.config['obj']
     os.chdir(CORPORA_UPLOAD_FOLDER)
     obj.count_words()
-    # obj.display()
-    print len(str(obj.corpora[0]).split(" "))
+    obj.display()
+    #print len(str(obj.corpora[0]).split(" "))
+    #obj.save_to_csv()
+    obj.generate_scores()
     content = obj.to_html() + "<p><input type=submit value='Download Results'></p>"
     return render_template("index.html",
                            title='Analyze',
