@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, Response
 from werkzeug import secure_filename
 from fileManager import *
 import glob
@@ -12,19 +12,15 @@ from WordCount import WordCount
 def index():
     try:
         app.config['obj']
-        print 2
     except:
         app.config['obj'] = WordCount()
-        print 1
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             if request.form['upload'] == "corpus":
-                print "corpus"
                 file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
             elif request.form['upload'] == "dictionary":
-                print "dic"
                 file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
             return redirect(url_for('index'))
     content = """
@@ -51,16 +47,25 @@ def index():
                            content=content)
 
 
-@app.route('/FileManager')
+@app.route('/FileManager', methods=['GET', 'POST'])
 def FileManager():
+    if request.method == 'POST':
+        return Response(
+            mimetype="text/csv",
+            headers={"Content-disposition":
+                         "attachment; filename=" + request.form['corpus']})
     content = "<table>"
     count = 0
     for corpus in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
         content += "<tr>" \
-                        "<td><input type='checkbox' name='corpus" + str(count) +"' value='val' checked></td>" \
-                        "<td>" + corpus + "</td>" \
-                        "<td><input type=submit value='Download'></td>" \
-                        "<td><input type=submit value='Delete'></td>" \
+                   "<td><input type='checkbox' name='corpus" + str(count) + "' value='val' checked></td>" \
+                   "<td>" + corpus + "</td>" \
+                   "<td>" \
+                   "<form method='POST'><input type='hidden' name='corpus' type='text' value='" + corpus + "'>" \
+                   "<input id='my_submit' type='submit' value='Download'>" \
+                   "</form>" \
+                   "</td>" \
+                   "<td><input type=submit value='Delete'></td>" \
                    "</tr>"
         count += 1
     content += "</table>"
@@ -70,18 +75,27 @@ def FileManager():
                            )
 
 
-@app.route('/DictionaryManager')
+@app.route('/DictionaryManager', methods=['GET', 'POST'])
 def DictionaryManager():
+    if request.method == 'POST':
+        return Response(
+            mimetype="text/csv",
+            headers={"Content-disposition":
+                         "attachment; filename=" + request.form['dictionary']})
     content = "<table>"
     count = 0
-    for corpus in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
+    for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
         content += "<tr>" \
-                        "<td><input type='checkbox' name='corpus" + str(count) +"' value='val' checked></td>" \
-                        "<td>" + corpus + "</td>" \
-                        "<td><input type=submit value='Edit'></td>" \
-                        "<td><input type=submit value='Download'></td>" \
-                        "<td><input type=submit value='Delete'></td>" \
-                  "</tr>"
+                   "<td><input type='checkbox' name='corpus" + str(dictionary) + "' value='val' checked></td>" \
+                   "<td>" + dictionary + "</td>" \
+                   "<td><input type=submit value='Edit'></td>" \
+                   "<td>" \
+                   "<form method='POST'><input type='hidden' name='dictionary' type='text' value='" + dictionary + "'>" \
+                   "<input id='my_submit' type='submit' value='Download'>" \
+                   "</form>" \
+                   "</td>" \
+                   "<td><input type=submit value='Delete'></td>" \
+                   "</tr>"
         count += 1
     content += "</table>"
     return render_template("index.html",
@@ -96,19 +110,34 @@ def Analyze():
     os.chdir(CORPORA_UPLOAD_FOLDER)
     for file in glob.glob("*"):
         obj.add_corpus(CORPORA_UPLOAD_FOLDER + "/" + file)
-    obj.add_list(obj.threat, "thread")
-    obj.add_list(obj.enactment, "enactment")
-    obj.add_list(obj.opportunity, "opportunity")
-    obj.add_list(obj.org_iden, "org_iden")
-    obj.upload_list("/home/alvaro/Desktop/COMP-401/Dictionaries/my_dict.csv", "my_dict")
+    os.chdir(DICTIONARIES_UPLOAD_FOLDER)
+    for file in glob.glob("*"):
+        with open(file, 'r') as myfile:
+            dictionary = myfile.read().replace('\n', '').split(", ")
+            obj.add_list(dictionary, file)
     obj.count_words()
-    obj.display()
+    # obj.display()
     content = obj.to_html() + "<p><input type=submit value='Download Results'></p>"
     return render_template("index.html",
+                           title='Analyze',
                            content=content)
+
 
 @app.route('/Reset')
 def Reset():
     delete_tmp_folder()
     create_tmp_folder()
     return redirect(url_for('index'))
+
+
+@app.route("/getPlotCSV/<id>")
+def getPlotCSV(id):
+    # with open("outputs/Adjacency.csv") as fp:
+    #     csv = fp.read()
+    print id
+    csv = '1,2,3\n4,5,6\n'
+    return Response(
+        csv,
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                     "attachment; filename=myplot.csv"})
