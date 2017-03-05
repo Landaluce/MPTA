@@ -5,6 +5,8 @@ import re
 
 
 class WordCount(object):
+    def __del__(self):
+        print "deleted"
     def __init__(self):  # , filepath, label=""):
         self.opportunity = ['advancement', 'advantage', 'befalling', 'break', 'chance', 'connection', 'contingency',
                    'convenience',
