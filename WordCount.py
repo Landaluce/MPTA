@@ -241,7 +241,7 @@ class WordCount(object):
                 iter_count += 1
             new_list = list(itertools.chain(*new_list))
             new_list = self.scrub_list(new_list)
-            self.add_list(new_list,lst_name)
+            self.add_list(new_list, lst_name)
 
     def add_list(self, lst, lst_name):
         # need to check is list exists
@@ -264,7 +264,7 @@ class WordCount(object):
         for name in self.list_names:
             result += "<td align='center'>" + name + "</td>"
         result += "</tr><tr>"
-        for i in range(len(self.corpora)):
+        for i in range(len(self.corpora_names)):
             result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
             for counts in self.counters[i]:
                 result += "<td align='center'>" + str(counts) + "</td>"

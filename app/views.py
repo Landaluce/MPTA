@@ -1,20 +1,21 @@
 from app import app
-from app.constants import ALLOWED_EXTENSIONS, CORPORA_UPLOAD_FOLDER, DICTIONARIES_UPLOAD_FOLDER
 from flask import render_template, request, redirect, url_for
 from werkzeug import secure_filename
+from fileManager import *
 import glob
 import os
-from WordCount import WordCount, hardiness
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+from WordCount import WordCount
 
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    try:
+        app.config['obj']
+        print 2
+    except:
+        app.config['obj'] = WordCount()
+        print 1
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
@@ -58,12 +59,12 @@ def FileManager():
         content += "<tr>" \
                         "<td><input type='checkbox' name='corpus" + str(count) +"' value='val' checked></td>" \
                         "<td>" + corpus + "</td>" \
-                        "<td><input type=submit value=Download></td>" \
-                        "<td><input type=submit value=Delete></td>" \
+                        "<td><input type=submit value='Download'></td>" \
+                        "<td><input type=submit value='Delete'></td>" \
                    "</tr>"
         count += 1
     content += "</table>"
-    return render_template("filemanager.html",
+    return render_template("index.html",
                            title='File Manager',
                            content=content
                            )
@@ -77,13 +78,13 @@ def DictionaryManager():
         content += "<tr>" \
                         "<td><input type='checkbox' name='corpus" + str(count) +"' value='val' checked></td>" \
                         "<td>" + corpus + "</td>" \
-                        "<td><input type=submit value=Edit></td>" \
-                        "<td><input type=submit value=Download></td>" \
-                        "<td><input type=submit value=Delete></td>" \
+                        "<td><input type=submit value='Edit'></td>" \
+                        "<td><input type=submit value='Download'></td>" \
+                        "<td><input type=submit value='Delete'></td>" \
                   "</tr>"
         count += 1
     content += "</table>"
-    return render_template("filemanager.html",
+    return render_template("index.html",
                            title='Dictionary Manager',
                            content=content
                            )
@@ -99,7 +100,15 @@ def Analyze():
     obj.add_list(obj.enactment, "enactment")
     obj.add_list(obj.opportunity, "opportunity")
     obj.add_list(obj.org_iden, "org_iden")
+    obj.upload_list("/home/alvaro/Desktop/COMP-401/Dictionaries/my_dict.csv", "my_dict")
     obj.count_words()
     obj.display()
-    return render_template("analyze.html",
-                           content=obj.to_html())
+    content = obj.to_html() + "<p><input type=submit value='Download Results'></p>"
+    return render_template("index.html",
+                           content=content)
+
+@app.route('/Reset')
+def Reset():
+    delete_tmp_folder()
+    create_tmp_folder()
+    return redirect(url_for('index'))
