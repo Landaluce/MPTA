@@ -125,7 +125,7 @@ class WordCount(object):
                 'definite', 'definitive', 'dependable', 'dependence', 'dependent', 'devote', 'devoted', 'devotes',
                 'devoting', 'discrete', 'disparate', 'disposition', 'distinct', 'distinctive', 'divergent', 'diverse',
                 'dominant', 'donate', 'donated', 'donates', 'donation', 'donations', 'duplicate', 'duplicated',
-                'duplicates', 'duplicating', 'd\xe9tente', 'echo', 'echoed', 'echoes', 'echoing', 'elemental',
+                'duplicates', 'duplicating', 'd\xe9tente', 'echo', 'echoed', 'echoes', 'echoing', 'elemental', #-------------------?
                 'embrace',
                 'embraced', 'embraces', 'embracing', 'empathize', 'empathized', 'empathizes', 'empathizing', 'empathy',
                 'endorse', 'endorsed', 'endorses', 'endorsing', 'enduring', 'environ', 'equal', 'equalities',

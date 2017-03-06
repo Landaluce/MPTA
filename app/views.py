@@ -4,7 +4,7 @@ from werkzeug import secure_filename
 from fileManager import *
 import glob
 import os
-from WordCount import WordCount
+from WordCount import WordCount, read_txt
 import csv
 
 
@@ -97,7 +97,7 @@ def DictionaryManager():
         file_content = ""
         for name in obj.list_names:
             if name == file_name:
-                file_content = obj.lists_to_use[i]
+                file_content = read_txt(obj.lists_to_use[i])
             i += 1
         return Response(
             file_content,
@@ -145,7 +145,7 @@ def Analyze():
     os.chdir(CORPORA_UPLOAD_FOLDER)
     obj.count_words()
     obj.display()
-    #print len(str(obj.corpora[0]).split(" "))
+    print obj.lists_to_use
 
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
