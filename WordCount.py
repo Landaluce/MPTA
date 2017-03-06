@@ -171,6 +171,11 @@ class WordCount(object):
         self.corpora.append(corpus)
         self.total_word_counts.append(len(str(corpus).split(" ")))
 
+    def delete_corpus(self, index):
+        del self.corpora[index]
+        del self.corpora_names[index]
+        #del self.counters[index]
+
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
         return list(sorted(set(lst)))
@@ -210,6 +215,10 @@ class WordCount(object):
         self.list_names.append(lst_name)
 
     def count_words(self):
+        #delete previous results
+        self.counts = []
+        self.counters = []
+        self.scores = []
         for corpus in self.corpora:
             counts = []
             for lst in self.lists_to_use:

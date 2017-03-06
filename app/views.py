@@ -54,19 +54,35 @@ def index():
 @app.route('/FileManager', methods=['GET', 'POST'])
 def FileManager():
     if request.method == 'POST':
-        file_name = request.form['corpus']
         obj = app.config['obj']
-        i = 0
-        file_content = ""
-        for name in obj.corpora_names:
-            if name == file_name:
-                file_content = obj.corpora[i]
-            i += 1
-        return Response(
-            file_content,
-            mimetype="text/plain",
-            headers={"Content-disposition":
-                         "attachment; filename=" + file_name})
+        try:
+            file_name = request.form['download']
+
+            i = 0
+            file_content = ""
+            for name in obj.corpora_names:
+                if name == file_name:
+                    file_content = obj.corpora[i]
+                i += 1
+            return Response(
+                file_content,
+                mimetype="text/plain",
+                headers={"Content-disposition":
+                             "attachment; filename=" + file_name})
+        except:
+            try:
+                file_name = request.form['delete']
+                i = 0
+                corpus_index = 0
+                for name in obj.corpora_names:
+                    if name == file_name:
+                        corpus_index = i
+                    i += 1
+                obj.delete_corpus(corpus_index)
+                os.remove(CORPORA_UPLOAD_FOLDER + "/" + file_name)
+            except:
+                pass
+
     content = "<table>"
     count = 0
     for corpus in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
@@ -74,11 +90,15 @@ def FileManager():
                    "<td><input type='checkbox' name='corpus" + str(count) + "' value='val' checked></td>" \
                    "<td>" + corpus + "</td>" \
                    "<td>" \
-                   "<form method='POST'><input type='hidden' name='corpus' type='text' value='" + corpus + "'>" \
+                   "<form method='POST'><input type='hidden' name='download' type='text' value='" + corpus + "'>" \
                    "<input id='my_submit' type='submit' value='Download'>" \
                    "</form>" \
                    "</td>" \
-                   "<td><input type=submit value='Delete'></td>" \
+                   "<td>" \
+                   "<form method='POST'><input type='hidden' name='delete' type='text' value='" + corpus + "'>" \
+                   "<input id='my_submit' type='submit' value='Delete'>" \
+                   "</form>" \
+                   "</td>" \
                    "</tr>"
         count += 1
     content += "</table>"
