@@ -299,12 +299,12 @@ class WordCount(object):
     def save_to_csv(self):
         with open('results.csv', 'wb') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            spamwriter.writerow(["file"] + self.list_names + ["score"])
+            spamwriter.writerow(["file"] + self.list_names + ["total_word_count"] + ["score"])
         csvfile.close()
         with open('results.csv', 'a') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for i in range(len(self.corpora)):
-                spamwriter.writerow([self.corpora_names[i]] + self.counters[i])
+                spamwriter.writerow([self.corpora_names[i]] + self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]])
 
     def save_list(self, list_name):
         index = -1

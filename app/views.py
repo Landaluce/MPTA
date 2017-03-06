@@ -5,6 +5,7 @@ from fileManager import *
 import glob
 import os
 from WordCount import WordCount
+import csv
 
 
 @app.route('/')
@@ -57,8 +58,6 @@ def FileManager():
         obj = app.config['obj']
         i = 0
         file_content = ""
-        print obj.corpora_names
-        print obj.corpora
         for name in obj.corpora_names:
             if name == file_name:
                 file_content = obj.corpora[i]
@@ -127,16 +126,33 @@ def DictionaryManager():
                            )
 
 
-@app.route('/Analyze')
+@app.route('/Analyze', methods=['GET', 'POST'])
 def Analyze():
+    if request.method == 'POST':
+        print "post"
+        file_name = request.form['results']
+        file_content = ""
+        with open(TMP_DIRECTORY + '/results.csv', 'rb') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            for row in spamreader:
+                file_content += ', '.join(row) + '\n'
+        return Response(
+            file_content,
+            mimetype="text/csv",
+            headers={"Content-disposition":
+                         "attachment; filename=" + file_name})
     obj = app.config['obj']
     os.chdir(CORPORA_UPLOAD_FOLDER)
     obj.count_words()
     obj.display()
     #print len(str(obj.corpora[0]).split(" "))
-    #obj.save_to_csv()
+
     obj.generate_scores()
-    content = obj.to_html() + "<p><input type=submit value='Download Results'></p>"
+    os.chdir(TMP_DIRECTORY)
+    obj.save_to_csv()
+    content = obj.to_html() + "<p><form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
+                   "<input id='my_submit' type='submit' value='Download'>" \
+                   "</form></p>"
     return render_template("index.html",
                            title='Analyze',
                            content=content)
