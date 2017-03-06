@@ -174,7 +174,6 @@ class WordCount(object):
     def delete_corpus(self, index):
         del self.corpora[index]
         del self.corpora_names[index]
-        #del self.counters[index]
 
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))

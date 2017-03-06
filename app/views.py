@@ -57,7 +57,6 @@ def FileManager():
         obj = app.config['obj']
         try:
             file_name = request.form['download']
-
             i = 0
             file_content = ""
             for name in obj.corpora_names:
@@ -81,6 +80,7 @@ def FileManager():
                 obj.delete_corpus(corpus_index)
                 os.remove(CORPORA_UPLOAD_FOLDER + "/" + file_name)
             except:
+                # bad Post request
                 pass
 
     content = "<table>"
@@ -111,19 +111,34 @@ def FileManager():
 @app.route('/DictionaryManager', methods=['GET', 'POST'])
 def DictionaryManager():
     if request.method == 'POST':
-        file_name = request.form['dictionary']
         obj = app.config['obj']
-        i = 0
-        file_content = ""
-        for name in obj.list_names:
-            if name == file_name:
-                file_content = read_txt(obj.lists_to_use[i])
-            i += 1
-        return Response(
-            file_content,
-            mimetype="text/plain",
-            headers={"Content-disposition":
-                         "attachment; filename=" + file_name})
+        try:
+            file_name = request.form['download']
+            i = 0
+            file_content = ""
+            for name in obj.list_names:
+                if name == file_name:
+                    file_content = read_txt(obj.lists_to_use[i])
+                i += 1
+            return Response(
+                file_content,
+                mimetype="text/plain",
+                headers={"Content-disposition":
+                             "attachment; filename=" + file_name})
+        except:
+            try:
+                file_name = request.form['delete']
+                i = 0
+                dictionary_index = 0
+                for name in obj.corpora_names:
+                    if name == file_name:
+                        dictionary_index = i
+                    i += 1
+                obj.delete_corpus(dictionary_index)
+                os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
+            except:
+                # bad Post request
+                pass
     content = "<table>"
     count = 0
     for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
@@ -132,11 +147,15 @@ def DictionaryManager():
                    "<td>" + dictionary + "</td>" \
                    "<td><input type=submit value='Edit'></td>" \
                    "<td>" \
-                   "<form method='POST'><input type='hidden' name='dictionary' type='text' value='" + dictionary + "'>" \
+                   "<form method='POST'><input type='hidden' name='download' type='text' value='" + dictionary + "'>" \
                    "<input id='my_submit' type='submit' value='Download'>" \
                    "</form>" \
                    "</td>" \
-                   "<td><input type=submit value='Delete'></td>" \
+                   "<td>" \
+                   "<form method='POST'><input type='hidden' name='delete' type='text' value='" + dictionary + "'>" \
+                   "<input id='my_submit' type='submit' value='Delete'>" \
+                   "</form>" \
+                   "</td>" \
                    "</tr>"
         count += 1
     content += "</table>"
@@ -165,7 +184,6 @@ def Analyze():
     os.chdir(CORPORA_UPLOAD_FOLDER)
     obj.count_words()
     obj.display()
-    print obj.lists_to_use
 
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
