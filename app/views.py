@@ -166,15 +166,3 @@ def Reset():
     del obj
     return redirect(url_for('index'))
 
-
-@app.route("/getPlotCSV/<id>")
-def getPlotCSV(id):
-    # with open("outputs/Adjacency.csv") as fp:
-    #     csv = fp.read()
-    print id
-    csv = '1,2,3\n4,5,6\n'
-    return Response(
-        csv,
-        mimetype="text/csv",
-        headers={"Content-disposition":
-                     "attachment; filename=myplot.csv"})
