@@ -137,15 +137,28 @@ def DictionaryManager():
                 obj.delete_corpus(dictionary_index)
                 os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
             except:
-                # bad Post request
-                pass
+                try:
+                    file_name = request.form['edit']
+                    print "edit"
+                except:
+                    # bad Post request
+                    pass
+            print(request.form)
+            for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
+
+                if not request.form.get("use_dictionary" + str(dictionary)):
+                    print "not use", dictionary
     content = "<table>"
     count = 0
     for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
         content += "<tr>" \
-                   "<td><input type='checkbox' name='corpus" + str(dictionary) + "' value='val' checked></td>" \
+                   "<td><form method='POST'><input type='checkbox' name='use_dictionary' value='" + str(dictionary) + "' checked><form></td>" \
                    "<td>" + dictionary + "</td>" \
-                   "<td><input type=submit value='Edit'></td>" \
+                   "<td>" \
+                   "<form method='POST'><input type='hidden' name='edit' type='text' value='" + dictionary + "'>" \
+                   "<input id='my_submit' type='submit' value='Edit'>" \
+                   "</form>" \
+                   "</td>" \
                    "<td>" \
                    "<form method='POST'><input type='hidden' name='download' type='text' value='" + dictionary + "'>" \
                    "<input id='my_submit' type='submit' value='Download'>" \
