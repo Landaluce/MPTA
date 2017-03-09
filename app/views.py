@@ -19,8 +19,6 @@ def index():
     if request.method == 'POST':
         files = request.files.getlist("file[]")
         for file in files:
-            print file
-        for file in files:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 if request.form['upload'] == "corpus":
