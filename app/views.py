@@ -17,32 +17,35 @@ def index():
     except:
         app.config['obj'] = WordCount()
     if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            if request.form['upload'] == "corpus":
-                file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
-                obj.add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename),filename)
-            elif request.form['upload'] == "dictionary":
-                file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
-                obj.add_list(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename),filename)
-            return redirect(url_for('index'))
+        files = request.files.getlist("file[]")
+        for file in files:
+            print file
+        for file in files:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                if request.form['upload'] == "corpus":
+                    file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
+                    obj.add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename),filename)
+                elif request.form['upload'] == "dictionary":
+                    file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
+                    obj.add_list(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename),filename)
+        return redirect(url_for('index'))
     content = """
         <!doctype html>
         <h1>Upload new File</h1>
-        <form action="" method=post enctype=multipart/form-data>
+        <form action="index" method="post" enctype="multipart/form-data">
           <input type="hidden" name="upload" value="corpus">
-          <p><input type=file name=file>
-             <input type=submit value=Upload>
+          <input type="file" multiple="multiple" name="file[]">
+          <input type="submit" value="Upload">
         </form>
         <p>%s</p>
         """ % "<br>".join(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'], ))
     content += """
         <h1>Upload new Dictionary</h1>
-        <form action="" method=post enctype=multipart/form-data>
-          <input type="hidden" name="upload" value="dictionary">
-          <p><input type=file name=file>
-             <input type=submit value=Upload>
+        <form action="index" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="upload" value="dictionary">
+                <input type="file" multiple="multiple" name="file[]">
+                <input type="submit" value="Upload">
         </form>
         <p>%s</p>
         """ % "<br>".join(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'], ))
