@@ -1,0 +1,52 @@
+
+ ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li:last-child {
+    border-right: none;
+    float: right;
+}
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+input[type='file'] {
+  color: transparent;
+}
+#dragndrop {
+    /*float: right;
+    margin-right: 500px;*/
+    border-radius: 10px;
+    border: 5px dashed black;
+    width: 600px;
+    height: 200px;
+    text-align: center;
+}
+#dragndrop p {
+    padding-top: 90px;
+}
+#uploadbutton {
+    position: absolute;
+    margin-top: 70px;
+    margin-left: 235px;
+}
+
+h1 {
+    font-weight: lighter;
+}

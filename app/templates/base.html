@@ -5,16 +5,16 @@
     {% else %}
     <title>Welcome to ...</title>
     {% endif %}
+      <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   </head>
   <body>
-    <div>
-        <a href="/index">Home</a>
-        <a href="/FileManager">File Manager</a>
-        <a href="/DictionaryManager">Dictionary Manager</a>
-        <a href="/Analyze">Analyze</a>
-        <a href="/Reset">Reset</a>
-    </div>
-    <hr>
+    <ul>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/FileManager">File Manager</a></li>
+        <li><a href="/DictionaryManager">Dictionary Manager</a></li>
+        <li><a href="/Analyze">Analyze</a></li>
+        <li><a href="/Reset">Reset</a></li>
+    </ul>
     {% block content %}{% endblock %}
   </body>
 </html>

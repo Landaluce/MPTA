@@ -33,8 +33,8 @@ def index():
         <h1>Upload new File</h1>
         <form action="index" method="post" enctype="multipart/form-data">
             <input type="hidden" name="upload" value="corpus">
-            <input type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
-            <div id="dragndrop">Or drop files here</div>
+            <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
+            <div id="dragndrop"><p>or drop files here</p></div>
         </form>
         <p>%s</p>
         """ % "<br>".join(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'], ))
@@ -42,7 +42,8 @@ def index():
         <h1>Upload new Dictionary</h1>
         <form action="index" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="upload" value="dictionary">
-                <input type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
+                <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
+                <div id="dragndrop"><p>or drop files here</p></div>
         </form>
         <p>%s</p>
         """ % "<br>".join(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'], ))
