@@ -29,12 +29,12 @@ def index():
                     obj.add_list(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename),filename)
         return redirect(url_for('index'))
     content = """
-        <!doctype html>
+
         <h1>Upload new File</h1>
         <form action="index" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="upload" value="corpus">
-          <input type="file" multiple="multiple" name="file[]">
-          <input type="submit" value="Upload">
+            <input type="hidden" name="upload" value="corpus">
+            <input type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
+            <div id="dragndrop">Or drop files here</div>
         </form>
         <p>%s</p>
         """ % "<br>".join(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'], ))
@@ -42,8 +42,7 @@ def index():
         <h1>Upload new Dictionary</h1>
         <form action="index" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="upload" value="dictionary">
-                <input type="file" multiple="multiple" name="file[]">
-                <input type="submit" value="Upload">
+                <input type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
         </form>
         <p>%s</p>
         """ % "<br>".join(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'], ))
