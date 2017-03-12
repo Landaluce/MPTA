@@ -156,6 +156,7 @@ class WordCount(object):
         self.list_names = []
         self.corpora = []
         self.corpora_names = []
+        self.active_corpora = []
         self.counts = []
         self.counters = []
         self.total_word_counts = []
@@ -169,11 +170,19 @@ class WordCount(object):
             self.corpora_names.append(ntpath.basename(label))
             corpus = self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore')
         self.corpora.append(corpus)
+        self.active_corpora.append(1)
         self.total_word_counts.append(len(str(corpus).split(" ")))
 
     def delete_corpus(self, index):
         del self.corpora[index]
         del self.corpora_names[index]
+        del self.active_corpora[index]
+
+    def deactivate_corpus(self, index):
+        self.active_corpora[index] = 0
+
+    def activate_corpus(self, index):
+        self.active_corpora[index] = 1
 
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
@@ -212,6 +221,7 @@ class WordCount(object):
         # need to check is list exists
         self.lists_to_use.append(lst)
         self.list_names.append(lst_name)
+        self.active_corpora.append(1)
 
     def count_words(self):
         #delete previous results
@@ -243,9 +253,10 @@ class WordCount(object):
             result += "<td align='center'>" + name + "</td>"
         result += "</tr><tr>"
         for i in range(len(self.corpora_names)):
-            result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
-            for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
-                result += "<td align='center'>" + str(counts) + "</td>"
+            if self.active_corpora[i] == 1:
+                result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
+                for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
+                    result += "<td align='center'>" + str(counts) + "</td>"
         result += "</tr></table?"
         return result
 
@@ -254,9 +265,10 @@ class WordCount(object):
         for name in self.list_names:
             print '{:>8}'.format(name),
         for i in range(len(self.corpora)):
-            print '\n{:>8}'.format(self.corpora_names[i]),
-            for counts in self.counters[i]:
-                print '{:>8}'.format(counts),
+            if self.active_corpora[i] == 1:
+                print '\n{:>8}'.format(self.corpora_names[i]),
+                for counts in self.counters[i]:
+                    print '{:>8}'.format(counts),
 
     def save_to_csv(self):
         with open('results.csv', 'wb') as csvfile:
@@ -266,7 +278,8 @@ class WordCount(object):
         with open('results.csv', 'a') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for i in range(len(self.corpora)):
-                spamwriter.writerow([self.corpora_names[i]] + self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]])
+                if self.active_corpora[i] == 1:
+                    spamwriter.writerow([self.corpora_names[i]] + self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]])
 
     def save_list(self, list_name):
         index = -1
