@@ -152,8 +152,9 @@ class WordCount(object):
                 'us', 'vital', 'vouch', 'vouched', 'vouches', 'vouching', 'warrant', 'warranted', 'warranting',
                 'warrants', 'we', 'well-beloved', 'well-disposed', 'well-inclined', 'well-loved', 'well-wisher', 'well-wishers',
                 'whole', 'wholly', 'willing', 'willingly']
-        self.lists_to_use = []
-        self.list_names = []
+        self.dictionaries = []
+        self.dictionaries_names = []
+        self.active_dictionaries = []
         self.corpora = []
         self.corpora_names = []
         self.active_corpora = []
@@ -184,6 +185,12 @@ class WordCount(object):
     def activate_corpus(self, index):
         self.active_corpora[index] = 1
 
+    def deactivate_dictionary(self, index):
+        self.active_dictionaries[index] = 0
+
+    def activate_dictionary(self, index):
+        self.active_dictionaries[index] = 1
+
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
         return list(sorted(set(lst)))
@@ -204,7 +211,7 @@ class WordCount(object):
 
         return text
 
-    def upload_list(self, csv_file, lst_name):
+    def upload_dictionary(self, csv_file, lst_name):
         # Uploading all Organizational Identity words into a list called new_list
         new_list = []
         iter_count = 0
@@ -215,13 +222,13 @@ class WordCount(object):
                 iter_count += 1
             new_list = list(itertools.chain(*new_list))
             new_list = self.scrub_list(new_list)
-            self.add_list(new_list, lst_name)
+            self.add_dictionary(new_list, lst_name)
 
-    def add_list(self, lst, lst_name):
+    def add_dictionary(self, lst, lst_name):
         # need to check is list exists
-        self.lists_to_use.append(lst)
-        self.list_names.append(lst_name)
-        self.active_corpora.append(1)
+        self.dictionaries.append(lst)
+        self.dictionaries_names.append(lst_name)
+        self.active_dictionaries.append(1)
 
     def count_words(self):
         #delete previous results
@@ -230,11 +237,12 @@ class WordCount(object):
         self.scores = []
         for corpus in self.corpora:
             counts = []
-            for lst in self.lists_to_use:
-                count = 0
-                for word in lst:
-                    count += len(re.findall(" " + word + " ", corpus))
-                counts.append(count)
+            for i in range(len(self.dictionaries)):
+                if self.active_dictionaries[i] == 1:
+                    count = 0
+                    for word in self.dictionaries[i]:
+                        count += len(re.findall(" " + word + " ", corpus))
+                    counts.append(count)
             self.counters.append(counts)
 
     def generate_scores(self):
@@ -249,50 +257,67 @@ class WordCount(object):
     def to_html(self):
         result = "<table border=1><tr>"
         result += "<td align='center'>file</td>"
-        for name in self.list_names + ["total word count", "score"]:
-            result += "<td align='center'>" + name + "</td>"
+        for i in range(len(self.dictionaries_names)):
+            if self.active_dictionaries[i] == 1:
+                result += "<td align='center'>" + self.dictionaries_names[i] + "</td>"
+        result += "<td align='center'>total word count</td>"
+        result += "<td align='center'>score</td>"
         result += "</tr><tr>"
+
         for i in range(len(self.corpora_names)):
             if self.active_corpora[i] == 1:
                 result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
                 for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
                     result += "<td align='center'>" + str(counts) + "</td>"
-        result += "</tr></table?"
+        result += "</tr></table>"
         return result
 
     def display(self):
-        print '{:>8}'.format("file"),
-        for name in self.list_names:
-            print '{:>8}'.format(name),
-        for i in range(len(self.corpora)):
+        matrix = self.to_matrix()
+        for row in matrix:
+            print row
+
+    def to_matrix(self):
+        header = []
+        header.append("file")
+        for i in range(len(self.dictionaries_names)):
+            if self.active_dictionaries[i] == 1:
+                header.append(self.dictionaries_names[i])
+        header.append("total_word_count")
+        header.append("score")
+        matrix = []
+        matrix.append(header)
+        for i in range(len(self.corpora_names)):
             if self.active_corpora[i] == 1:
-                print '\n{:>8}'.format(self.corpora_names[i]),
-                for counts in self.counters[i]:
-                    print '{:>8}'.format(counts),
+                row = []
+                row.append(self.corpora_names[i])
+                for x in self.counters[i]:
+                    row.append(x)
+                row.append(self.total_word_counts[i])
+                row.append(self.scores[i])
+                matrix.append(row)
+        return matrix
 
     def save_to_csv(self):
+        matrix = self.to_matrix()
         with open('results.csv', 'wb') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            spamwriter.writerow(["file"] + self.list_names + ["total_word_count"] + ["score"])
+            for row in matrix:
+                spamwriter.writerow(row)
         csvfile.close()
-        with open('results.csv', 'a') as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for i in range(len(self.corpora)):
-                if self.active_corpora[i] == 1:
-                    spamwriter.writerow([self.corpora_names[i]] + self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]])
 
     def save_list(self, list_name):
         index = -1
         count = 0
-        for lst in self.list_names:
+        for lst in self.dictionaries_names:
             if lst == list_name:
                 index = count
             count += 1
         if index == -1:
             print "\nList", list_name, "not found"
         else:
-            with open("Dictionaries/" + self.list_names, 'w') as file:
-                file.write(", ".join(self.lists_to_use[index]))
+            with open("Dictionaries/" + self.dictionaries_names, 'w') as file:
+                file.write(", ".join(self.dictionaries[index]))
             file.close()
 
 
@@ -308,10 +333,10 @@ def hardiness():
     hardi = WordCount()
     hardi.add_corpus("TestSuite/JPMorgan2000_3paragraphs.txt", label="JPMsort")
     hardi.add_corpus("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
-    hardi.add_list(hardi.threat, "threat")
-    hardi.add_list(hardi.enactment, "enactment")
-    hardi.add_list(hardi.opportunity, "opportunity")
-    hardi.add_list(hardi.org_iden, "org_id")
+    hardi.add_dictionary(hardi.threat, "threat")
+    hardi.add_dictionary(hardi.enactment, "enactment")
+    hardi.add_dictionary(hardi.opportunity, "opportunity")
+    hardi.add_dictionary(hardi.org_iden, "org_id")
     hardi.count_words()
     hardi.display()
     hardi.save_to_csv()

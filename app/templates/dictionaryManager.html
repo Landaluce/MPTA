@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+    {% set count = 0 %}
+    <table>
+        {% for dictionary in dictionaries %}
+        <tr>
+            <td>
+                <form method='POST'>
+                    <input type='hidden' name='dictionary' type='text' value='{{dictionary}}'>
+                    <input type='hidden' name='index' type='number' value={{count}}>
+                    <input type='checkbox' {{'checked' if active_dictionaries[count] != ''}} onchange='this.form.submit();'>
+                </form>
+            </td>
+            <td>{{dictionary}}</td>
+            <td>
+                <form method='POST'><input type='hidden' name='download' type='text' value='{{dictionary}}'>
+                    <input id='my_submit' type='submit' value='Download'>
+                </form>
+            </td>
+            <td>
+                <form method='POST'><input type='hidden' name='delete' type='text' value='{{dictionary}}'>
+                    <input id='my_submit' type='submit' value='Delete'>
+                </form>
+            </td>
+        </tr>
+        {% set count = count + 1 %}
+        {% endfor %}
+
+    </table>
+{% endblock %}

@@ -12,6 +12,7 @@ import csv
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     active_corpora = app.config['active_corpora']
+    active_dictionaries = app.config['active_dictionaries']
     try:
         obj = app.config['obj']
     except:
@@ -28,8 +29,10 @@ def index():
                     active_corpora.append("checked")
                 elif request.form['upload'] == "dictionary":
                     file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
-                    obj.add_list(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename), filename)
+                    obj.add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename), filename)
+                    active_dictionaries.append("checked")
         app.config['active_corpora'] = active_corpora
+        app.config['active_dictionaries'] = active_dictionaries
         return redirect(url_for('index'))
     content = """
 
@@ -113,29 +116,6 @@ def FileManager():
                 except:
                     # bad Post request
                     pass
-
-    content = "<table>"
-    count = 0
-    for corpus in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
-        content += """<tr>
-                   <form method='POST'>
-                        <td><input type='checkbox' name='corpus""" + str(count) + """' value='val' checked onchange='this.form.submit();'></td>
-                   </form>
-                   <td>""" + corpus + """</td>
-                   <td>
-                        <form method='POST'><input type='hidden' name='download' type='text' value='""" + corpus + """'>
-                            <input id='my_submit' type='submit' value='Download'>
-                        </form>
-                   </td>
-                   <td>
-                        <form method='POST'><input type='hidden' name='delete' type='text' value='""" + corpus + """'>
-                            <input id='my_submit' type='submit' value='Delete'>
-                        </form>
-                   </td>
-                   </tr>"""
-        count += 1
-    content += "</table>"
-
     return render_template("fileManager.html",
                            title='File Manager',
                            active_corpora=app.config['active_corpora'],
@@ -146,42 +126,64 @@ def FileManager():
 def DictionaryManager():
     if request.method == 'POST':
         obj = app.config['obj']
+        active_dictionaries = app.config['active_dictionaries']
         try:
-            file_name = request.form['download']
-            i = 0
-            file_content = ""
-            for name in obj.list_names:
-                if name == file_name:
-                    file_content = read_txt(obj.lists_to_use[i])
-                i += 1
-            return Response(
-                file_content,
-                mimetype="text/plain",
-                headers={"Content-disposition":
-                             "attachment; filename=" + file_name})
+            index = int(request.form['index'].encode("utf-8"))
+            dictionary = request.form['dictionary'].encode("utf-8")
+            obj_index = 0
+            count = 0
+            for name in obj.dictionaries_names:
+                if name == dictionary:
+                    obj_index = count
+                count += 1
+            if active_dictionaries[index] == "checked":
+                active_dictionaries[index] = ""
+                app.config['obj'].deactivate_dictionary(obj_index)
+            else:
+                active_dictionaries[index] = "checked"
+                app.config['obj'].activate_dictionary(obj_index)
+            print app.config['active_dictionaries']
+            return render_template("dictionaryManager.html",
+                                   title='File Manager',
+                                   actiactive_dictionaries=active_dictionaries,
+                                   dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
         except:
             try:
-                file_name = request.form['delete']
+                file_name = request.form['download']
                 i = 0
-                dictionary_index = 0
-                for name in obj.corpora_names:
+                file_content = ""
+                for name in obj.list_names:
                     if name == file_name:
-                        dictionary_index = i
+                        file_content = read_txt(obj.lists_to_use[i])
                     i += 1
-                obj.delete_corpus(dictionary_index)
-                os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
+                return Response(
+                    file_content,
+                    mimetype="text/plain",
+                    headers={"Content-disposition":
+                                 "attachment; filename=" + file_name})
             except:
                 try:
-                    file_name = request.form['edit']
-                    print "edit"
+                    file_name = request.form['delete']
+                    i = 0
+                    dictionary_index = 0
+                    for name in obj.corpora_names:
+                        if name == file_name:
+                            dictionary_index = i
+                        i += 1
+                    obj.delete_corpus(dictionary_index)
+                    os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
                 except:
-                    # bad Post request
-                    pass
-            print(request.form)
-            for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
+                    try:
+                        file_name = request.form['edit']
+                        print "edit"
+                    except:
+                        # bad Post request
+                        pass
+                print(request.form)
+                for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
 
-                if not request.form.get("use_dictionary" + str(dictionary)):
-                    print "not use", dictionary
+                    if not request.form.get("use_dictionary" + str(dictionary)):
+                        print "not use", dictionary
     content = "<table>"
     count = 0
     for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
@@ -206,10 +208,10 @@ def DictionaryManager():
                    "</tr>"
         count += 1
     content += "</table>"
-    return render_template("index.html",
-                           title='Dictionary Manager',
-                           content=content
-                           )
+    return render_template("dictionaryManager.html",
+                           title='File Manager',
+                           active_dictionaries=app.config['active_dictionaries'],
+                           dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
 
 
 @app.route('/Analyze', methods=['GET', 'POST'])
@@ -229,14 +231,14 @@ def Analyze():
     obj = app.config['obj']
     os.chdir(CORPORA_UPLOAD_FOLDER)
     obj.count_words()
-    #obj.display()
 
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
-    obj.save_to_csv()
     content = obj.to_html() + "<p><form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
                    "<input id='my_submit' type='submit' value='Download'>" \
                    "</form></p>"
+    #obj.display()
+    obj.save_to_csv()
     return render_template("index.html",
                            title='Analyze',
                            content=content)
