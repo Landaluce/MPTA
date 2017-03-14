@@ -2,7 +2,6 @@ from app import app
 from flask import render_template, request, redirect, url_for, Response, session
 from werkzeug import secure_filename
 from fileManager import *
-import glob
 import os
 from WordCount import WordCount, read_txt
 import csv
@@ -34,24 +33,53 @@ def index():
         app.config['active_corpora'] = active_corpora
         app.config['active_dictionaries'] = active_dictionaries
         return redirect(url_for('index'))
+
+    corpora_sizes = []
+    for filename in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
+        corpora_sizes.append(get_file_size(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + filename))
+    dictionaries_sizes = []
+    for filename in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
+        dictionaries_sizes.append(get_file_size(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + filename))
+
+
     content = """
-        <h1>Upload new File</h1>
-        <form action="index" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="upload" value="corpus">
-            <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
-            <div id="dragndrop"><p>or drop files here</p></div>
-        </form>
-        <p>%s</p>
-        """ % "<br>".join(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'], ))
+        <table id="index_table" >
+            <tr>
+                <td align="center">
+                    <h1>Upload new File</h1>
+                </td>
+                <td align="center">
+                    <h1>Upload new Dictionary</h1>
+                </td>
+            <tr>
+                <td align="center">
+                    <form action="index" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="upload" value="corpus">
+                        <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
+                        <div id="dragndrop"><p>or drop files here</p></div>
+                    </form>
+                </td>
+                <td align="center">
+                    <form action="index" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="upload" value="dictionary">
+                        <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
+                        <div id="dragndrop"><p>or drop files here</p></div>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top">"""
+    content += files_to_html_table(os.listdir(app.config['CORPORA_UPLOAD_FOLDER']),corpora_sizes)
     content += """
-        <h1>Upload new Dictionary</h1>
-        <form action="index" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="upload" value="dictionary">
-                <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
-                <div id="dragndrop"><p>or drop files here</p></div>
-        </form>
-        <p>%s</p>
-        """ % "<br>".join(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'], ))
+                </td>
+                <td align="center" valign="top">"""
+    content += files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']),dictionaries_sizes)
+    content += """
+                </td>
+            </tr>
+        </table>
+    """
+
     return render_template("index.html",
                            title='Home',
                            content=content)
@@ -217,7 +245,7 @@ def Analyze():
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
     content = obj.to_html() + "<p><form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
-                   "<input id='my_submit' type='submit' value='Download'>" \
+                   "<input class='button' id='download_button' type='submit' value='Download'>" \
                    "</form></p>"
     #obj.display()
     obj.save_to_csv()
