@@ -35,7 +35,6 @@ def index():
         app.config['active_dictionaries'] = active_dictionaries
         return redirect(url_for('index'))
     content = """
-
         <h1>Upload new File</h1>
         <form action="index" method="post" enctype="multipart/form-data">
             <input type="hidden" name="upload" value="corpus">
@@ -142,6 +141,7 @@ def DictionaryManager():
             else:
                 active_dictionaries[index] = "checked"
                 app.config['obj'].activate_dictionary(obj_index)
+            app.config['active_dictionaries'] = active_dictionaries
             print app.config['active_dictionaries']
             return render_template("dictionaryManager.html",
                                    title='File Manager',
@@ -152,9 +152,9 @@ def DictionaryManager():
                 file_name = request.form['download']
                 i = 0
                 file_content = ""
-                for name in obj.list_names:
+                for name in obj.dictionaries_names:
                     if name == file_name:
-                        file_content = read_txt(obj.lists_to_use[i])
+                        file_content = read_txt(obj.dictionaries[i])
                     i += 1
                 return Response(
                     file_content,
@@ -170,44 +170,26 @@ def DictionaryManager():
                         if name == file_name:
                             dictionary_index = i
                         i += 1
-                    obj.delete_corpus(dictionary_index)
+                    obj.delete_dictionary(dictionary_index)
                     os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
+                    return render_template("dictionaryManager.html",
+                                           title='File Manager',
+                                           active_dictionaries=app.config['active_dictionaries'],
+                                           dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
                 except:
                     try:
                         file_name = request.form['edit']
-                        print "edit"
+                        file_content = ""
+                        for i in range(len(obj.dictionaries_names)):
+                            if obj.dictionaries_names[i] == file_name:
+                                file_content = read_txt(obj.dictionaries[i])
+                        return render_template("edit.html",
+                                               title='Edit',
+                                               #file_name=file_name,
+                                               content=file_content)
                     except:
                         # bad Post request
                         pass
-                print(request.form)
-                for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
-
-                    if not request.form.get("use_dictionary" + str(dictionary)):
-                        print "not use", dictionary
-    content = "<table>"
-    count = 0
-    for dictionary in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
-        content += "<tr>" \
-                   "<td><form method='POST'><input type='checkbox' name='use_dictionary' value='" + str(dictionary) + "' checked><form></td>" \
-                   "<td>" + dictionary + "</td>" \
-                   "<td>" \
-                   "<form method='POST'><input type='hidden' name='edit' type='text' value='" + dictionary + "'>" \
-                   "<input id='my_submit' type='submit' value='Edit'>" \
-                   "</form>" \
-                   "</td>" \
-                   "<td>" \
-                   "<form method='POST'><input type='hidden' name='download' type='text' value='" + dictionary + "'>" \
-                   "<input id='my_submit' type='submit' value='Download'>" \
-                   "</form>" \
-                   "</td>" \
-                   "<td>" \
-                   "<form method='POST'><input type='hidden' name='delete' type='text' value='" + dictionary + "'>" \
-                   "<input id='my_submit' type='submit' value='Delete'>" \
-                   "</form>" \
-                   "</td>" \
-                   "</tr>"
-        count += 1
-    content += "</table>"
     return render_template("dictionaryManager.html",
                            title='File Manager',
                            active_dictionaries=app.config['active_dictionaries'],

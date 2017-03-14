@@ -95,7 +95,7 @@ class WordCount(object):
                 'dealings', 'definite', 'definitive', 'dependable', 'dependence', 'dependent', 'devote', 'devoted', 'devotes',
                 'devoting', 'discrete', 'disparate', 'disposition', 'distinct', 'distinctive', 'divergent', 'diverse',
                 'dominant', 'donate', 'donated', 'donates', 'donation', 'donations', 'duplicate', 'duplicated',
-                'duplicates', 'duplicating', 'd\xe9tente', 'echo', 'echoed', 'echoes', 'echoing', 'elemental', #-------------------?
+                'duplicates', 'duplicating', 'echo', 'echoed', 'echoes', 'echoing', 'elemental', #-------------------?
                 'embrace', 'embraced', 'embraces', 'embracing', 'empathize', 'empathized', 'empathizes', 'empathizing', 'empathy',
                 'endorse', 'endorsed', 'endorses', 'endorsing', 'enduring', 'environ', 'equal', 'equalities',
                 'equality', 'equally', 'equate', 'equated', 'equating', 'equidistant', 'equivalence', 'equivalent', 'essential',
@@ -178,6 +178,11 @@ class WordCount(object):
         del self.corpora[index]
         del self.corpora_names[index]
         del self.active_corpora[index]
+
+    def delete_dictionary(self, index):
+        del self.dictionaries[index]
+        del self.dictionaries_names[index]
+        del self.active_dictionaries[index]
 
     def deactivate_corpus(self, index):
         self.active_corpora[index] = 0
