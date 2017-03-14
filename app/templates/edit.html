@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% block content %}
-    <textarea rows="4" cols="50">
-        {{content}}
+    <h1>Edit {{file_name}}</h1>
+    <textarea rows="10" cols="100">
+        {{file_content}}
     </textarea>
+    <form method='POST'>
+        <input type='hidden' name='save_filename' type='text' value='{{file_name}}'>
+        <input class='button' id='edit_button' type='submit' value='Save'>
+    </form>
 {% endblock %}

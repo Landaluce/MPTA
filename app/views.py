@@ -213,8 +213,8 @@ def DictionaryManager():
                                 file_content = read_txt(obj.dictionaries[i])
                         return render_template("edit.html",
                                                title='Edit',
-                                               #file_name=file_name,
-                                               content=file_content)
+                                               file_name=file_name,
+                                               file_content=file_content)
                     except:
                         # bad Post request
                         pass
