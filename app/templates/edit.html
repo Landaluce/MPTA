@@ -5,8 +5,19 @@
     <textarea form="save" name='save_content' rows="10" cols="100">
         {{file_content}}
     </textarea>
-    <form id="save" method='POST'>
-        <input type='hidden' name='save_filename' value='{{file_name}}'>
-        <input class='button' id='edit_button' type='submit' value='Save'>
-    </form>
+    <table id="editor_buttons">
+        <tr>
+            <td>
+                <form id="save" method='POST'>
+                    <input type='hidden' name='save_filename' value='{{file_name}}'>
+                    <input class='button' id='edit_button' type='submit' value='Save'>
+                </form>
+            </td>
+            <td>
+                <form method='POST'>
+                    <input class='button' id='delete_button' type='submit' value='Cancel'>
+                </form>
+            </td>
+        </tr>
+    </table>
 {% endblock %}

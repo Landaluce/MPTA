@@ -73,6 +73,9 @@ h1 {
     background: green;
     color: white;
 }
+#editor_buttons {
+    margin-left: 950px;
+}
 .button {
     border: 0px;
     border-radius: 3px;
