@@ -10,8 +10,14 @@ import csv
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    active_corpora = app.config['active_corpora']
-    active_dictionaries = app.config['active_dictionaries']
+    try:
+        active_corpora = app.config['active_corpora']
+    except:
+        active_corpora = []
+    try:
+        active_dictionaries = app.config['active_dictionaries']
+    except:
+        active_dictionaries = []
     try:
         obj = app.config['obj']
     except:
@@ -132,12 +138,16 @@ def FileManager():
             except:
                 try:
                     file_name = request.form['delete']
+                    active_corpora = app.config['active_corpora']
                     i = 0
                     corpus_index = 0
                     for name in obj.corpora_names:
                         if name == file_name:
                             corpus_index = i
                         i += 1
+                    index = int(request.form['del_index'].encode("utf-8"))
+                    del active_corpora[index]
+                    app.config['active_corpora'] = active_corpora
                     obj.delete_corpus(corpus_index)
                     os.remove(CORPORA_UPLOAD_FOLDER + "/" + file_name)
                 except:
@@ -198,6 +208,9 @@ def DictionaryManager():
                         if name == file_name:
                             dictionary_index = i
                         i += 1
+                    index = int(request.form['del_index'].encode("utf-8"))
+                    del active_dictionaries[index]
+                    app.config['active_corpora'] = active_dictionaries
                     obj.delete_dictionary(dictionary_index)
                     os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
                     return render_template("dictionaryManager.html",
@@ -266,7 +279,8 @@ def Reset():
     session.clear()
     delete_tmp_folder()
     create_tmp_folder()
-    obj = app.config['obj']
     del app.config['obj']
+    del app.config['active_corpora']
+    del app.config['active_dictionaries']
     return redirect(url_for('index'))
 

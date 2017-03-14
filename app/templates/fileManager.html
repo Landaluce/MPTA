@@ -14,12 +14,15 @@
             </td>
             <td>{{corpus}}</td>
             <td>
-                <form method='POST'><input type='hidden' name='download' value='{{corpus}}'>
+                <form method='POST'>
+                    <input type='hidden' name='download' value='{{corpus}}'>
                     <input class='button' id='download_button' type='submit' value='Download'>
                 </form>
             </td>
             <td>
-                <form method='POST'><input type='hidden' name='delete' value='{{corpus}}'>
+                <form method='POST'>
+                    <input type='hidden' name='delete' value='{{corpus}}'>
+                    <input type='hidden' name='del_index' value={{count}}>
                     <input class='button' id='delete_button' type='submit' value='Delete'>
                 </form>
             </td>
