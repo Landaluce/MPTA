@@ -3,13 +3,22 @@
 {% block content %}
     {% set count = 0 %}
     <table>
+        <tr>
+            <td>
+                <form method='POST'>
+                    <input type='hidden' name='check_all'>
+                    <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
+                </form>
+            </td>
+            <td align="left">All</td>
+        </tr>
         {% for dictionary in dictionaries %}
         <tr>
             <td>
                 <form method='POST'>
                     <input type='hidden' name='dictionary' value='{{dictionary}}'>
                     <input type='hidden' name='index' value={{count}}>
-                    <input type='checkbox' {{'checked' if active_dictionaries[count] != ''}} onchange='this.form.submit();'>
+                    <input type='checkbox' {{'checked' if active_dictionaries[count] != ''}} onclick='this.form.submit();'>
                 </form>
             </td>
             <td>{{dictionary}}</td>

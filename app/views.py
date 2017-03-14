@@ -119,6 +119,7 @@ def FileManager():
             else:
                 active_corpora[index] = "checked"
                 app.config['obj'].activate_corpus(obj_index)
+            print "check"
             return render_template("fileManager.html",
                                    title='File Manager',
                                    active_corpora=active_corpora,
@@ -153,11 +154,28 @@ def FileManager():
                     obj.delete_corpus(corpus_index)
                     os.remove(CORPORA_UPLOAD_FOLDER + "/" + file_name)
                 except:
-                    # bad Post request
-                    pass
+                    try:
+                        check_all = request.form['check_all']
+                        active_corpora = app.config['active_corpora']
+                        check_all_corpora = app.config['check_all_corpora']
+                        if check_all_corpora == 1:
+                            for i in range(len(active_corpora)):
+                                active_corpora[i] = ''
+                                check_all_corpora = 0
+                                app.config['obj'].deactivate_corpus(i)
+                        else:
+                            for i in range(len(active_corpora)):
+                                active_corpora[i] = "checked"
+                                check_all_corpora = 1
+                                app.config['obj'].activate_corpus(i)
+                        app.config['active_corpora'] = active_corpora
+                        app.config['check_all_corpora'] = check_all_corpora
+                    except:
+                        pass
     return render_template("fileManager.html",
                            title='File Manager',
                            active_corpora=app.config['active_corpora'],
+                           check_all=app.config['check_all_corpora'],
                            corpora=os.listdir(app.config['CORPORA_UPLOAD_FOLDER']))
 
 
@@ -238,10 +256,28 @@ def DictionaryManager():
                             file.write(file_content)
                             file.close()
                         except:
-                            pass
+                            try:
+                                check_all = request.form['check_all']
+                                active_dictionaries = app.config['active_dictionaries']
+                                check_all_dictionaries = app.config['check_all_dictionaries']
+                                if check_all_dictionaries == 1:
+                                    for i in range(len(active_dictionaries)):
+                                        active_dictionaries[i] = ''
+                                        check_all_dictionaries = 0
+                                        app.config['obj'].deactivate_dictionary(i)
+                                else:
+                                    for i in range(len(active_dictionaries)):
+                                        active_dictionaries[i] = "checked"
+                                        check_all_dictionaries = 1
+                                        app.config['obj'].activate_dictionary(i)
+                                app.config['active_dictionaries'] = active_dictionaries
+                                app.config['check_all_dictionaries'] = check_all_dictionaries
+                            except:
+                                pass
     return render_template("dictionaryManager.html",
                            title='File Manager',
                            active_dictionaries=app.config['active_dictionaries'],
+                           check_all=app.config['check_all_dictionaries'],
                            dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
 
 
@@ -283,5 +319,7 @@ def Reset():
     del app.config['obj']
     del app.config['active_corpora']
     del app.config['active_dictionaries']
+    app.config['check_all_corpora'] = 1
+    app.config['check_all_dictionaries'] = 1
     return redirect(url_for('index'))
 
