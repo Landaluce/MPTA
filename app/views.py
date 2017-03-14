@@ -13,10 +13,12 @@ def index():
     try:
         active_corpora = app.config['active_corpora']
     except:
+        app.config['active_corpora'] = []
         active_corpora = []
     try:
         active_dictionaries = app.config['active_dictionaries']
     except:
+        app.config['active_dictionaries'] = []
         active_dictionaries = []
     try:
         obj = app.config['obj']
@@ -180,7 +182,6 @@ def DictionaryManager():
                 active_dictionaries[index] = "checked"
                 app.config['obj'].activate_dictionary(obj_index)
             app.config['active_dictionaries'] = active_dictionaries
-            print app.config['active_dictionaries']
             return render_template("dictionaryManager.html",
                                    title='File Manager',
                                    actiactive_dictionaries=active_dictionaries,
@@ -204,13 +205,14 @@ def DictionaryManager():
                     file_name = request.form['delete']
                     i = 0
                     dictionary_index = 0
-                    for name in obj.corpora_names:
+                    for name in obj.dictionaries_names:
                         if name == file_name:
                             dictionary_index = i
                         i += 1
                     index = int(request.form['del_index'].encode("utf-8"))
                     del active_dictionaries[index]
                     app.config['active_corpora'] = active_dictionaries
+
                     obj.delete_dictionary(dictionary_index)
                     os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
                     return render_template("dictionaryManager.html",
@@ -230,7 +232,6 @@ def DictionaryManager():
                                                file_content=file_content)
                     except:
                         try:
-                            print "save"
                             file_name = request.form['save_filename']
                             file_content = request.form['save_content']
                             file = open(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + file_name, "w")
