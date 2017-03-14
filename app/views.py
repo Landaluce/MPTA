@@ -216,8 +216,15 @@ def DictionaryManager():
                                                file_name=file_name,
                                                file_content=file_content)
                     except:
-                        # bad Post request
-                        pass
+                        try:
+                            print "save"
+                            file_name = request.form['save_filename']
+                            file_content = request.form['save_content']
+                            file = open(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + file_name, "w")
+                            file.write(file_content)
+                            file.close()
+                        except:
+                            pass
     return render_template("dictionaryManager.html",
                            title='File Manager',
                            active_dictionaries=app.config['active_dictionaries'],
