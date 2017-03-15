@@ -8,43 +8,12 @@ class WordCount(object):
     def __del__(self):
         print "deleted"
     def __init__(self):  # , filepath, label=""):
-        self.opportunity = ['advancement', 'advantage', 'befalling', 'break', 'chance', 'connection', 'contingency',
-                   'convenience', 'cut', 'expect', 'expectation', 'expects', 'expediency', 'fair shake', 'favorability', 'favorable',
-                   'fighting chance', 'fitness', 'fling', 'fortuity', 'fortune', 'hope', 'luck', 'momentous',
-                   'momentum', 'momentus', 'occasion', 'opening', 'opportune', 'opportunisitic', 'opportunistic', 'opportunities',
-                   'opportunity', 'optimism', 'optimist', 'optimistic', 'outlook', 'possibility', 'prospect',
-                   'prospects', 'prosperity', 'prosperous', 'recourse', 'stimulating', 'successful', 'suitable', 'time', 'turn',
-                   'upbeat', 'viable']
-        self.threat = ['alarming', 'alarming fateful', 'apocalyptic', 'assault', 'baleful', 'baneful', 'black', 'cautionary',
-              'challenging', 'comminatory', 'conflict', 'constrained', 'crisis', 'crunch', 'danger', 'dangerous',
-              'demur', 'dire', 'fateful', 'foreboding', 'grim', 'hazard', 'ill-boding', 'imminent', 'impendent', 'impending',
-              'inauspicious', 'intimidating', 'jeopardy', 'looming', 'loss', 'loury', 'lowering', 'lowery', 'menace',
-              'minacious', 'minatory', 'negative', 'omen', 'peril', 'portending', 'portent', 'risk', 'sinister',
-              'stressful', 'sword of damocles', 'trial dire', 'ugly', 'unlucky', 'unpropitious', 'unsafe', 'urgent',
-              'warning']
-        self.enactment = ['absorb', 'access', 'accomplish', 'accrue', 'achieve', 'acquire', 'acquisition', 'act', 'action',
-                 'active',
-                 'activity', 'actualize', 'advance', 'affect', 'affiliate', 'aggrandizement', 'agitate', 'alacrity',
-                 'alertness', 'ally', 'alter', 'amalgamat', 'amalgamate', 'amass', 'amplif', 'annex', 'appeal',
-                 'assimilate', 'attack', 'attain', 'attribute', 'augment', 'bankrupt', 'barnstorm', 'battle', 'blend',
-                 'boost', 'campaign', 'cement', 'censure', 'centralize', 'change', 'charge', 'cite', 'coalesce',
-                 'combat', 'combine', 'commission', 'complain', 'complete', 'compound', 'conflict', 'conglomerate', 'consolidate',
-                 'consummate', 'contend', 'contest', 'converge', 'crusade', 'cultivate', 'deconstruct', 'denounce',
-                 'develop', 'developing', 'develops', 'dilation', 'disassemble', 'disinherit', 'dismantle', 'dispute',
-                 'distention', 'divest', 'divestiture', 'effect', 'enact', 'encounter', 'engage', 'engagement',
-                 'enlarge', 'enterprise', 'environment', 'environs', 'execute', 'exercise', 'exert', 'expand', 'expands',
-                 'expansion', 'exploit', 'extension', 'fight', 'finish', 'force', 'forfeit', 'fulfill', 'further', 'fuse',
-                 'gradual increase', 'gradually increase', 'grow', 'grows', 'growth', 'impeach', 'implicate', 'impute',
-                 'incorporate', 'incriminate', 'inculpate', 'indict', 'induce', 'industry', 'influence', 'intermingle',
-                 'intervene', 'intervention', 'investment banker', 'join', 'league', 'lobby', 'manage', 'maneuver',
-                 'manipulate', 'market', 'marry', 'meld', 'merge', 'mingle', 'modify', 'move', 'network', 'niche',
-                 'nook', 'occupy', 'operate', 'operation', 'oust', 'perform', 'persuade', 'pitch', 'planted', 'plug',
-                 'politick', 'pool', 'press', 'pressure', 'proceed', 'proceeds', 'process', 'procure', 'progress', 'progression',
-                 'promote', 'prosecute', 'province', 'purchase', 'purview', 'react', 'realize', 'region', 'relinquish',
-                 'remove', 'request', 'resist', 'resolve', 'respond', 'rival', 'rush', 'sacrifice', 'scope', 'sector',
-                 'secure', 'sell', 'separate', 'solicit', 'stir', 'strive', 'struggle', 'sway', 'syndicate',
-                 'synthesize', 'team', 'team up', 'terrain', 'territory', 'thrust', 'transact', 'turgescence', 'undertake', 'unite',
-                 'urge', 'vie', 'win']
+        self.opportunity = ['fair shake', 'fighting chance', 'advancement', 'advantage', 'befalling', 'break', 'chance', 'connection', 'contingency', 'convenience', 'cut', 'expect', 'expectation', 'expects', 'expediency', 'favorability', 'favorable', 'fitness', 'fling', 'fortuity', 'fortune', 'hope', 'luck', 'momentous', 'momentum', 'momentus', 'occasion', 'opening', 'opportune', 'opportunisitic', 'opportunistic', 'opportunities', 'opportunity', 'optimism', 'optimist', 'optimistic', 'outlook', 'possibility', 'prospect', 'prospects', 'prosperity', 'prosperous', 'recourse', 'stimulating', 'successful', 'suitable', 'time', 'turn', 'upbeat', 'viable']
+
+        self.threat = ['sword of damocles', 'alarming fateful', 'trial dire', 'alarming', 'apocalyptic', 'assault', 'baleful', 'baneful', 'black', 'cautionary', 'challenging', 'comminatory', 'conflict', 'constrained', 'crisis', 'crunch', 'danger', 'dangerous', 'demur', 'dire', 'fateful', 'foreboding', 'grim', 'hazard', 'ill-boding', 'imminent', 'impendent', 'impending', 'inauspicious', 'intimidating', 'jeopardy', 'looming', 'loss', 'loury', 'lowering', 'lowery', 'menace', 'minacious', 'minatory', 'negative', 'omen', 'peril', 'portending', 'portent', 'risk', 'sinister', 'stressful', 'ugly', 'unlucky', 'unpropitious', 'unsafe', 'urgent', 'warning']
+
+        self.enactment = ['gradual increase', 'gradually increase', 'investment banker', 'team up', 'absorb', 'access', 'accomplish', 'accrue', 'achieve', 'acquire', 'acquisition', 'act', 'action', 'active', 'activity', 'actualize', 'advance', 'affect', 'affiliate', 'aggrandizement', 'agitate', 'alacrity', 'alertness', 'ally', 'alter', 'amalgamat', 'amalgamate', 'amass', 'amplif', 'annex', 'appeal', 'assimilate', 'attack', 'attain', 'attribute', 'augment', 'bankrupt', 'barnstorm', 'battle', 'blend', 'boost', 'campaign', 'cement', 'censure', 'centralize', 'change', 'charge', 'cite', 'coalesce', 'combat', 'combine', 'commission', 'complain', 'complete', 'compound', 'conflict', 'conglomerate', 'consolidate', 'consummate', 'contend', 'contest', 'converge', 'crusade', 'cultivate', 'deconstruct', 'denounce', 'develop', 'developing', 'develops', 'dilation', 'disassemble', 'disinherit', 'dismantle', 'dispute', 'distention', 'divest', 'divestiture', 'effect', 'enact', 'encounter', 'engage', 'engagement', 'enlarge', 'enterprise', 'environment', 'environs', 'execute', 'exercise', 'exert', 'expand', 'expands', 'expansion', 'exploit', 'extension', 'fight', 'finish', 'force', 'forfeit', 'fulfill', 'further', 'fuse', 'grow', 'grows', 'growth', 'impeach', 'implicate', 'impute', 'incorporate', 'incriminate', 'inculpate', 'indict', 'induce', 'industry', 'influence', 'intermingle', 'intervene', 'intervention', 'join', 'league', 'lobby', 'manage', 'maneuver', 'manipulate', 'market', 'marry', 'meld', 'merge', 'mingle', 'modify', 'move', 'network', 'niche', 'nook', 'occupy', 'operate', 'operation', 'oust', 'perform', 'persuade', 'pitch', 'planted', 'plug', 'politick', 'pool', 'press', 'pressure', 'proceed', 'proceeds', 'process', 'procure', 'progress', 'progression', 'promote', 'prosecute', 'province', 'purchase', 'purview', 'react', 'realize', 'region', 'relinquish', 'remove', 'request', 'resist', 'resolve', 'respond', 'rival', 'rush', 'sacrifice', 'scope', 'sector', 'secure', 'sell', 'separate', 'solicit', 'stir', 'strive', 'struggle', 'sway', 'syndicate', 'synthesize', 'team', 'terrain', 'territory', 'thrust', 'transact', 'turgescence', 'undertake', 'unite', 'urge', 'vie', 'win']
+
         self.org_iden = ['abreast', 'accede', 'acceded', 'accedes', 'acceding', 'accept', 'accepted', 'accepting', 'accepts',
                 'accommodate', 'accommodated', 'accommodates', 'accommodation', 'accompanied', 'accompanies',
                 'accompany', 'accompanying', 'accord', 'accords', 'adhere', 'adhered', 'adheres', 'adhering', 'admit', 'admits',
@@ -198,7 +167,8 @@ class WordCount(object):
 
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
-        return list(sorted(set(lst)))
+        return lst.sort(key=lambda x: len(x.split()), reverse=True)
+        #return list(sorted(set(lst)))
 
     def utf8_to_ascii(self, text):
         text = text.replace(u'\u2014', '-')
@@ -231,7 +201,14 @@ class WordCount(object):
 
     def add_dictionary(self, lst, lst_name):
         # need to check is list exists
-        self.dictionaries.append(lst)
+        with open(lst, 'rb') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+        new_list = []
+        for row in rows:
+            new_list += row
+        new_list.sort(key=lambda x: len(x.split()), reverse=True)
+        self.dictionaries.append(new_list)
         self.dictionaries_names.append(lst_name)
         self.active_dictionaries.append(1)
 
@@ -240,13 +217,27 @@ class WordCount(object):
         self.counts = []
         self.counters = []
         self.scores = []
-        for corpus in self.corpora:
+        corpora = self.corpora
+        for corpus in corpora:
             counts = []
             for i in range(len(self.dictionaries)):
                 if self.active_dictionaries[i] == 1:
                     count = 0
+                    print "["+corpus+"]"
                     for word in self.dictionaries[i]:
+                        if corpus.startswith(word + " "):
+                            count += 1
+                            print "starts with", word
+                        if corpus.endswith(" " + word + "\n") or corpus.endswith(" " + word):
+                            count += 1
+                            print "ends with", word
+                        if len(re.findall(" " + word + " ", corpus)) > 0:
+                            print word, len(re.findall(" " + word + " ", corpus))
                         count += len(re.findall(" " + word + " ", corpus))
+                        print corpus,"--"
+                        if ' ' in word:
+                            print "in"
+                            corpus = corpus.replace(word, " ")
                     counts.append(count)
             self.counters.append(counts)
 
@@ -321,7 +312,7 @@ class WordCount(object):
         if index == -1:
             print "\nList", list_name, "not found"
         else:
-            with open("Dictionaries/" + self.dictionaries_names, 'w') as file:
+            with open("Dictionaries/" + self.dictionaries_names[index], 'w') as file:
                 file.write(", ".join(self.dictionaries[index]))
             file.close()
 
@@ -349,8 +340,15 @@ def hardiness():
 
 
 def main():
-    hardiness()
+    #hardiness()
     #hardiness("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
+
+    test = WordCount()
+    print test.org_iden
+    test.org_iden.sort(key=lambda x: len(x.split()), reverse=True)
+    print test.org_iden
+    test.add_dictionary(["alarming", "fateful"], "alarming_fateful")
+    test.save_list("alarming_fateful")
 
 
 if __name__ == "__main__":
