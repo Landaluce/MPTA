@@ -9,7 +9,7 @@ import csv
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
-def index():
+def Upload():
     try:
         active_corpora = app.config['active_corpora']
     except:
@@ -40,7 +40,7 @@ def index():
                     active_dictionaries.append("checked")
         app.config['active_corpora'] = active_corpora
         app.config['active_dictionaries'] = active_dictionaries
-        return redirect(url_for('index'))
+        return redirect(url_for('Upload'))
 
     corpora_sizes = []
     for filename in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
@@ -321,5 +321,5 @@ def Reset():
     del app.config['active_dictionaries']
     app.config['check_all_corpora'] = 1
     app.config['check_all_dictionaries'] = 1
-    return redirect(url_for('index'))
+    return redirect(url_for('Upload'))
 
