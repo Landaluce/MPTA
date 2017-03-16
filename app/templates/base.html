@@ -15,15 +15,32 @@
                 }
           }
       </script>
+      {% set navigation_bar = [
+        ('/', 'index', 'Upload'),
+        ('/FileManager', 'FileManager', 'File Manager'),
+        ('/DictionaryManager', 'DictionaryManager', 'Dictionary Manager'),
+        ('/Analyze', 'Analyze', 'Analyze'),
+        ('/Reset', 'Reset', 'Reset')
+        ] -%}
+      {% set active_page = active_page|default('index') -%}
   </head>
   <body>
-    <ul>
+    <div id="app_name">App Name</div>
+    <ul id="navigation">
+        {% for href, id, caption in navigation_bar %}
+        <li{% if id == active_page %} class="active"{% endif
+        %}><a href="{{ href|e }}">{{ caption|e }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!--<ul>
         <li><a href="/index">Upload</a></li>
         <li><a href="/FileManager">File Manager</a></li>
         <li><a href="/DictionaryManager">Dictionary Manager</a></li>
         <li><a href="/Analyze">Analyze</a></li>
         <li><a href="/Reset">Reset</a></li>
-    </ul>
+    </ul>-->
     <div id="content">
         {% block content %}{% endblock %}
     </div>

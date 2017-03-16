@@ -89,7 +89,8 @@ def Upload():
     """
 
     return render_template("index.html",
-                           title='Home',
+                           title='Upload',
+                           #active_page='Upload',
                            content=content)
 
 
@@ -315,6 +316,7 @@ def Analyze():
     obj.save_to_csv()
     return render_template("index.html",
                            title='Analyze',
+                           active_page='Analyze',
                            content=content)
 
 
