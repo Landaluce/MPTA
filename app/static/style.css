@@ -132,8 +132,17 @@ h1 {
 
 #manager_table, #analyze_table {
     margin: 0 auto 0 auto;
+    margin-top: 50px;
 }
 
+#manager_table {
+
+}
+#manager_table td {
+    /*border: 1px solid black;*/
+    padding-left: 10px;
+    padding-right: 10px;
+}
 #analyze_table{
     width: 90%;
     border: 1px solid #111;
@@ -142,6 +151,10 @@ h1 {
 #analyze_table #header{
     background: #111;
     color: white;
+}
+
+#analyze_table td{
+    height: 50px;
 }
 
 #analyze_table #even{
