@@ -210,7 +210,6 @@ class WordCount(object):
                 for cell in row:
                     cell = cell.strip()
                     new_list.append(cell)
-                #new_list += row
         elif get_file_type(file_path) == ".txt":
             new_list = read_txt(file_path)
             new_list = new_list.split(", ")

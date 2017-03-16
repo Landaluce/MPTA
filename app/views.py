@@ -210,10 +210,10 @@ def DictionaryManager():
                 file_name = request.form['download']
                 i = 0
                 file_content = ""
+                print obj.dictionaries
                 for name in obj.dictionaries_names:
                     if name == file_name:
-                        print 1
-                        file_content = obj.dictionaries[i]
+                        file_content = ", ".join(obj.dictionaries[i])
                     i += 1
 
                 return Response(
