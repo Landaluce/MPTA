@@ -1,7 +1,7 @@
+from app.fileManager import get_file_type, strip_file_extension
 import ntpath
 import csv
 import re
-from app.fileManager import get_file_type, strip_file_extension
 
 
 class WordCount(object):

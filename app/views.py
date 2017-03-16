@@ -1,10 +1,10 @@
-from app import app
+from fileManager import allowed_file, get_file_size, files_to_html_table, delete_tmp_folder, create_tmp_folder
 from flask import render_template, request, redirect, url_for, Response, session
 from werkzeug import secure_filename
-from fileManager import *
-import os
-from WordCount import WordCount, read_txt, read_csv
+from WordCount import WordCount
+from app import app
 import csv
+import os
 
 
 @app.route('/')
@@ -92,13 +92,6 @@ def Upload():
                            title='Upload',
                            content=content)
 
-
-def is_int(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
 
 @app.route('/FileManager', methods=['GET', 'POST'])
 def FileManager():
@@ -334,4 +327,3 @@ def Reset():
     app.config['check_all_corpora'] = 1
     app.config['check_all_dictionaries'] = 1
     return redirect(url_for('Upload'))
-
