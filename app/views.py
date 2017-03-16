@@ -310,9 +310,9 @@ def Analyze():
     obj.count_words()
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
-    content = obj.to_html() + "<p><form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
-                   "<input class='button' id='download_button' type='submit' value='Download'>" \
-                   "</form></p>"
+    content = obj.to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
+                   "<input class='button' id='download_scores' type='submit' value='Download'>" \
+                   "</form>"
     #obj.display()
     obj.save_to_csv()
     return render_template("index.html",

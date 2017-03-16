@@ -77,9 +77,14 @@ h1 {
 
 }
 
-#download_button {
+#download_button, #download_scores {
     background: #4a9fee;
     color: white;
+}
+
+#download_scores {
+    float: right;
+    margin-right: 5%;
 }
 
 #delete_button {
@@ -92,7 +97,8 @@ h1 {
     color: white;
 }
 #editor_buttons {
-    margin-left: 1063px;
+    float: right;
+    margin-right: 10%;
 }
 .button {
     border: 0px;
@@ -170,6 +176,8 @@ h1 {
 }
 
 textarea {
+    width: 80%;
+    height: 300px;
     display: block;
     outline: none;
     resize: none;
