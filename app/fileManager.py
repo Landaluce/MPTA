@@ -26,8 +26,8 @@ def get_file_size(filepath):
 
 
 def get_file_type(filepath):
-    size = os.path.splitext(filepath)[1] # in bytes
-    return size
+    type = os.path.splitext(filepath)[1]
+    return type
 
 
 def file_to_html(filename, size):

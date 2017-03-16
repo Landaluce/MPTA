@@ -2,6 +2,7 @@ import itertools
 import ntpath
 import csv
 import re
+from app.fileManager import get_file_type
 
 
 class WordCount(object):
@@ -199,14 +200,21 @@ class WordCount(object):
             new_list = self.scrub_list(new_list)
             self.add_dictionary(new_list, lst_name)
 
-    def add_dictionary(self, lst, lst_name):
-        # need to check is list exists
-        with open(lst, 'rb') as f:
-            reader = csv.reader(f)
-            rows = list(reader)
-        new_list = []
-        for row in rows:
-            new_list += row
+    def add_dictionary(self, file_path, lst_name):
+        if get_file_type(file_path) == ".csv":
+            with open(file_path, 'rb') as f:
+                reader = csv.reader(f)
+                rows = list(reader)
+            new_list = []
+            for row in rows:
+                for cell in row:
+                    cell = cell.strip()
+                    new_list.append(cell)
+                #new_list += row
+        elif get_file_type(file_path) == ".txt":
+            new_list = read_txt(file_path)
+            new_list = new_list.split(", ")
+            new_list = map(lambda x: x.encode("utf-8"), new_list)
         new_list.sort(key=lambda x: len(x.split()), reverse=True)
         self.dictionaries.append(new_list)
         self.dictionaries_names.append(lst_name)
@@ -223,20 +231,13 @@ class WordCount(object):
             for i in range(len(self.dictionaries)):
                 if self.active_dictionaries[i] == 1:
                     count = 0
-                    print "["+corpus+"]"
                     for word in self.dictionaries[i]:
                         if corpus.startswith(word + " "):
                             count += 1
-                            print "starts with", word
                         if corpus.endswith(" " + word + "\n") or corpus.endswith(" " + word):
                             count += 1
-                            print "ends with", word
-                        if len(re.findall(" " + word + " ", corpus)) > 0:
-                            print word, len(re.findall(" " + word + " ", corpus))
                         count += len(re.findall(" " + word + " ", corpus))
-                        print corpus,"--"
                         if ' ' in word:
-                            print "in"
                             corpus = corpus.replace(word, " ")
                     counts.append(count)
             self.counters.append(counts)
@@ -323,6 +324,19 @@ def read_txt(filepath):
             return myfile.read().decode("utf-8").lower()
     except IOError:
         print "could not read", filepath
+
+
+def read_csv(filepath):
+    result = ""
+    print "Aa", filepath
+    with open(filepath, 'rb') as csvfile:
+        print "aaaa"
+        spamreader = csv.reader(csvfile, delimiter=',')
+
+        for row in spamreader:
+            result += ', '.join(row)
+        print result
+    return result
 
 
 def hardiness():

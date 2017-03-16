@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for, Response, session
 from werkzeug import secure_filename
 from fileManager import *
 import os
-from WordCount import WordCount, read_txt
+from WordCount import WordCount, read_txt, read_csv
 import csv
 
 
@@ -92,6 +92,7 @@ def Upload():
                            title='Home',
                            content=content)
 
+
 def is_int(s):
     try:
         int(s)
@@ -119,7 +120,6 @@ def FileManager():
             else:
                 active_corpora[index] = "checked"
                 app.config['obj'].activate_corpus(obj_index)
-            print "check"
             return render_template("fileManager.html",
                                    title='File Manager',
                                    active_corpora=active_corpora,
@@ -200,19 +200,22 @@ def DictionaryManager():
                 active_dictionaries[index] = "checked"
                 app.config['obj'].activate_dictionary(obj_index)
             app.config['active_dictionaries'] = active_dictionaries
+            print "check"
             return render_template("dictionaryManager.html",
                                    title='File Manager',
                                    actiactive_dictionaries=active_dictionaries,
                                    dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
         except:
-            try:
+            try: #fix need to check if dictionary comes from txt or csv
                 file_name = request.form['download']
                 i = 0
                 file_content = ""
                 for name in obj.dictionaries_names:
                     if name == file_name:
-                        file_content = read_txt(obj.dictionaries[i])
+                        print 1
+                        file_content = obj.dictionaries[i]
                     i += 1
+
                 return Response(
                     file_content,
                     mimetype="text/plain",
@@ -243,7 +246,7 @@ def DictionaryManager():
                         file_content = ""
                         for i in range(len(obj.dictionaries_names)):
                             if obj.dictionaries_names[i] == file_name:
-                                file_content = read_txt(obj.dictionaries[i])
+                                file_content = obj.dictionaries[i]
                         return render_template("edit.html",
                                                title='Edit',
                                                file_name=file_name,
