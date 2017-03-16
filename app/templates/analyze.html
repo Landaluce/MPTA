@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% set active_page = active_page %}
+{% block content %}
+    {% if corpus_count > 0 and dictionary_count > 0 %}
+        <div>{{ content|safe }}</div>
+    {% elif corpus_count > 0%}
+        <p>Upload at least a dictionary</p>
+    {% elif dictionary_count > 0%}
+        <p>Upload at least a file</p>
+    {% else %}
+        <p>Upload at least a file and a dictionary</p>
+    {% endif %}
+{% endblock %}

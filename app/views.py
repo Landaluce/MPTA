@@ -310,14 +310,17 @@ def Analyze():
     obj.count_words()
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
+    print len(obj.corpora), len(obj.dictionaries)
     content = obj.to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
                    "<input class='button' id='download_scores' type='submit' value='Download'>" \
                    "</form>"
     #obj.display()
     obj.save_to_csv()
-    return render_template("index.html",
+    return render_template("analyze.html",
                            title='Analyze',
                            active_page='Analyze',
+                           corpus_count=len(obj.corpora),
+                           dictionary_count=len(obj.dictionaries),
                            content=content)
 
 

@@ -2,56 +2,60 @@
 {% extends "base.html" %}
 {% set active_page = "DictionaryManager" %}
 {% block content %}
-    {% set count = 0 %}
-    <table id="manager_table">
-        <tr>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='check_all'>
-                    <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
-                </form>
-            </td>
-            <td align="left">Active dictionaries</td>
-        </tr>
-        {% for dictionary in dictionaries %}
-        <tr>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='dictionary' value='{{dictionary}}'>
-                    <input type='hidden' name='index' value={{count}}>
-                    <input type='checkbox' {{'checked' if active_dictionaries[count] != ''}} onclick='this.form.submit();'>
-                </form>
-            </td>
-            <td align="left">{{dictionary}}</td>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='edit' value='{{dictionary}}'>
-                    <input class='button' id='edit_button' type='submit' value='Edit'>
-                </form>
-            </td>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='download' value='{{dictionary}}'>
-                    <input class='button' id='download_button' type='submit' value='Download'>
-                </form>
-            </td>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='delete' value='{{dictionary}}'>
-                    <input type='hidden' name='del_index' value={{count}}>
-                    <input class='button' id='delete_button' type='submit' value='Delete'>
-                </form>
-            </td>
-            <td>
-                <form method='POST'>
-                    <input type='text' name='label' value='{{labels[count]}}'>
-                    <input type='hidden' name='label_index' value={{count}}>
-                    <input class='button' id='edit_button' type='submit' value='Save label'>
-                </form>
-            </td>
-        </tr>
-        {% set count = count + 1 %}
-        {% endfor %}
+    {% if dictionaries is defined and dictionaries|length > 0 %}
+        {% set count = 0 %}
+        <table id="manager_table">
+            <tr>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='check_all'>
+                        <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
+                    </form>
+                </td>
+                <td align="left">Active dictionaries</td>
+            </tr>
+            {% for dictionary in dictionaries %}
+            <tr>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='dictionary' value='{{dictionary}}'>
+                        <input type='hidden' name='index' value={{count}}>
+                        <input type='checkbox' {{'checked' if active_dictionaries[count] != ''}} onclick='this.form.submit();'>
+                    </form>
+                </td>
+                <td align="left">{{dictionary}}</td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='edit' value='{{dictionary}}'>
+                        <input class='button' id='edit_button' type='submit' value='Edit'>
+                    </form>
+                </td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='download' value='{{dictionary}}'>
+                        <input class='button' id='download_button' type='submit' value='Download'>
+                    </form>
+                </td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='delete' value='{{dictionary}}'>
+                        <input type='hidden' name='del_index' value={{count}}>
+                        <input class='button' id='delete_button' type='submit' value='Delete'>
+                    </form>
+                </td>
+                <td>
+                    <form method='POST'>
+                        <input type='text' name='label' value='{{labels[count]}}'>
+                        <input type='hidden' name='label_index' value={{count}}>
+                        <input class='button' id='edit_button' type='submit' value='Save label'>
+                    </form>
+                </td>
+            </tr>
+            {% set count = count + 1 %}
+            {% endfor %}
 
-    </table>
+        </table>
+    {% else %}
+            <p>empty</p>
+    {% endif %}
 {% endblock %}

@@ -2,51 +2,54 @@
 {% extends "base.html" %}
 {% set active_page = "FileManager" %}
 {% block content %}
-    {% set count = 0 %}
-    <table id="manager_table">
-        <tr>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='check_all'>
-                    <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
-                </form>
-            </td>
-            <td align="left">Active files</td>
-        </tr>
-        {% for corpus in corpora %}
-        <tr>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='corpus' value='{{corpus}}'>
-                    <input type='hidden' name='index' value={{count}}>
-                    <input type='checkbox' {{'checked' if active_corpora[count] != ''}} onclick='this.form.submit();'>
-                </form>
-            </td>
-            <td align="left">{{corpus}}</td>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='download' value='{{corpus}}'>
-                    <input class='button' id='download_button' type='submit' value='Download'>
-                </form>
-            </td>
-            <td>
-                <form method='POST'>
-                    <input type='hidden' name='delete' value='{{corpus}}'>
-                    <input type='hidden' name='del_index' value={{count}}>
-                    <input class='button' id='delete_button' type='submit' value='Delete'>
-                </form>
-            </td>
-            <td>
-                <form method='POST'>
-                    <input type='text' name='label' value='{{labels[count]}}'>
-                    <input type='hidden' name='label_index' value={{count}}>
-                    <input class='button' id='edit_button' type='submit' value='Save label'>
-                </form>
-            </td>
-        </tr>
-        {% set count = count + 1 %}
-        {% endfor %}
+    {% if corpora is defined and corpora|length > 0 %}
+        {% set count = 0 %}
+        <table id="manager_table">
+            <tr>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='check_all'>
+                        <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
+                    </form>
+                </td>
+                <td align="left">Active files</td>
+            </tr>
+            {% for corpus in corpora %}
+            <tr>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='corpus' value='{{corpus}}'>
+                        <input type='hidden' name='index' value={{count}}>
+                        <input type='checkbox' {{'checked' if active_corpora[count] != ''}} onclick='this.form.submit();'>
+                    </form>
+                </td>
+                <td align="left">{{corpus}}</td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='download' value='{{corpus}}'>
+                        <input class='button' id='download_button' type='submit' value='Download'>
+                    </form>
+                </td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='delete' value='{{corpus}}'>
+                        <input type='hidden' name='del_index' value={{count}}>
+                        <input class='button' id='delete_button' type='submit' value='Delete'>
+                    </form>
+                </td>
+                <td>
+                    <form method='POST'>
+                        <input type='text' name='label' value='{{labels[count]}}'>
+                        <input type='hidden' name='label_index' value={{count}}>
+                        <input class='button' id='edit_button' type='submit' value='Save label'>
+                    </form>
+                </td>
+            </tr>
+            {% set count = count + 1 %}
+            {% endfor %}
+        </table>
+    {% else %}
+            <p>empty</p>
+    {% endif %}
 
-
-    </table>
 {% endblock %}
