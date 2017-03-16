@@ -254,7 +254,7 @@ class WordCount(object):
             index += 1
 
     def to_html(self):
-        result = "<table border=1><tr>"
+        result = "<table id='analyze_table'><tr id='header'>"
         result += "<td align='center'>file</td>"
         for i in range(len(self.dictionaries_names)):
             if self.active_dictionaries[i] == 1:
@@ -265,7 +265,12 @@ class WordCount(object):
 
         for i in range(len(self.corpora_names)):
             if self.active_corpora[i] == 1:
-                result += "</tr><tr><td align='center'>" + self.corpora_labels[i] + "</td>"
+                result += "</tr>"
+                if i % 2 == 0:
+                    result += "<tr id='even'>"
+                else:
+                    result += "<tr id='odd'>"
+                result += "<td align='center'>" + self.corpora_labels[i] + "</td>"
                 for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
                     result += "<td align='center'>" + str(counts) + "</td>"
         result += "</tr></table>"

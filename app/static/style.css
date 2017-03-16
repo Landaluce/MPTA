@@ -60,17 +60,17 @@ h1 {
 }
 
 #download_button {
-    background: blue;
+    background: #4a9fee;
     color: white;
 }
 
 #delete_button {
-    background: red;
+    background: #ff6346;
     color: white;
 }
 
 #edit_button {
-    background: green;
+    background: #7eb063;
     color: white;
 }
 #editor_buttons {
@@ -110,4 +110,30 @@ h1 {
 #files_to_html_table td td{
     border: 0px solid black;
     width: 100%;
+}
+
+#manager_table, #analyze_table {
+    margin: 0 auto 0 auto;
+}
+
+#analyze_table{
+    width: 90%;
+    border: 1px solid #111;
+}
+
+#analyze_table #header{
+    background: #111;
+    color: white;
+}
+
+#analyze_table #even{
+    background: white;
+}
+
+#analyze_table #odd{
+    background: darkgrey;
+}
+
+#analyze_table #even:hover, #analyze_table #odd:hover {
+    background: lightblue;
 }

@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 {% block content %}
     {% set count = 0 %}
-    <table>
+    <table id="manager_table">
         <tr>
             <td>
                 <form method='POST'>
@@ -10,7 +10,7 @@
                     <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
                 </form>
             </td>
-            <td align="left">All</td>
+            <td align="left">Active dictionaries</td>
         </tr>
         {% for dictionary in dictionaries %}
         <tr>
