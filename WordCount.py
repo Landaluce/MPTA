@@ -2,7 +2,7 @@ import itertools
 import ntpath
 import csv
 import re
-from app.fileManager import get_file_type
+from app.fileManager import get_file_type, strip_file_extension
 
 
 class WordCount(object):
@@ -124,22 +124,22 @@ class WordCount(object):
                 'whole', 'wholly', 'willing', 'willingly']
         self.dictionaries = []
         self.dictionaries_names = []
+        self.dictionaries_labels = []
         self.active_dictionaries = []
         self.corpora = []
         self.corpora_names = []
+        self.corpora_labels = []
         self.active_corpora = []
         self.counts = []
         self.counters = []
         self.total_word_counts = []
         self.scores = []
 
-
-    def add_corpus(self, filepath, label=""):
-        if label == "":
-            self.corpora_names.append(ntpath.basename(filepath))
-        else:
-            self.corpora_names.append(ntpath.basename(label))
-            corpus = self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore')
+    def add_corpus(self, filepath):
+        file_name = ntpath.basename(filepath)
+        self.corpora_names.append(file_name)
+        self.corpora_labels.append(ntpath.basename(strip_file_extension(file_name)))
+        corpus = self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore')
         self.corpora.append(corpus)
         self.active_corpora.append(1)
         self.total_word_counts.append(len(str(corpus).split(" ")))
@@ -187,6 +187,7 @@ class WordCount(object):
 
         return text
 
+    #not been used
     def upload_dictionary(self, csv_file, lst_name):
         # Uploading all Organizational Identity words into a list called new_list
         new_list = []
@@ -200,7 +201,10 @@ class WordCount(object):
             new_list = self.scrub_list(new_list)
             self.add_dictionary(new_list, lst_name)
 
-    def add_dictionary(self, file_path, lst_name):
+    def add_dictionary(self, file_path):
+        file_name = ntpath.basename(file_path)
+        self.dictionaries_names.append(file_name)
+        self.dictionaries_labels.append(ntpath.basename(strip_file_extension(file_name)))
         if get_file_type(file_path) == ".csv":
             with open(file_path, 'rb') as f:
                 reader = csv.reader(f)
@@ -216,7 +220,6 @@ class WordCount(object):
             new_list = map(lambda x: x.encode("utf-8"), new_list)
         new_list.sort(key=lambda x: len(x.split()), reverse=True)
         self.dictionaries.append(new_list)
-        self.dictionaries_names.append(lst_name)
         self.active_dictionaries.append(1)
 
     def count_words(self):
@@ -255,14 +258,14 @@ class WordCount(object):
         result += "<td align='center'>file</td>"
         for i in range(len(self.dictionaries_names)):
             if self.active_dictionaries[i] == 1:
-                result += "<td align='center'>" + self.dictionaries_names[i] + "</td>"
+                result += "<td align='center'>" + self.dictionaries_labels[i] + "</td>"
         result += "<td align='center'>total word count</td>"
         result += "<td align='center'>score</td>"
         result += "</tr><tr>"
 
         for i in range(len(self.corpora_names)):
             if self.active_corpora[i] == 1:
-                result += "</tr><tr><td align='center'>" + self.corpora_names[i] + "</td>"
+                result += "</tr><tr><td align='center'>" + self.corpora_labels[i] + "</td>"
                 for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
                     result += "<td align='center'>" + str(counts) + "</td>"
         result += "</tr></table>"

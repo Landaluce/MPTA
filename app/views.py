@@ -32,11 +32,11 @@ def Upload():
                 filename = secure_filename(file.filename)
                 if request.form['upload'] == "corpus":
                     file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
-                    obj.add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename), filename)
+                    obj.add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
                     active_corpora.append("checked")
                 elif request.form['upload'] == "dictionary":
                     file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
-                    obj.add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename), filename)
+                    obj.add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))#, filename)
                     active_dictionaries.append("checked")
         app.config['active_corpora'] = active_corpora
         app.config['active_dictionaries'] = active_dictionaries
@@ -123,7 +123,8 @@ def FileManager():
             return render_template("fileManager.html",
                                    title='File Manager',
                                    active_corpora=active_corpora,
-                                   corpora=os.listdir(app.config['CORPORA_UPLOAD_FOLDER']))
+                                   labels=obj.corpora_labels,
+                                   corpora=sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
         except:
             try:
                 file_name = request.form['download']
@@ -142,16 +143,11 @@ def FileManager():
                 try:
                     file_name = request.form['delete']
                     active_corpora = app.config['active_corpora']
-                    i = 0
-                    corpus_index = 0
-                    for name in obj.corpora_names:
-                        if name == file_name:
-                            corpus_index = i
-                        i += 1
                     index = int(request.form['del_index'].encode("utf-8"))
                     del active_corpora[index]
+                    del obj.corpora_labels[index]
                     app.config['active_corpora'] = active_corpora
-                    obj.delete_corpus(corpus_index)
+                    obj.delete_corpus(index)
                     os.remove(CORPORA_UPLOAD_FOLDER + "/" + file_name)
                 except:
                     try:
@@ -171,12 +167,19 @@ def FileManager():
                         app.config['active_corpora'] = active_corpora
                         app.config['check_all_corpora'] = check_all_corpora
                     except:
-                        pass
+                        try:
+                            label = request.form['label']
+                            label_index = int(request.form['label_index'])
+                            obj.corpora_labels[label_index] = label
+                            app.config['obj'] = obj
+                        except:
+                            pass
     return render_template("fileManager.html",
                            title='File Manager',
                            active_corpora=app.config['active_corpora'],
                            check_all=app.config['check_all_corpora'],
-                           corpora=os.listdir(app.config['CORPORA_UPLOAD_FOLDER']))
+                           labels=app.config['obj'].corpora_labels,
+                           corpora=sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
 
 
 @app.route('/DictionaryManager', methods=['GET', 'POST'])
@@ -204,13 +207,13 @@ def DictionaryManager():
             return render_template("dictionaryManager.html",
                                    title='File Manager',
                                    actiactive_dictionaries=active_dictionaries,
-                                   dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
+                                   labels=app.config['obj'].dictionaries_labels,
+                                   dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
         except:
-            try: #fix need to check if dictionary comes from txt or csv
+            try:
                 file_name = request.form['download']
                 i = 0
                 file_content = ""
-                print obj.dictionaries
                 for name in obj.dictionaries_names:
                     if name == file_name:
                         file_content = ", ".join(obj.dictionaries[i])
@@ -224,22 +227,17 @@ def DictionaryManager():
             except:
                 try:
                     file_name = request.form['delete']
-                    i = 0
-                    dictionary_index = 0
-                    for name in obj.dictionaries_names:
-                        if name == file_name:
-                            dictionary_index = i
-                        i += 1
                     index = int(request.form['del_index'].encode("utf-8"))
                     del active_dictionaries[index]
+                    del obj.dictionaries_labels[index]
                     app.config['active_corpora'] = active_dictionaries
-
-                    obj.delete_dictionary(dictionary_index)
+                    obj.delete_dictionary(index)
                     os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
                     return render_template("dictionaryManager.html",
                                            title='File Manager',
                                            active_dictionaries=app.config['active_dictionaries'],
-                                           dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
+                                           labels=app.config['obj'].dictionaries_labels,
+                                           dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
                 except:
                     try:
                         file_name = request.form['edit']
@@ -276,12 +274,19 @@ def DictionaryManager():
                                 app.config['active_dictionaries'] = active_dictionaries
                                 app.config['check_all_dictionaries'] = check_all_dictionaries
                             except:
-                                pass
+                                try:
+                                    label = request.form['label']
+                                    label_index = int(request.form['label_index'])
+                                    obj.dictionaries_labels[label_index] = label
+                                    app.config['obj'] = obj
+                                except:
+                                    pass
     return render_template("dictionaryManager.html",
                            title='File Manager',
                            active_dictionaries=app.config['active_dictionaries'],
                            check_all=app.config['check_all_dictionaries'],
-                           dictionaries=os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']))
+                           labels=app.config['obj'].dictionaries_labels,
+                           dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
 
 
 @app.route('/Analyze', methods=['GET', 'POST'])
@@ -301,7 +306,6 @@ def Analyze():
     obj = app.config['obj']
     os.chdir(CORPORA_UPLOAD_FOLDER)
     obj.count_words()
-
     obj.generate_scores()
     os.chdir(TMP_DIRECTORY)
     content = obj.to_html() + "<p><form method='POST'><input type='hidden' name='results' type='text' value='results'>" \

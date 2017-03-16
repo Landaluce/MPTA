@@ -35,6 +35,13 @@
                     <input class='button' id='delete_button' type='submit' value='Delete'>
                 </form>
             </td>
+            <td>
+                <form method='POST'>
+                    <input type='text' name='label' value='{{labels[count]}}'>
+                    <input type='hidden' name='label_index' value={{count}}>
+                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                </form>
+            </td>
         </tr>
         {% set count = count + 1 %}
         {% endfor %}

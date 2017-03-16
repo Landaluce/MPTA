@@ -30,6 +30,11 @@ def get_file_type(filepath):
     return type
 
 
+def strip_file_extension(filepath):
+    name = os.path.splitext(filepath)[0]
+    return name
+
+
 def file_to_html(filename, size):
     result = """<table id="file_to_html">
     <tr><td align="center"> """ + filename + """</td></tr>
