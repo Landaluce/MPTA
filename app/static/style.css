@@ -68,8 +68,15 @@ input[type='file'] {
     margin-left: -68px;
 }
 
-h1 {
-    font-weight: lighter;
+#upload_title {
+    font-weight: 200;
+    font-size: 25px;
+    padding: 0;
+}
+
+#formats {
+    color: #999;
+    font-size: 15px;
 }
 
 .button:hover {
@@ -116,6 +123,7 @@ h1 {
 
 #index_table {
     margin: 0 auto;
+    margin-top: 20px;
     width: 90%;
 }
 

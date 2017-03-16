@@ -54,10 +54,12 @@ def Upload():
         <table id="index_table" >
             <tr>
                 <td align="center">
-                    <h1>Upload new File</h1>
+                    <div id="upload_title">File Upload</div>
+                    <div id="formats">Formats Supported: .txt</div>
                 </td>
                 <td align="center">
-                    <h1>Upload new Dictionary</h1>
+                    <div id="upload_title">Dictionary Upload</div>
+                    <div id="formats">Formats Supported: .txt, .csv</div>
                 </td>
             <tr>
                 <td align="center">
