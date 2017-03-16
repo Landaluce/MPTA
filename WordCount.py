@@ -1,4 +1,3 @@
-import itertools
 import ntpath
 import csv
 import re
@@ -6,9 +5,7 @@ from app.fileManager import get_file_type, strip_file_extension
 
 
 class WordCount(object):
-    def __del__(self):
-        print "deleted"
-    def __init__(self):  # , filepath, label=""):
+    def __init__(self):
         self.opportunity = ['fair shake', 'fighting chance', 'advancement', 'advantage', 'befalling', 'break', 'chance', 'connection', 'contingency', 'convenience', 'cut', 'expect', 'expectation', 'expects', 'expediency', 'favorability', 'favorable', 'fitness', 'fling', 'fortuity', 'fortune', 'hope', 'luck', 'momentous', 'momentum', 'momentus', 'occasion', 'opening', 'opportune', 'opportunisitic', 'opportunistic', 'opportunities', 'opportunity', 'optimism', 'optimist', 'optimistic', 'outlook', 'possibility', 'prospect', 'prospects', 'prosperity', 'prosperous', 'recourse', 'stimulating', 'successful', 'suitable', 'time', 'turn', 'upbeat', 'viable']
 
         self.threat = ['sword of damocles', 'alarming fateful', 'trial dire', 'alarming', 'apocalyptic', 'assault', 'baleful', 'baneful', 'black', 'cautionary', 'challenging', 'comminatory', 'conflict', 'constrained', 'crisis', 'crunch', 'danger', 'dangerous', 'demur', 'dire', 'fateful', 'foreboding', 'grim', 'hazard', 'ill-boding', 'imminent', 'impendent', 'impending', 'inauspicious', 'intimidating', 'jeopardy', 'looming', 'loss', 'loury', 'lowering', 'lowery', 'menace', 'minacious', 'minatory', 'negative', 'omen', 'peril', 'portending', 'portent', 'risk', 'sinister', 'stressful', 'ugly', 'unlucky', 'unpropitious', 'unsafe', 'urgent', 'warning']
@@ -169,7 +166,6 @@ class WordCount(object):
     def scrub_list(self, lst):
         lst = list(map(lambda x: x.lower(), lst))
         return lst.sort(key=lambda x: len(x.split()), reverse=True)
-        #return list(sorted(set(lst)))
 
     def utf8_to_ascii(self, text):
         text = text.replace(u'\u2014', '-')
@@ -181,25 +177,9 @@ class WordCount(object):
         exclude.add(u'\u201d')  # "
         exclude.add(u'\u2022')  # bullet point
         exclude.add(u'\u2026')  # ...
-
         for c in exclude:
             text = text.replace(c, ' ')
-
         return text
-
-    #not been used
-    def upload_dictionary(self, csv_file, lst_name):
-        # Uploading all Organizational Identity words into a list called new_list
-        new_list = []
-        iter_count = 0
-        with open(csv_file, 'rb') as csvfile:
-            reader = csv.reader(csvfile, delimiter=',')
-            for row in reader:
-                new_list.append(row)
-                iter_count += 1
-            new_list = list(itertools.chain(*new_list))
-            new_list = self.scrub_list(new_list)
-            self.add_dictionary(new_list, lst_name)
 
     def add_dictionary(self, file_path):
         file_name = ntpath.basename(file_path)
@@ -335,42 +315,16 @@ def read_txt(filepath):
 
 def read_csv(filepath):
     result = ""
-    print "Aa", filepath
     with open(filepath, 'rb') as csvfile:
-        print "aaaa"
         spamreader = csv.reader(csvfile, delimiter=',')
-
         for row in spamreader:
             result += ', '.join(row)
         print result
     return result
 
 
-def hardiness():
-    hardi = WordCount()
-    hardi.add_corpus("TestSuite/JPMorgan2000_3paragraphs.txt", label="JPMsort")
-    hardi.add_corpus("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
-    hardi.add_dictionary(hardi.threat, "threat")
-    hardi.add_dictionary(hardi.enactment, "enactment")
-    hardi.add_dictionary(hardi.opportunity, "opportunity")
-    hardi.add_dictionary(hardi.org_iden, "org_id")
-    hardi.count_words()
-    hardi.display()
-    hardi.save_to_csv()
-    return hardi.to_html()
-
-
 def main():
-    #hardiness()
-    #hardiness("TestSuite/JP Morgan/JP Morgan2000docx.txt", label="JPM")
-
-    test = WordCount()
-    print test.org_iden
-    test.org_iden.sort(key=lambda x: len(x.split()), reverse=True)
-    print test.org_iden
-    test.add_dictionary(["alarming", "fateful"], "alarming_fateful")
-    test.save_list("alarming_fateful")
-
+    pass
 
 if __name__ == "__main__":
     main()
