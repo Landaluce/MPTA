@@ -148,7 +148,7 @@ def FileManager():
                     del obj.corpora_labels[index]
                     app.config['active_corpora'] = active_corpora
                     obj.delete_corpus(index)
-                    os.remove(CORPORA_UPLOAD_FOLDER + "/" + file_name)
+                    os.remove(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name)
                 except:
                     try:
                         check_all = request.form['check_all']
@@ -232,7 +232,7 @@ def DictionaryManager():
                     del obj.dictionaries_labels[index]
                     app.config['active_corpora'] = active_dictionaries
                     obj.delete_dictionary(index)
-                    os.remove(DICTIONARIES_UPLOAD_FOLDER + "/" + file_name)
+                    os.remove(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + file_name)
                     return render_template("dictionaryManager.html",
                                            title='File Manager',
                                            active_dictionaries=app.config['active_dictionaries'],
@@ -296,7 +296,7 @@ def Analyze():
     if request.method == 'POST':
         file_name = request.form['results']
         file_content = ""
-        with open(TMP_DIRECTORY + '/results.csv', 'rb') as csvfile:
+        with open(app.config['TMP_DIRECTORY'] + '/results.csv', 'rb') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
             for row in spamreader:
                 file_content += ', '.join(row) + '\n'
@@ -306,10 +306,10 @@ def Analyze():
             headers={"Content-disposition":
                          "attachment; filename=" + file_name})
     obj = app.config['obj']
-    os.chdir(CORPORA_UPLOAD_FOLDER)
+    os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
     obj.count_words()
     obj.generate_scores()
-    os.chdir(TMP_DIRECTORY)
+    os.chdir(app.config['TMP_DIRECTORY'])
     content = obj.to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
                    "<input class='button' id='download_scores' type='submit' value='Download'>" \
                    "</form>"
