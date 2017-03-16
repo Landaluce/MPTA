@@ -92,7 +92,7 @@ h1 {
     color: white;
 }
 #editor_buttons {
-    margin-left: 950px;
+    margin-left: 1063px;
 }
 .button {
     border: 0px;
@@ -167,4 +167,16 @@ h1 {
 
 #analyze_table #even:hover, #analyze_table #odd:hover {
     background: lightblue;
+}
+
+textarea {
+    display: block;
+    outline: none;
+    resize: none;
+    margin: 0 auto 0 auto;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+textarea:focus{
+	outline: none;
+    border: 1px solid lightblue;
 }

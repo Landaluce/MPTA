@@ -90,7 +90,6 @@ def Upload():
 
     return render_template("index.html",
                            title='Upload',
-                           #active_page='Upload',
                            content=content)
 
 
@@ -245,10 +244,12 @@ def DictionaryManager():
                         file_content = ""
                         for i in range(len(obj.dictionaries_names)):
                             if obj.dictionaries_names[i] == file_name:
-                                file_content = obj.dictionaries[i]
+                                file_content = ", ".join(obj.dictionaries[i])
+                                label = obj.dictionaries_labels[i]
                         return render_template("edit.html",
                                                title='Edit',
-                                               file_name=file_name,
+                                               file_name=label,
+                                               active_page='DictionaryManager',
                                                file_content=file_content)
                     except:
                         try:
