@@ -1,5 +1,5 @@
 import PyPDF2
-from docx import *
+from docx import opendocx, getdocumenttext
 #testing
 # input:  path to a pdf file (string)
 # return: file content in a string

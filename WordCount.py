@@ -1,4 +1,5 @@
 from app.fileManager import get_file_type, strip_file_extension
+from docx import opendocx, getdocumenttext
 import ntpath
 import csv
 import re
@@ -132,14 +133,49 @@ class WordCount(object):
         self.total_word_counts = []
         self.scores = []
 
-    def add_corpus(self, filepath):
-        file_name = ntpath.basename(filepath)
+    def add_corpus(self, file_path):
+        file_name = ntpath.basename(file_path)
         self.corpora_names.append(file_name)
         self.corpora_labels.append(ntpath.basename(strip_file_extension(file_name)))
-        corpus = self.utf8_to_ascii(read_txt(filepath)).decode('unicode_escape').encode('ascii', 'ignore')
-        self.corpora.append(corpus)
+        file_extension = get_file_type(file_path)
+        if file_extension == ".csv":
+            new_corpus = read_csv(file_path)
+        elif file_extension == ".txt":
+            new_corpus = read_txt(file_path)
+            new_corpus = self.utf8_to_ascii(new_corpus).decode('unicode_escape').encode('ascii', 'ignore')
+        elif file_extension == ".docx":
+            new_corpus = read_docx(file_path)
+
+
+        self.corpora.append(new_corpus)
         self.active_corpora.append(1)
-        self.total_word_counts.append(len(str(corpus).split(" ")))
+        self.total_word_counts.append(len(str(new_corpus).split(" ")))
+
+    def add_dictionary(self, file_path):
+        file_name = ntpath.basename(file_path)
+        self.dictionaries_names.append(file_name)
+        self.dictionaries_labels.append(ntpath.basename(strip_file_extension(file_name)))
+        file_extension = get_file_type(file_path)
+        if file_extension == ".csv":
+            with open(file_path, 'rb') as f:
+                reader = csv.reader(f)
+                rows = list(reader)
+            new_list = []
+            for row in rows:
+                for cell in row:
+                    cell = cell.strip()
+                    new_list.append(cell)
+        elif file_extension == ".txt":
+            new_list = read_txt(file_path)
+            new_list = new_list.split(", ")
+            new_list = map(lambda x: x.encode("utf-8"), new_list)
+        elif file_extension == ".docx":
+            new_list = read_docx(file_path)
+            new_list = new_list.split(", ")
+            new_list = map(lambda x: x.encode("utf-8"), new_list)
+        new_list.sort(key=lambda x: len(x.split()), reverse=True)
+        self.dictionaries.append(new_list)
+        self.active_dictionaries.append(1)
 
     def delete_corpus(self, index):
         del self.corpora[index]
@@ -180,27 +216,6 @@ class WordCount(object):
         for c in exclude:
             text = text.replace(c, ' ')
         return text
-
-    def add_dictionary(self, file_path):
-        file_name = ntpath.basename(file_path)
-        self.dictionaries_names.append(file_name)
-        self.dictionaries_labels.append(ntpath.basename(strip_file_extension(file_name)))
-        if get_file_type(file_path) == ".csv":
-            with open(file_path, 'rb') as f:
-                reader = csv.reader(f)
-                rows = list(reader)
-            new_list = []
-            for row in rows:
-                for cell in row:
-                    cell = cell.strip()
-                    new_list.append(cell)
-        elif get_file_type(file_path) == ".txt":
-            new_list = read_txt(file_path)
-            new_list = new_list.split(", ")
-            new_list = map(lambda x: x.encode("utf-8"), new_list)
-        new_list.sort(key=lambda x: len(x.split()), reverse=True)
-        self.dictionaries.append(new_list)
-        self.active_dictionaries.append(1)
 
     def count_words(self):
         #delete previous results
@@ -322,6 +337,9 @@ def read_csv(filepath):
         print result
     return result
 
+def read_docx(filepath):
+    document = opendocx(filepath)
+    return " ".join(getdocumenttext(document)).encode("utf-8")
 
 def main():
     pass

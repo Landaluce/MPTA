@@ -28,7 +28,8 @@ def Upload():
     if request.method == 'POST':
         files = request.files.getlist("file[]")
         for file in files:
-            if file and allowed_file(file.filename):
+            file_extension = allowed_file(file.filename)
+            if file_extension != "":
                 filename = secure_filename(file.filename)
                 if request.form['upload'] == "corpus":
                     file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
@@ -55,11 +56,11 @@ def Upload():
             <tr>
                 <td align="center">
                     <div id="upload_title">File Upload</div>
-                    <div id="formats">Formats Supported: .txt</div>
+                    <div id="formats">Formats Supported: .txt, .csv, .docx</div>
                 </td>
                 <td align="center">
                     <div id="upload_title">Dictionary Upload</div>
-                    <div id="formats">Formats Supported: .txt, .csv</div>
+                    <div id="formats">Formats Supported: .txt, .csv, .docx</div>
                 </td>
             <tr>
                 <td align="center">

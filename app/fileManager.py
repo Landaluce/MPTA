@@ -4,7 +4,12 @@ import os
 
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    file_extension = filename.rsplit('.', 1)[1]
+    if file_extension in app.config['ALLOWED_EXTENSIONS']:
+        return file_extension
+    else:
+        return ""
+    #return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 def create_tmp_folder():
