@@ -17,12 +17,6 @@
           function toggle_oh(source,id) {
               var checkboxes = document.querySelectorAll('.'+id);
                 for (var i = 0; i < checkboxes.length; i++) {
-                    /*if (checkboxes[i].style.visibility === 'hidden') {
-                        checkboxes[i].style.visibility = 'visible';
-                    }
-                    else {
-                        checkboxes[i].style.visibility = 'hidden';
-                    }*/
                     if (checkboxes[i] != source) {
                         checkboxes[i].checked = source.checked;
                     }

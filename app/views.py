@@ -1,5 +1,5 @@
 from fileManager import allowed_file, get_file_size, files_to_html_table, delete_tmp_folder, create_tmp_folder
-from flask import render_template, request, redirect, url_for, Response, session
+from flask import render_template, request, redirect, url_for, Response
 from werkzeug import secure_filename
 from WordCount import WordCount
 from app import app
