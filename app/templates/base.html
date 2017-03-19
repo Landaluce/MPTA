@@ -7,11 +7,26 @@
     {% endif %}
       <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
       <script>
-          function toggle(source) {
-              var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          function toggle(source,id) {
+              var checkboxes = document.querySelectorAll('#'+id);
                 for (var i = 0; i < checkboxes.length; i++) {
                     if (checkboxes[i] != source)
                         checkboxes[i].checked = source.checked;
+                }
+          }
+          function toggle_oh(source,id) {
+              var checkboxes = document.querySelectorAll('.'+id);
+                for (var i = 0; i < checkboxes.length; i++) {
+                    /*if (checkboxes[i].style.visibility === 'hidden') {
+                        checkboxes[i].style.visibility = 'visible';
+                    }
+                    else {
+                        checkboxes[i].style.visibility = 'hidden';
+                    }*/
+                    if (checkboxes[i] != source) {
+                        checkboxes[i].checked = source.checked;
+                    }
+
                 }
           }
       </script>
@@ -33,14 +48,6 @@
         </li>
         {% endfor %}
     </ul>
-
-    <!--<ul>
-        <li><a href="/index">Upload</a></li>
-        <li><a href="/FileManager">File Manager</a></li>
-        <li><a href="/DictionaryManager">Dictionary Manager</a></li>
-        <li><a href="/Analyze">Analyze</a></li>
-        <li><a href="/Reset">Reset</a></li>
-    </ul>-->
     <div id="content">
         {% block content %}{% endblock %}
     </div>

@@ -20,7 +20,7 @@
                     <form method='POST'>
                         <input type='hidden' name='corpus' value='{{corpus}}'>
                         <input type='hidden' name='index' value={{count}}>
-                        <input type='checkbox' {{'checked' if active_corpora[count] != ''}} onclick='this.form.submit();'>
+                        <input type='checkbox' id='file' {{'checked' if active_corpora[count] != ''}} onclick='this.form.submit();'>
                     </form>
                 </td>
                 <td align="left">{{corpus}}</td>
@@ -49,7 +49,7 @@
             {% endfor %}
         </table>
     {% else %}
-            <p>empty</p>
+            <p>Upload a file</p>
     {% endif %}
 
 {% endblock %}

@@ -1,4 +1,5 @@
 from app import app
+import math
 import shutil
 import os
 
@@ -9,7 +10,6 @@ def allowed_file(filename):
         return file_extension
     else:
         return ""
-    #return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 def create_tmp_folder():
@@ -24,9 +24,18 @@ def delete_tmp_folder():
         shutil.rmtree(app.config['TMP_DIRECTORY'])
 
 
+def humanize_file_size(size):
+    size = abs(size)
+    if size == 0:
+        return "0 bytes"
+    units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    p = math.floor(math.log(size, 2)/10)
+    return "%.1f %s" % (size / math.pow(1000, p), units[int(p)])
+
+
 def get_file_size(filepath):
-    size = os.stat(filepath).st_size  # in bytes
-    return size
+    size = os.stat(filepath).st_size
+    return humanize_file_size(size)
 
 
 def get_file_type(filepath):
@@ -42,7 +51,7 @@ def strip_file_extension(filepath):
 def file_to_html(filename, size):
     result = """<table id="file_to_html">
     <tr><td align="center"> """ + filename + """</td></tr>
-    <tr><td align="center"> Size: """ + str(size) + """ bytes </td></tr>
+    <tr><td align="center"> Size: """ + str(size) + """</td></tr>
     </table>"""
     return result
 

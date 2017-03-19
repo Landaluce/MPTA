@@ -7,55 +7,225 @@
         <table id="manager_table">
             <tr>
                 <td>
-                    <form method='POST'>
-                        <input type='hidden' name='check_all'>
-                        <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
-                    </form>
-                </td>
-                <td align="left">Active dictionaries</td>
-            </tr>
-            {% for dictionary in dictionaries %}
-            <tr>
-                <td>
-                    <form method='POST'>
-                        <input type='hidden' name='dictionary' value='{{dictionary}}'>
-                        <input type='hidden' name='index' value={{count}}>
-                        <input type='checkbox' {{'checked' if active_dictionaries[count] != ''}} onclick='this.form.submit();'>
-                    </form>
-                </td>
-                <td align="left">{{dictionary}}</td>
-                <td>
-                    <form method='POST'>
-                        <input type='hidden' name='edit' value='{{dictionary}}'>
-                        <input class='button' id='edit_button' type='submit' value='Edit'>
-                    </form>
-                </td>
-                <td>
-                    <form method='POST'>
-                        <input type='hidden' name='download' value='{{dictionary}}'>
-                        <input class='button' id='download_button' type='submit' value='Download'>
-                    </form>
-                </td>
-                <td>
-                    <form method='POST'>
-                        <input type='hidden' name='delete' value='{{dictionary}}'>
-                        <input type='hidden' name='del_index' value={{count}}>
-                        <input class='button' id='delete_button' type='submit' value='Delete'>
-                    </form>
-                </td>
-                <td>
-                    <form method='POST'>
-                        <input type='text' name='label' value='{{labels[count]}}'>
-                        <input type='hidden' name='label_index' value={{count}}>
-                        <input class='button' id='edit_button' type='submit' value='Save label'>
-                    </form>
-                </td>
-            </tr>
-            {% set count = count + 1 %}
-            {% endfor %}
+                    <table >
+                        <tr>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='check_all'>
+                                    <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this,'file');" onchange='this.form.submit();'>
+                                </form>
+                            </td>
+                            <td align="left">Active dictionaries</td>
+                        </tr>
+                        {% for dictionary in dictionaries %}
+                        <tr>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='dictionary' value='{{dictionary}}'>
+                                    <input type='hidden' name='index' value={{count}}>
+                                    <input type='checkbox' id='file' {{'checked' if active_dictionaries[count] != ''}} onclick='this.form.submit();'>
+                                </form>
+                            </td>
+                            <td align="left">{{dictionary}}</td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='edit' value='{{dictionary}}'>
+                                    <input class='button' id='edit_button' type='submit' value='Edit'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='download' value='{{dictionary}}'>
+                                    <input class='button' id='download_button' type='submit' value='Download'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='delete' value='{{dictionary}}'>
+                                    <input type='hidden' name='del_index' value={{count}}>
+                                    <input class='button' id='delete_button' type='submit' value='Delete'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='text' name='label' value='{{labels[count]}}'>
+                                    <input type='hidden' name='label_index' value={{count}}>
+                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                </form>
+                            </td>
+                        </tr>
+                        {% set count = count + 1 %}
+                        {% endfor %}
 
-        </table>
+                    </table>
+                </td>
+            </tr>
+
     {% else %}
-            <p>empty</p>
+            <p>Upload a dictionary</p>
     {% endif %}
+            <tr>
+                <td align="left">
+                    <table id="manager_table">
+                        <tr>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='check_oh'>
+                                    <input type="checkbox" onchange="toggle_oh(this,'oh');this.form.submit();" {{'checked' if check_all_oh == 1}}>
+                                </form>
+                            </td>
+                            <td align="left" colspan="2">Organizational Hardiness</td>
+                        </tr>
+                        {% if check_all_oh == 0 %}
+                            <tr class='oh' style="visibility:hidden">
+                        {% else %}
+                            <tr class='oh' style="visibility:visible">
+                        {% endif %}
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='oh' value='opportunity'>
+                                    <input type='checkbox' class='oh' onchange="this.form.submit();" {{'checked' if active_oh[0] == 1}}>
+                                </form>
+                            </td>
+                            <td align="left">Opportunity</td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='edit' value='opportunity'>
+                                    <input class='button' id='edit_button' type='submit' value='Edit'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='download' value='opportunity'>
+                                    <input class='button' id='download_button' type='submit' value='Download'>
+                                </form>
+                            </td>
+                            <!--<td>
+                                <form method='POST'>
+                                    <input type='hidden' name='delete' value='opportunity'>
+                                    <input class='button' id='delete_button' type='submit' value='Delete'>
+                                </form>
+                            </td>-->
+                            <td>
+                                <form method='POST'>
+                                    <input type='text' name='label' value='Opportunity'>
+                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                </form>
+                            </td>
+                        </tr>
+                        {% if check_all_oh == 0 %}
+                            <tr class='oh' style="visibility:hidden">
+                        {% else %}
+                            <tr class='oh' style="visibility:visible">
+                        {% endif %}
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='oh' value='threat'>
+                                    <input type='checkbox' class='oh' onchange="this.form.submit();" {{'checked' if active_oh[1] == 1}}>
+                                </form>
+                            </td>
+                            <td align="left">Threat</td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='edit' value='threat'>
+                                    <input class='button' id='edit_button' type='submit' value='Edit'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='download' value='threat'>
+                                    <input class='button' id='download_button' type='submit' value='Download'>
+                                </form>
+                            </td>
+                            <!--<td>
+                                <form method='POST'>
+                                    <input type='hidden' name='delete' value='threat'>
+                                    <input class='button' id='delete_button' type='submit' value='Delete'>
+                                </form>
+                            </td>-->
+                            <td>
+                                <form method='POST'>
+                                    <input type='text' name='label' value='Threat'>
+                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                </form>
+                            </td>
+                        </tr>
+                        {% if check_all_oh == 0 %}
+                            <tr class='oh' style="visibility:hidden">
+                        {% else %}
+                            <tr class='oh' style="visibility:visible">
+                        {% endif %}
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='oh' value='enactment'>
+                                    <input type='checkbox' onchange="this.form.submit();" {{'checked' if active_oh[2] == 1}}>
+                                </form>
+                            </td>
+                            <td align="left">Enactment</td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='edit' value='enactment'>
+                                    <input class='button' id='edit_button' type='submit' value='Edit'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='download' value='enactment'>
+                                    <input class='button' id='download_button' type='submit' value='Download'>
+                                </form>
+                            </td>
+                            <!--<td>
+                                <form method='POST'>
+                                    <input type='hidden' name='delete' value='enactment'>
+                                    <input class='button' id='delete_button' type='submit' value='Delete'>
+                                </form>
+                            </td>-->
+                            <td>
+                                <form method='POST'>
+                                    <input type='text' name='label' value='Enactment'>
+                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                </form>
+                            </td>
+                        </tr>
+                        {% if check_all_oh == 0 %}
+                            <tr class='oh' style="visibility:hidden">
+                        {% else %}
+                            <tr class='oh' style="visibility:visible">
+                        {% endif %}
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='oh' value='org_id'>
+                                    <input type='checkbox' class='oh' onchange="this.form.submit();" {{'checked' if active_oh[3] == 1}}>
+                                </form>
+                            </td>
+                            <td align="left">Organizational Identity</td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='edit' value='org_id'>
+                                    <input class='button' id='edit_button' type='submit' value='Edit'>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='POST'>
+                                    <input type='hidden' name='download' value='org_id}'>
+                                    <input class='button' id='download_button' type='submit' value='Download'>
+                                </form>
+                            </td>
+                            <!--<td>
+                                <form method='POST'>
+                                    <input type='hidden' name='delete' value='org_id'>
+                                    <input class='button' id='delete_button' type='submit' value='Delete'>
+                                </form>
+                            </td>-->
+                            <td>
+                                <form method='POST'>
+                                    <input type='text' name='label' value='Org_Id'>
+                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
 {% endblock %}
