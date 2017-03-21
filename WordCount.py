@@ -1,5 +1,6 @@
 from app.fileManager import get_file_type, strip_file_extension
 from docx import opendocx, getdocumenttext
+import unicodedata
 import ntpath
 import csv
 import re
@@ -174,6 +175,7 @@ class WordCount(object):
             new_list = new_list.split(", ")
             new_list = map(lambda x: x.encode("utf-8"), new_list)
         new_list.sort(key=lambda x: len(x.split()), reverse=True)
+        new_list = self.scrub_list(new_list)
         self.dictionaries.append(new_list)
         self.active_dictionaries.append(1)
 
@@ -200,22 +202,24 @@ class WordCount(object):
         self.active_dictionaries[index] = 1
 
     def scrub_list(self, lst):
-        lst = list(map(lambda x: x.lower(), lst))
-        return lst.sort(key=lambda x: len(x.split()), reverse=True)
+        for item in lst:
+            item = item.lower()
+        return lst
 
     def utf8_to_ascii(self, text):
         text = text.replace(u'\u2014', '-')
         text = text.replace(u'\u2013', '-')
-        exclude = set('!"#$%&()*+,./:;<=>?@[\]^_`{|}~')
-        exclude.add(u'\u2018')  # '
-        exclude.add(u'\u2019')  # '
-        exclude.add(u'\u201c')  # "
-        exclude.add(u'\u201d')  # "
-        exclude.add(u'\u2022')  # bullet point
-        exclude.add(u'\u2026')  # ...
+        exclude = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
+        exclude.append(u'\u2018')  # '
+        exclude.append(u'\u2019')  # '
+        exclude.append(u'\u201c')  # "
+        exclude.append(u'\u201d')  # "
+        exclude.append(u'\u2022')  # bullet point
+        exclude.append(u'\u2026')  # ...
         for c in exclude:
             text = text.replace(c, ' ')
-        return text
+
+        return ' '.join(text.split())
 
     def count_words(self):
         #delete previous results
@@ -231,9 +235,10 @@ class WordCount(object):
                     for word in self.dictionaries[i]:
                         if corpus.startswith(word + " "):
                             count += 1
-                        if corpus.endswith(" " + word + "\n") or corpus.endswith(" " + word):
+                        if corpus.endswith(" " + word + "\n") or corpus.endswith(" " + word) or corpus.endswith(word):
                             count += 1
-                        count += len(re.findall(" " + word + " ", corpus))
+                        else:
+                            count += len(re.findall(" " + word + " ", corpus))
                         if ' ' in word:
                             corpus = corpus.replace(word, " ")
                     counts.append(count)
@@ -323,7 +328,9 @@ class WordCount(object):
 def read_txt(filepath):
     try:
         with open(filepath, 'r') as myfile:
-            return myfile.read().decode("utf-8").lower()
+            text = myfile.read().decode("latin")
+            return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
+            #return myfile.read().decode("utf-8").lower()
     except IOError:
         print "could not read", filepath
 
@@ -334,7 +341,6 @@ def read_csv(filepath):
         spamreader = csv.reader(csvfile, delimiter=',')
         for row in spamreader:
             result += ', '.join(row)
-        print result
     return result
 
 def read_docx(filepath):
