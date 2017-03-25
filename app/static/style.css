@@ -199,3 +199,10 @@ textarea:focus{
 #bold{
     font-weight: bold;
 }
+
+#tw_table {
+    border-radius: 10px;
+    border: 5px solid black;
+    padding: 20px;
+    margin-top: 40px;
+}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% set active_page = active_page %}
 {% block content %}
-    <table id="index_table" >
+    <table id="index_table">
         <tr>
             <td align="center">
                 <div id="upload_title">File Upload</div>
@@ -33,6 +33,25 @@
             </td>
             <td align="center" valign="top">
                 {{dictionaries|safe}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <table id="tw_table">
+                    <tr>
+                        <td align="center">
+                            <div id="upload_title">Tweet Search</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form method='POST'>
+                                <input type='text' name='search_query'>
+                                <input class='button' id='download_button' type='submit' value='Search'>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

@@ -11,19 +11,23 @@ import os
 @app.route('/index', methods=['GET', 'POST'])
 def Upload():
     if request.method == 'POST':
-        files = request.files.getlist("file[]")
-        for file in files:
-            file_extension = allowed_file(file.filename)
-            if file_extension != "":
-                filename = secure_filename(file.filename)
-                if request.form['upload'] == "corpus":
-                    file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
-                    app.config['obj'].add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
-                    app.config['active_corpora'].append("checked")
-                elif request.form['upload'] == "dictionary":
-                    file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
-                    app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
-                    app.config['active_dictionaries'].append("checked")
+        if request.files.getlist("file[]"):
+            files = request.files.getlist("file[]")
+            for file in files:
+                file_extension = allowed_file(file.filename)
+                if file_extension != "":
+                    filename = secure_filename(file.filename)
+                    if request.form['upload'] == "corpus":
+                        file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
+                        app.config['obj'].add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
+                        app.config['active_corpora'].append("checked")
+                    elif request.form['upload'] == "dictionary":
+                        file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
+                        app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
+                        app.config['active_dictionaries'].append("checked")
+        elif 'search_query' in request.form:
+            search_query = request.form['search_query']
+            print search_query
         return redirect(url_for('Upload'))
 
     corpora_sizes = []
