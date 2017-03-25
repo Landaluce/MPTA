@@ -32,48 +32,11 @@ def Upload():
     dictionaries_sizes = []
     for filename in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
         dictionaries_sizes.append(get_file_size(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + filename))
-    content = """
-        <table id="index_table" >
-            <tr>
-                <td align="center">
-                    <div id="upload_title">File Upload</div>
-                    <div id="formats">Formats Supported: .txt, .csv, .docx</div>
-                </td>
-                <td align="center">
-                    <div id="upload_title">Dictionary Upload</div>
-                    <div id="formats">Formats Supported: .txt, .csv, .docx</div>
-                </td>
-            <tr>
-                <td align="center">
-                    <form action="index" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="upload" value="corpus">
-                        <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
-                        <div id="dragndrop"><p>or drop files here</p></div>
-                    </form>
-                </td>
-                <td align="center">
-                    <form action="index" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="upload" value="dictionary">
-                        <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
-                        <div id="dragndrop"><p>or drop files here</p></div>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td align="center" valign="top">"""
-    content += files_to_html_table(os.listdir(app.config['CORPORA_UPLOAD_FOLDER']), corpora_sizes)
-    content += """
-                </td>
-                <td align="center" valign="top">"""
-    content += files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']), dictionaries_sizes)
-    content += """
-                </td>
-            </tr>
-        </table>
-    """
+
     return render_template("index.html",
                            title='Upload',
-                           content=content)
+                           corpora=files_to_html_table(os.listdir(app.config['CORPORA_UPLOAD_FOLDER']), corpora_sizes),
+                           dictionaries=files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']), dictionaries_sizes))
 
 
 @app.route('/FileManager', methods=['GET', 'POST'])
