@@ -10,6 +10,7 @@ app.config['TMP_DIRECTORY'] = cwd + "/tmp"
 app.config['CORPORA_UPLOAD_FOLDER'] = cwd + "/tmp/corpora"
 app.config['DICTIONARIES_UPLOAD_FOLDER'] = cwd + "/tmp/dictionaries"
 create_tmp_folder()
+app.config['OH_UPLOAD_FOLDER'] = cwd + "/OrganizationalHardiness"
 app.config['check_all_corpora'] = 1
 app.config['check_all_dictionaries'] = 1
 app.config['check_all_oh'] = 0

@@ -236,28 +236,45 @@ def DictionaryManager():
             else:
                 app.config['check_all_oh'] = 1
                 app.config['active_oh'] = [1, 1, 1, 1]
+                if 'opportunity' not in app.config['obj'].corpora_names:
+                    app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Opportunity.txt'))
+                if 'threat' not in app.config['obj'].corpora_names:
+                    app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Threat.txt'))
+                if 'enactment' not in app.config['obj'].corpora_names:
+                    app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Enactment.txt'))
+                if 'Org_Id' not in app.config['obj'].corpora_names:
+                    app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Org_Identity.txt'))
         elif 'oh' in request.form:
             oh = request.form['oh']
             if oh == 'opportunity':
                 if app.config['active_oh'][0] == 0:
-                    app.config['active_oh'][0] = 1;
+                    app.config['active_oh'][0] = 1
+                    app.config['obj'].activate_dictionary(0)
                 else:
                     app.config['active_oh'][0] = 0
+                    app.config['obj'].deactivate_dictionary(0)
+
             elif oh == 'threat':
                 if app.config['active_oh'][1] == 0:
-                    app.config['active_oh'][1] = 1;
+                    app.config['active_oh'][1] = 1
+                    app.config['obj'].activate_dictionary(1)
                 else:
                     app.config['active_oh'][1] = 0
+                    app.config['obj'].deactivate_dictionary(1)
             elif oh == 'enactment':
                 if app.config['active_oh'][2] == 0:
-                    app.config['active_oh'][2] = 1;
+                    app.config['active_oh'][2] = 1
+                    app.config['obj'].activate_dictionary(2)
                 else:
                     app.config['active_oh'][2] = 0
+                    app.config['obj'].deactivate_dictionary(2)
             elif oh == 'org_id':
                 if app.config['active_oh'][3] == 0:
-                    app.config['active_oh'][3] = 1;
+                    app.config['active_oh'][3] = 1
+                    app.config['obj'].activate_dictionary(3)
                 else:
                     app.config['active_oh'][3] = 0
+                    app.config['obj'].deactivate_dictionary(3)
     return render_template("dictionaryManager.html",
                            title='Dictionary Manager',
                            active_dictionaries=app.config['active_dictionaries'],
