@@ -25,9 +25,11 @@ def Upload():
                         file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
                         app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
                         app.config['active_dictionaries'].append("checked")
-        elif 'search_query' in request.form:
+        elif 'search_query' and 'quantity' in request.form:
             search_query = request.form['search_query']
+            quantity = request.form['quantity']
             print search_query
+            print quantity
         return redirect(url_for('Upload'))
 
     corpora_sizes = []
