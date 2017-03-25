@@ -175,7 +175,7 @@ input[type='file'] {
 }
 
 #analyze_table #odd{
-    background: darkgrey;
+    background: white;
 }
 
 #analyze_table #even:hover, #analyze_table #odd:hover {
