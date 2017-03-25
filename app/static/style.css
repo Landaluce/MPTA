@@ -206,3 +206,7 @@ textarea:focus{
     padding: 20px;
     margin-top: 40px;
 }
+
+#quantity {
+    width: 290px;
+}

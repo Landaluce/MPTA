@@ -45,12 +45,26 @@
                     </tr>
                     <tr>
                         <td>
-                            <form method='POST'>
-                                <input type='text' name='search_query'>
-                                <input class='button' id='download_button' type='submit' value='Search'>
+                            Number of tweets:
+                            <input type="number" id="quantity" name="quantity" min="1" max="500" placeholder="1-500">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <form id="tw" method='POST'>
+                                query:
+                                <input type='text' name='search_query' placeholder="">
+
                             </form>
                         </td>
                     </tr>
+                    <tr>
+                        <td align="center">
+                            <input form="tw" class='button' id='download_button' type='submit' value='Search'>
+                        </td>
+                    </tr>
+
                 </table>
             </td>
         </tr>
