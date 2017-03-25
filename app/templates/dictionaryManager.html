@@ -2,14 +2,12 @@
 {% extends "base.html" %}
 {% set active_page = "DictionaryManager" %}
 {% block content %}
-<table id="manager_table">
-    <tr>
-        <td align="center">
-                    <table>
+    <table id="manager_table">
+        <tr>
+            <td align="center">
+                <table>
     {% if dictionaries is defined and dictionaries|length > 0 %}
         {% set count = 0 %}
-
-
                         <tr>
                             <td>
                                 <form method='POST'>
@@ -58,17 +56,11 @@
                         </tr>
                         {% set count = count + 1 %}
                         {% endfor %}
-
-                    <!--</table>
-                </td>-->
             </tr>
 
     {% else %}
             <p>Upload a dictionary</p>
     {% endif %}
-            <!--<tr>
-                <td align="left">
-                    <table id="manager_table">-->
                         <tr height="30px"></tr>
                         <tr>
                             <td>
