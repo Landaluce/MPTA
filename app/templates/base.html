@@ -6,6 +6,10 @@
     <title>Welcome to ...</title>
     {% endif %}
       <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="jquery-3.1.1.min.js"></script>
+ <script src="{{url_for('static', filename='myscripts.js')}}"></script>
+<a href="#" id="return-to-top" onclick="top();"><i class="icon-chevron-up"></i></a>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
       <script>
           function toggle(source,id) {
               var checkboxes = document.querySelectorAll('#'+id);
