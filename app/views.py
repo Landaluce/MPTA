@@ -161,7 +161,7 @@ def DictionaryManager():
             file_content = ""
             for name in app.config['obj'].dictionaries_names:
                 if name == file_name:
-                    file_content = ", ".join(app.config['obj'].dictionaries[i])
+                    file_content = app.config['obj'].dictionaries[i]
                 i += 1
 
             return Response(
@@ -188,7 +188,7 @@ def DictionaryManager():
             file_content = ""
             for i in range(len(app.config['obj'].dictionaries_names)):
                 if app.config['obj'].dictionaries_names[i] == file_name:
-                    file_content = ", ".join(app.config['obj'].dictionaries[i])
+                    file_content = ', '.join(app.config['obj'].dictionaries[i])
                     label = app.config['obj'].dictionaries_labels[i]
             return render_template("edit.html",
                                    title='Edit',
