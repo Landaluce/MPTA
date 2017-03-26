@@ -2,7 +2,7 @@ from fileManager import allowed_file, get_file_size, files_to_html_table, delete
 from flask import render_template, request, redirect, url_for, Response
 from werkzeug import secure_filename
 from WordCount import WordCount
-from TwitterIPA import get_tweets, scrub_tweets
+from TwitterAPI import get_tweets, scrub_tweets
 from app import app
 import csv
 import os
