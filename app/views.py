@@ -30,14 +30,20 @@ def Upload():
             search_query = request.form['search_query']
             quantity = request.form['quantity']
             tweets = get_tweets(search_query, int(quantity))
+            tweets = tweets[:int(quantity)]
             tw_text = []
             for tweet in tweets:
                 tw_text.append(tweet.text)
             tw_texts = scrub_tweets(tw_text)
             default_name = search_query + "_tw_"
-            count = 0
+            count = 01
+
             for tweet in tw_texts:
-                file_name = default_name + str(count) + ".txt"
+                number_of_zeros = len(str(len(tweets))) - len(str(count))
+                left_zeros = ""
+                for i in range(number_of_zeros):
+                    left_zeros += "0"
+                file_name = default_name + left_zeros + str(count) + ".txt"
                 count += 1
                 file = open(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name, "w")
                 file.write(tweet)

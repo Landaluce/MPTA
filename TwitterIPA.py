@@ -13,10 +13,8 @@ def get_tweets(search_query, number_tweets=15):
     auth.set_access_token(access_token, access_token_secret)
 
     api = tweepy.API(auth)
-    if number_tweets < 100:
-        tweetsPerQry = number_tweets
-    else:
-        tweetsPerQry = 100  # 100  # this is the max the API permits
+
+    tweetsPerQry = 100  # this is the max the API permits
 
     # If results from a specific ID onwards are reqd, set since_id to that ID.
     # else default to no lower limit, go as far back as API allows
@@ -24,25 +22,23 @@ def get_tweets(search_query, number_tweets=15):
 
     # If results only below a specific ID are, set max_id to that ID.
     # else default to no upper limit, start from the most recent tweet matching the search query.
-    max_id = -1
-
-    tweet_count = 0
+    max_id = -1L
     tweets = []
-    #print("Downloading max {0} tweets".format(number_tweets))
-    while tweet_count < number_tweets:
+    tweetCount = 0
+    while tweetCount < number_tweets:
         try:
-            if (max_id <= 0):
-                if (not sinceId):
-                    new_tweets = api.search(search_query, count=tweetsPerQry)
+            if max_id <= 0:
+                if not sinceId:
+                    new_tweets = api.search(q=search_query, count=tweetsPerQry)
                 else:
-                    new_tweets = api.search(search_query, count=tweetsPerQry,
+                    new_tweets = api.search(q=search_query, count=tweetsPerQry,
                                             since_id=sinceId)
             else:
-                if (not sinceId):
-                    new_tweets = api.search(search_query, count=tweetsPerQry,
+                if not sinceId:
+                    new_tweets = api.search(q=search_query, count=tweetsPerQry,
                                             max_id=str(max_id - 1))
                 else:
-                    new_tweets = api.search(search_query, count=tweetsPerQry,
+                    new_tweets = api.search(q=search_query, count=tweetsPerQry,
                                             max_id=str(max_id - 1),
                                             since_id=sinceId)
             if not new_tweets:
@@ -50,7 +46,7 @@ def get_tweets(search_query, number_tweets=15):
                 break
             for tweet in new_tweets:
                 tweets.append(tweet)
-                tweet_count += len(new_tweets)
+            tweetCount += len(new_tweets)
             max_id = new_tweets[-1].id
         except tweepy.TweepError as e:
             # Just exit if any error
@@ -96,3 +92,6 @@ def scrub_tweets(tweets):
         scrubed_tweets.append(tweet)
         #print '[' + tweet + ']'
     return scrubed_tweets
+
+tweets = get_tweets("Trump", 111)
+print len(tweets)
