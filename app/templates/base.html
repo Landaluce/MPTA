@@ -12,19 +12,10 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
       <script>
           function toggle(source,id) {
-              var checkboxes = document.querySelectorAll('#'+id);
+              var checkboxes = document.querySelectorAll(id);
                 for (var i = 0; i < checkboxes.length; i++) {
                     if (checkboxes[i] != source)
                         checkboxes[i].checked = source.checked;
-                }
-          }
-          function toggle_oh(source,id) {
-              var checkboxes = document.querySelectorAll('.'+id);
-                for (var i = 0; i < checkboxes.length; i++) {
-                    if (checkboxes[i] != source) {
-                        checkboxes[i].checked = source.checked;
-                    }
-
                 }
           }
       </script>
