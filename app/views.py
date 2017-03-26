@@ -2,6 +2,7 @@ from fileManager import allowed_file, get_file_size, files_to_html_table, delete
 from flask import render_template, request, redirect, url_for, Response
 from werkzeug import secure_filename
 from WordCount import WordCount
+from TwitterIPA import get_tweets, scrub_tweets
 from app import app
 import csv
 import os
@@ -28,8 +29,22 @@ def Upload():
         elif 'search_query' and 'quantity' in request.form:
             search_query = request.form['search_query']
             quantity = request.form['quantity']
-            print search_query
-            print quantity
+            tweets = get_tweets(search_query, int(quantity))
+            tw_text = []
+            for tweet in tweets:
+                tw_text.append(tweet.text)
+            tw_texts = scrub_tweets(tw_text)
+            default_name = search_query + "_tw_"
+            count = 0
+            for tweet in tw_texts:
+                print '['+tweet+']'
+                file_name = default_name + str(count) + ".txt"
+                count += 1
+                file = open(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name, "w")
+                file.write(tweet)
+                file.close()
+                app.config['obj'].add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
+                app.config['active_corpora'].append("checked")
         return redirect(url_for('Upload'))
 
     corpora_sizes = []
@@ -178,7 +193,16 @@ def DictionaryManager():
         elif 'save_filename' and 'save_content' in request.form:
             file_name = request.form['save_filename']
             file_content = request.form['save_content']
-            file = open(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + file_name, "w")
+            count = 0
+            index = 0
+            for i in range(0, len(app.config['obj'].dictionaries_names)):
+                if app.config['obj'].dictionaries_labels[i] == file_name:
+                    index = count
+                count += 1
+
+            file_extension = app.config['obj'].dictionaries_extensions[index]
+            app.config['obj'].dictionaries[index] = file_content
+            file = open(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + file_name + file_extension, "w")
             file.write(file_content)
             file.close()
         elif 'check_all' in request.form:

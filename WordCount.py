@@ -125,6 +125,7 @@ class WordCount(object):
         self.dictionaries_names = []
         self.dictionaries_labels = []
         self.active_dictionaries = []
+        self.dictionaries_extensions = []
         self.corpora = []
         self.corpora_names = []
         self.corpora_labels = []
@@ -167,6 +168,7 @@ class WordCount(object):
                     cell = cell.strip()
                     new_list.append(cell)
         elif file_extension == ".txt":
+
             new_list = read_txt(file_path)
             new_list = new_list.split(", ")
             new_list = map(lambda x: x.encode("utf-8"), new_list)
@@ -178,6 +180,7 @@ class WordCount(object):
         new_list = self.scrub_list(new_list)
         self.dictionaries.append(new_list)
         self.active_dictionaries.append(1)
+        self.dictionaries_extensions.append(file_extension)
 
     def delete_corpus(self, index):
         del self.corpora[index]
@@ -188,6 +191,7 @@ class WordCount(object):
         del self.dictionaries[index]
         del self.dictionaries_names[index]
         del self.active_dictionaries[index]
+        del self.dictionaries_extensions[index]
 
     def deactivate_corpus(self, index):
         self.active_corpora[index] = 0
