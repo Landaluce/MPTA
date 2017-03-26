@@ -37,7 +37,6 @@ def Upload():
             default_name = search_query + "_tw_"
             count = 0
             for tweet in tw_texts:
-                print '['+tweet+']'
                 file_name = default_name + str(count) + ".txt"
                 count += 1
                 file = open(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name, "w")
