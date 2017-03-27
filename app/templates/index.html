@@ -28,6 +28,25 @@
             </td>
         </tr>
         <tr>
+            <td align="center">
+                <div id="error_message">
+                    {% if corpus_errors|length > 0 %}
+                        Error uploading {{corpus_errors}}: Unsoprted file format
+                    {% endif %}
+                </div>
+            </td>
+             <td align="center">
+                <div id="error_message">
+                    {% if dictionary_errors|length > 0 %}
+                        Error uploading {{dictionary_errors}}: Unsoprted file format
+                    {% endif %}
+                </div>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
             <td align="center" valign="top">
                 {{corpora|safe}}
             </td>

@@ -11,12 +11,13 @@ import os
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def Upload():
+    corpus_errors = ""
+    dictionary_errors = ""
     if request.method == 'POST':
         if request.files.getlist("file[]"):
             files = request.files.getlist("file[]")
             for file in files:
-                file_extension = allowed_file(file.filename)
-                if file_extension != "":
+                if allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     if request.form['upload'] == "corpus":
                         file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], filename))
@@ -26,6 +27,11 @@ def Upload():
                         file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
                         app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], filename))
                         app.config['active_dictionaries'].append("checked")
+                else:
+                    if request.form['upload'] == "corpus":
+                        corpus_errors += file.filename + ", "
+                    elif request.form['upload'] == "dictionary":
+                        dictionary_errors += file.filename + ", "
         elif 'search_query' and 'quantity' in request.form:
             search_query = request.form['search_query']
             quantity = request.form['quantity']
@@ -50,8 +56,6 @@ def Upload():
                 file.close()
                 app.config['obj'].add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
                 app.config['active_corpora'].append("checked")
-        return redirect(url_for('Upload'))
-
     corpora_sizes = []
     for filename in os.listdir(app.config['CORPORA_UPLOAD_FOLDER']):
         corpora_sizes.append(get_file_size(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + filename))
@@ -61,6 +65,8 @@ def Upload():
 
     return render_template("index.html",
                            title='Upload',
+                           corpus_errors=corpus_errors[:-2],
+                           dictionary_errors=dictionary_errors[:-2],
                            corpora=files_to_html_table(os.listdir(app.config['CORPORA_UPLOAD_FOLDER']), corpora_sizes),
                            dictionaries=files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']), dictionaries_sizes))
 

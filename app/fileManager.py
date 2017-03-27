@@ -7,9 +7,9 @@ import os
 def allowed_file(filename):
     file_extension = filename.rsplit('.', 1)[1]
     if file_extension in app.config['ALLOWED_EXTENSIONS']:
-        return file_extension
+        return True
     else:
-        return ""
+        return False
 
 
 def create_tmp_folder():

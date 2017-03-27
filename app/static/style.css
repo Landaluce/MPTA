@@ -251,3 +251,8 @@ textarea:focus{
     color: #fff;
     top: 5px;
 }
+
+#error_message {
+    color: red;
+    width: 80%;
+}
