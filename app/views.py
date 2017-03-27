@@ -36,7 +36,7 @@ def Upload():
                 tw_text.append(tweet.text)
             tw_texts = scrub_tweets(tw_text)
             default_name = search_query + "_tw_"
-            count = 01
+            count = 1
 
             for tweet in tw_texts:
                 number_of_zeros = len(str(len(tweets))) - len(str(count))
@@ -91,9 +91,9 @@ def FileManager():
                     all_chacked = False
             if all_chacked:
                 if temp == "checked":
-                    app.config['check_all_corpora'] = 1
+                    app.config['check_all_corpora'] = True
             else:
-                app.config['check_all_corpora'] = 0
+                app.config['check_all_corpora'] = False
             return render_template("fileManager.html",
                                    title='File Manager',
                                    check_all=app.config['check_all_corpora'],
@@ -119,15 +119,15 @@ def FileManager():
             app.config['obj'].delete_corpus(index)
             os.remove(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name)
         elif 'check_all' in request.form:
-            if app.config['check_all_corpora'] == 1:
+            if app.config['check_all_corpora'] == True:
                 for i in range(len(app.config['active_corpora'])):
                     app.config['active_corpora'][i] = ''
-                    app.config['check_all_corpora'] = 0
+                    app.config['check_all_corpora'] = False
                     app.config['obj'].deactivate_corpus(i)
             else:
                 for i in range(len(app.config['active_corpora'])):
                     app.config['active_corpora'][i] = "checked"
-                    app.config['check_all_corpora'] = 1
+                    app.config['check_all_corpora'] = True
                     app.config['obj'].activate_corpus(i)
         elif 'label' and 'label_index' in request.form:
             label = request.form['label']
@@ -167,9 +167,9 @@ def DictionaryManager():
                     all_chacked = False
             if all_chacked:
                 if temp == "checked":
-                    app.config['check_all_dictionaries'] = 1
+                    app.config['check_all_dictionaries'] = True
             else:
-                app.config['check_all_dictionaries'] = 0
+                app.config['check_all_dictionaries'] = False
             return render_template("dictionaryManager.html",
                                    title='Dictionary Manager',
                                    active_dictionaries=app.config['active_dictionaries'],
@@ -234,15 +234,15 @@ def DictionaryManager():
             file.write(file_content)
             file.close()
         elif 'check_all' in request.form:
-            if app.config['check_all_dictionaries'] == 1:
+            if app.config['check_all_dictionaries'] == True:
                 for i in range(len(app.config['active_dictionaries'])):
                     app.config['active_dictionaries'][i] = ''
-                    app.config['check_all_dictionaries'] = 0
+                    app.config['check_all_dictionaries'] = False
                     app.config['obj'].deactivate_dictionary(i)
             else:
                 for i in range(len(app.config['active_dictionaries'])):
                     app.config['active_dictionaries'][i] = "checked"
-                    app.config['check_all_dictionaries'] = 1
+                    app.config['check_all_dictionaries'] = True
                     app.config['obj'].activate_dictionary(i)
         elif 'label' and 'label_index' in request.form:
             label = request.form['label']
@@ -258,8 +258,8 @@ def DictionaryManager():
                         first_oh_index = i
             if app.config['oh_uploaded'] == False:
                 app.config['oh_uploaded'] = True
-                app.config['check_all_oh'] = 1
-                app.config['active_oh'] = [1, 1, 1, 1]
+                app.config['check_all_oh'] = True
+                app.config['active_oh'] = [True, True, True, True]
                 if 'opportunity' not in app.config['obj'].corpora_names:
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Opportunity.txt'))
                 if 'threat' not in app.config['obj'].corpora_names:
@@ -268,14 +268,14 @@ def DictionaryManager():
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Enactment.txt'))
                 if 'Org_Id' not in app.config['obj'].corpora_names:
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Org_Identity.txt'))
-            elif app.config['check_all_oh'] == 1:
-                app.config['check_all_oh'] = 0
-                app.config['active_oh'] = [0, 0, 0, 0]
+            elif app.config['check_all_oh'] == True:
+                app.config['check_all_oh'] = False
+                app.config['active_oh'] = [False, False, False, False]
                 for i in range(0, 4):
                     app.config['obj'].deactivate_dictionary(first_oh_index + i)
-            elif app.config['check_all_oh'] == 0:
-                app.config['check_all_oh'] = 1
-                app.config['active_oh'] = [1, 1, 1, 1]
+            elif app.config['check_all_oh'] == False:
+                app.config['check_all_oh'] = True
+                app.config['active_oh'] = [True, True, True, True]
                 for i in range(0, 4):
                     app.config['obj'].activate_dictionary(first_oh_index + i)
         elif 'oh' in request.form:
@@ -288,11 +288,11 @@ def DictionaryManager():
                         first_oh_index = i
                 if app.config['obj'].dictionaries_names[i].lower() == oh + ".txt":
                     index = i
-            if app.config['active_oh'][index - first_oh_index] == 0:
-                app.config['active_oh'][index - first_oh_index] = 1
+            if not app.config['active_oh'][index - first_oh_index]:
+                app.config['active_oh'][index - first_oh_index] = True
                 app.config['obj'].activate_dictionary(index)
-            elif app.config['active_oh'][index - first_oh_index] == 1:
-                app.config['active_oh'][index - first_oh_index] = 0
+            elif app.config['active_oh'][index - first_oh_index]:
+                app.config['active_oh'][index - first_oh_index] = False
                 app.config['obj'].deactivate_dictionary(index)
             temp = app.config['active_oh'][0]
             all_chacked = True
@@ -301,7 +301,7 @@ def DictionaryManager():
                     all_chacked = False
             if all_chacked:
                 if temp != "checked":
-                    app.config['check_all_oh'] = 0
+                    app.config['check_all_oh'] = False
 
     return render_template("dictionaryManager.html",
                            title='Dictionary Manager',
@@ -349,9 +349,9 @@ def Reset():
     app.config['obj'] = WordCount()
     app.config['active_corpora'] = []
     app.config['active_dictionaries'] = []
-    app.config['check_all_corpora'] = 1
-    app.config['check_all_dictionaries'] = 1
-    app.config['check_all_oh'] = 0
-    app.config['active_oh'] = [0, 0, 0, 0]
+    app.config['check_all_corpora'] = True
+    app.config['check_all_dictionaries'] = True
+    app.config['check_all_oh'] = False
+    app.config['active_oh'] = [False, False, False, False]
     app.config['oh_uploaded'] = False
     return redirect(url_for('Upload'))

@@ -11,12 +11,12 @@ app.config['CORPORA_UPLOAD_FOLDER'] = cwd + "/tmp/corpora"
 app.config['DICTIONARIES_UPLOAD_FOLDER'] = cwd + "/tmp/dictionaries"
 create_tmp_folder()
 app.config['OH_UPLOAD_FOLDER'] = cwd + "/OrganizationalHardiness"
-app.config['check_all_corpora'] = 1
-app.config['check_all_dictionaries'] = 1
-app.config['check_all_oh'] = 0
+app.config['check_all_corpora'] = True
+app.config['check_all_dictionaries'] = True
+app.config['check_all_oh'] = False
 app.config['active_corpora'] = []
 app.config['active_dictionaries'] = []
-app.config['active_oh'] = [0, 0, 0, 0]
+app.config['active_oh'] = [False, False, False, False]
 app.config['obj'] = WordCount()
 app.config['oh_uploaded'] = False
 
