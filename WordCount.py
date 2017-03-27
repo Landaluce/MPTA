@@ -133,6 +133,7 @@ class WordCount(object):
         self.counts = []
         self.counters = []
         self.total_word_counts = []
+        self.sums = []
         self.scores = []
 
     def add_corpus(self, file_path):
@@ -251,20 +252,22 @@ class WordCount(object):
     def generate_scores(self):
         index = 0
         for counts in self.counters:
-            sum = 0.0
+            sum = 0
             for count in counts:
                 sum += count
-            self.scores.append(sum/self.total_word_counts[index])
+            self.scores.append(float(sum)/self.total_word_counts[index])
+            self.sums.append(sum)
             index += 1
 
     def to_html(self):
         result = "<table id='analyze_table'><tr id='header'>"
-        result += "<td align='center'>file</td>"
+        result += "<td align='center'>Files</td>"
         for i in range(len(self.dictionaries_names)):
             if self.active_dictionaries[i] == 1:
                 result += "<td align='center'>" + self.dictionaries_labels[i] + "</td>"
-        result += "<td align='center'>total word count</td>"
-        result += "<td align='center'>score</td>"
+        result += "<td align='center'>Sums</td>"
+        result += "<td align='center'>Total Word Counts</td>"
+        result += "<td align='center'>Scores</td>"
         result += "</tr><tr>"
 
         for i in range(len(self.corpora_names)):
@@ -275,7 +278,7 @@ class WordCount(object):
                 else:
                     result += "<tr id='odd'>"
                 result += "<td align='center'>" + self.corpora_labels[i] + "</td>"
-                for counts in self.counters[i] + [self.total_word_counts[i]] + [self.scores[i]]:
+                for counts in self.counters[i] + [self.sums[i]] + [self.total_word_counts[i]] + [self.scores[i]]:
                     result += "<td align='center'>" + str(counts) + "</td>"
         result += "</tr></table>"
         return result

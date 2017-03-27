@@ -75,7 +75,7 @@ def scrub_tweets(tweets):
         tweet = tweet.replace(u'\u2014', '-')
         tweet = tweet.replace(u'\u2013', '-')
         exclude = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
-        # exclude += ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        exclude += ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         exclude.append(u'\u2018')  # '
         exclude.append(u'\u2019')  # '
         exclude.append(u'\u201c')  # "
@@ -93,5 +93,6 @@ def scrub_tweets(tweets):
         #print '[' + tweet + ']'
     return scrubed_tweets
 
-tweets = get_tweets("Trump", 111)
-print len(tweets)
+#tweets = get_tweets("Trump", 100)
+#for tweet in tweets:
+#    print tweet.text
