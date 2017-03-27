@@ -12,7 +12,7 @@
                             <td>
                                 <form method='POST'>
                                     <input type='hidden' name='check_all'>
-                                    <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this,'#file');" onchange='this.form.submit();'>
+                                    <input type="checkbox"  onclick="toggle(this,'file');" onchange='this.form.submit();' {{'checked' if check_all == 1}}>
                                 </form>
                             </td>
                             <td align="left" id="bold">Active dictionaries</td>
@@ -66,7 +66,7 @@
                             <td>
                                 <form method='POST'>
                                     <input type='hidden' name='check_oh'>
-                                    <input type="checkbox" onchange="toggle(this,'.oh');this.form.submit();" {{'checked' if check_all_oh == 1}}>
+                                    <input type="checkbox" onchange="toggle_oh(this,'oh'); this.form.submit();" {{'checked' if check_all_oh == 1}}>
                                 </form>
                             </td>
                             <td align="left" colspan="5" id="bold">Organizational Hardiness</td>
@@ -160,7 +160,7 @@
                         {% endif %}
                             <td>
                                 <form method='POST'>
-                                    <input type='hidden' name='oh' value='org_id'>
+                                    <input type='hidden' name='oh' value='org_identity'>
                                     <input type='checkbox' class='oh' onchange="this.form.submit();" {{'checked' if active_oh[3] == 1}}>
                                 </form>
                             </td>

@@ -18,5 +18,6 @@ app.config['active_corpora'] = []
 app.config['active_dictionaries'] = []
 app.config['active_oh'] = [0, 0, 0, 0]
 app.config['obj'] = WordCount()
+app.config['oh_uploaded'] = False
 
 app.run(debug=True)
