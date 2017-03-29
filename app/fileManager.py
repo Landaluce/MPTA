@@ -86,7 +86,7 @@ def file_to_html(file_name, size):
     Generates a HTML table of for a given file_name an size
     :param file_name: name of a file (String)
     :param size: size of the file (Float)
-    :return: result: HTML table
+    :return: a HTML table
     """
     result = """<table id="file_to_html">
     <tr><td align="center"> """ + file_name + """</td></tr>
@@ -100,7 +100,7 @@ def files_to_html_table(file_names, sizes):
     Generates an HTML table containing all the given files and their sizes
     :param file_names: List of files (List of Strings)
     :param sizes: List of sizes (List of Floats)
-    :return: result: HTML table
+    :return: a HTML table
     """
     result = "<table id='files_to_html_table'>\n"
     for i in range(len(file_names)):
