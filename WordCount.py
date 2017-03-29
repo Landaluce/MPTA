@@ -1,4 +1,4 @@
-from app.fileManager import get_file_type, strip_file_extension
+from app.fileManager import get_file_extension, strip_file_extension
 from docx import opendocx, getdocumenttext
 import unicodedata
 import ntpath
@@ -140,7 +140,7 @@ class WordCount(object):
         file_name = ntpath.basename(file_path)
         self.corpora_names.append(file_name)
         self.corpora_labels.append(ntpath.basename(strip_file_extension(file_name)))
-        file_extension = get_file_type(file_path)
+        file_extension = get_file_extension(file_path)
         if file_extension == ".csv":
             new_corpus = read_csv(file_path)
         elif file_extension == ".txt":
@@ -158,7 +158,7 @@ class WordCount(object):
         file_name = ntpath.basename(file_path)
         self.dictionaries_names.append(file_name)
         self.dictionaries_labels.append(ntpath.basename(strip_file_extension(file_name)))
-        file_extension = get_file_type(file_path)
+        file_extension = get_file_extension(file_path)
         if file_extension == ".csv":
             with open(file_path, 'rb') as f:
                 reader = csv.reader(f)

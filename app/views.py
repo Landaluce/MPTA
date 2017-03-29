@@ -11,6 +11,11 @@ import os
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def Upload():
+    """
+    Handles the functionality of the upload page. It uploads files to be used
+    in the current session.
+    :return: a render_template call.
+    """
     corpus_errors = ""
     dictionary_errors = ""
     if request.method == 'POST':
@@ -73,6 +78,11 @@ def Upload():
 
 @app.route('/FileManager', methods=['GET', 'POST'])
 def FileManager():
+    """
+    Handles the functionality of the FileManager page. Its primary role is to activate/deactivate
+    specific corpora depending on the user's input.
+    :return: a render_template call.
+    """
     if request.method == 'POST':
         if 'index' and 'corpus' in request.form:
             index = int(request.form['index'].encode("utf-8"))
@@ -149,6 +159,11 @@ def FileManager():
 
 @app.route('/DictionaryManager', methods=['GET', 'POST'])
 def DictionaryManager():
+    """
+    Handles the functionality of the DictionaryManager page. Its primary role is to activate/deactivate
+    specific dictionaries depending on the user's input.
+    :return: a render_template call.
+    """
     if request.method == 'POST':
         if 'index' and 'dictionary' in request.form:
             index = int(request.form['index'].encode("utf-8"))
@@ -321,6 +336,11 @@ def DictionaryManager():
 
 @app.route('/Analyze', methods=['GET', 'POST'])
 def Analyze():
+    """
+    Handles the functionality of the Analyze page. It generates a table with raw count for
+    each corpus and its final score.
+    :return: a render_template call.
+    """
     if request.method == 'POST':
         file_name = request.form['results']
         file_content = ""
@@ -350,6 +370,10 @@ def Analyze():
 
 @app.route('/Reset')
 def Reset():
+    """
+    Deletes all files uploaded and resets all variables to their default values.
+    :return: a render_template call.
+    """
     delete_tmp_folder()
     create_tmp_folder()
     app.config['obj'] = WordCount()

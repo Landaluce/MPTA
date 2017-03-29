@@ -2,7 +2,14 @@ import tweepy
 import unicodedata
 import re
 
+
 def get_tweets(search_query, number_tweets=15):
+    """
+    Gets a list of tweets
+    :param search_query: search query used to find tweets (String)
+    :param number_tweets: number of tweets to get (Integer)
+    :return: List of tweet objects
+    """
     consumer_key = 'WCG4FAJ0w8wwe8mFPieZ7vH4k'
     consumer_secret = '5MwDTXZ7vQ78K2YUTHkDejwF9tAy5ALB53YW9DmO39Q1u3ERal'
 
@@ -55,7 +62,13 @@ def get_tweets(search_query, number_tweets=15):
 
     return tweets
 
+
 def scrub_tweets(tweets):
+    """
+    Scubs a list of tweets
+    :param tweets: List of tweets (List of Strings)
+    :return: scrubed_tweets: Scrubbed list of tweets (List of Strings)
+    """
     scrubed_tweets = []
     for tweet in tweets:
         tweet = unicodedata.normalize('NFKD', tweet).encode('ascii', 'ignore')
