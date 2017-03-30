@@ -1,5 +1,5 @@
 from app.fileManager import get_file_extension, strip_file_extension
-from docx import opendocx, getdocumenttext
+#from docx import opendocx, getdocumenttext
 import unicodedata
 import ntpath
 import csv
@@ -22,6 +22,7 @@ class WordCount(object):
         self.total_word_counts = []
         self.sums = []
         self.scores = []
+        self.average = []
 
     def add_corpus(self, file_path):
         file_name = ntpath.basename(file_path)
@@ -137,6 +138,28 @@ class WordCount(object):
             self.scores.append(float(sum)/self.total_word_counts[index])
             self.sums.append(sum)
             index += 1
+        self.average_scores()
+    
+    
+    def average_scores(self):
+        index = 0
+        sum = 0 #total hardiness score
+        sum2 = 0 #total word count score
+        sum3 = 0 #sum
+        for i in range(len(self.scores)):
+            sum += self.scores[i]
+            sum2 += self.total_word_counts[i]
+            sum3 += self.sums[i]
+        avg = float(sum/len(self.scores))
+        avg2 = float(sum2/(len(self.total_word_counts)))
+        avg3 = float(sum3/len(self.sums))
+        empty_list = []
+        cat_count = 0
+        for x in range(len(self.counters)):
+            for i in range(len(self.counters[x])):
+                cat_count += self.counters[x][i]
+            empty_list.append(cat_count/len(self.counters[x]))
+        print(empty_list)
 
     def to_html(self):
         result = "<table id='analyze_table'><tr id='header'>"
