@@ -3,7 +3,9 @@ from flask import render_template, request, redirect, url_for, Response
 from werkzeug import secure_filename
 from WordCount import WordCount
 from TwitterAPI import get_tweets, scrub_tweets
+from TwitterAPI2 import get_tweets2
 from app import app
+from time import time
 import csv
 import os
 
@@ -42,6 +44,7 @@ def Upload():
             quantity = request.form['quantity']
             tweets = get_tweets(search_query, int(quantity))
             tweets = tweets[:int(quantity)]
+            #get_tweets2(search_query, int(quantity))
             tw_text = []
             for tweet in tweets:
                 tw_text.append(tweet.text)

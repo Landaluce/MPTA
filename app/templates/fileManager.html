@@ -4,6 +4,25 @@
 {% block content %}
     {% if corpora is defined and corpora|length > 0 %}
         {% set count = 0 %}
+<script>
+window.onload=function(){
+  //document.getElementById("edit_button").style.visibility= "hidden";
+
+  let buttons = document.getElementsByName("edit_button");//.style.visibility= "hidden";
+  for(let x=0; x < buttons.length; x++)   // comparison should be "<" not "<="
+  {
+        buttons[x].style.visibility= "hidden";
+  }
+}
+
+function showButton(index){
+    let buttons = document.getElementsByName("edit_button");
+    let new_labels = dodument.getElementsByName("label");
+    //{% set new_labels = new_labels%}
+    //for(let x=0; x < new_labels.length;){}
+    buttons[index].style.visibility=  "visible";
+}
+</script>
         <table id="manager_table">
             <tr>
                 <td>
@@ -39,9 +58,10 @@
                 </td>
                 <td>
                     <form method='POST'>
-                        <input type='text' name='label' value='{{labels[count]}}'>
+                        <input type='text' name='label' value='{{labels[count]}}' onkeyup="showButton({{count}})">
                         <input type='hidden' name='label_index' value={{count}}>
-                        <input class='button' id='edit_button' type='submit' value='Save label'>
+                        <input type='hidden' name='new_labels'>
+                        <input class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden">
                     </form>
                 </td>
             </tr>

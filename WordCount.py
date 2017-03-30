@@ -93,16 +93,16 @@ class WordCount(object):
     def utf8_to_ascii(self, text):
         text = text.replace(u'\u2014', '-')
         text = text.replace(u'\u2013', '-')
-        exclude = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
+        exclude = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']#, u'\u2018', u'\u2019', u'\u201c', u'\u201d', u'\u2022', u'\u2026']
         exclude.append(u'\u2018')  # '
         exclude.append(u'\u2019')  # '
         exclude.append(u'\u201c')  # "
         exclude.append(u'\u201d')  # "
         exclude.append(u'\u2022')  # bullet point
         exclude.append(u'\u2026')  # ...
-        for c in exclude:
-            text = text.replace(c, ' ')
 
+        for c in exclude: #---------------------------------------
+            text = text.replace(c, ' ')
         return ' '.join(text.split())
 
     def count_words(self):
@@ -114,7 +114,7 @@ class WordCount(object):
         for corpus in corpora:
             counts = []
             for i in range(len(self.dictionaries)):
-                if self.active_dictionaries[i] == 1:
+                if self.active_dictionaries[i]:
                     count = 0
                     for word in self.dictionaries[i]:
                         if corpus.startswith(word + " "):

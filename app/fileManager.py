@@ -13,8 +13,7 @@ def allowed_file(file_name):
     file_extension = file_name.rsplit('.', 1)[1]
     if file_extension in app.config['ALLOWED_EXTENSIONS']:
         return True
-    else:
-        return False
+    return False
 
 
 def create_tmp_folder():
@@ -67,18 +66,16 @@ def get_file_extension(file_path):
     :param file_path: path of a file (String)
     :return: extension of file (Float)
     """
-    extension = os.path.splitext(file_path)[1]
-    return extension
+    return os.path.splitext(file_path)[1]
 
 
 def strip_file_extension(file_name):
     """
     Strinps the extension of the given file_name
     :param file_name: name of a file (String)
-    :return: name (String)
+    :return: file name (String)
     """
-    name = os.path.splitext(file_name)[0]
-    return name
+    return os.path.splitext(file_name)[0]
 
 
 def file_to_html(file_name, size):
@@ -88,11 +85,10 @@ def file_to_html(file_name, size):
     :param size: size of the file (Float)
     :return: a HTML table
     """
-    result = """<table id="file_to_html">
+    return """<table id="file_to_html">
     <tr><td align="center"> """ + file_name + """</td></tr>
     <tr><td align="center"> Size: """ + str(size) + """</td></tr>
     </table>"""
-    return result
 
 
 def files_to_html_table(file_names, sizes):
