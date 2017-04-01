@@ -4,6 +4,7 @@ import unicodedata
 import ntpath
 import csv
 import re
+import math
 
 
 class WordCount(object):
@@ -142,7 +143,6 @@ class WordCount(object):
     
     
     def average_scores(self):
-        index = 0
         sum = 0 #total hardiness score
         sum2 = 0 #total word count score
         sum3 = 0 #sum
@@ -150,14 +150,18 @@ class WordCount(object):
             sum += self.scores[i]
             sum2 += self.total_word_counts[i]
             sum3 += self.sums[i]
-        avg = float(sum/len(self.scores))
-        avg2 = float(sum2/(len(self.total_word_counts)))
-        avg3 = float(sum3/len(self.sums))
+        avg = (float(sum)/len(self.scores))
+        avg2 = (float(sum2)/(len(self.total_word_counts)))
+        avg3 = (float(sum3)/len(self.sums))
+        math.ceil(avg)
+        math.ceil(avg2)
+        math.ceil(avg3)
         print(avg)
         print(avg2)
         print(avg3)
         empty_list = []
         cat_count = 0
+        self.average.append("Averages")
         print(self.counters)
         for x in range(len(self.dictionaries)):
             for i in range(len(self.counters)):
@@ -165,6 +169,9 @@ class WordCount(object):
             empty_list.append(cat_count)
             self.average.append((float(cat_count)/len(self.counters)))
             cat_count = 0
+        self.average.append(avg3)
+        self.average.append(avg2)
+        self.average.append(avg)
         print(self.average)
 
     def to_html(self):
@@ -187,6 +194,10 @@ class WordCount(object):
                 result += "<td align='center'>" + self.corpora_labels[i] + "</td>"
                 for counts in self.counters[i] + [self.sums[i]] + [self.total_word_counts[i]] + [self.scores[i]]:
                     result += "<td align='center'>" + str(counts) + "</td>"
+        result += "</tr>"
+        result += "<tr>"
+        for x in range(len(self.average)):
+            result += "<td align='center'>" + str(self.average[x]) + "</td>"
         result += "</tr></table>"
         return result
 
@@ -201,6 +212,7 @@ class WordCount(object):
         for i in range(len(self.dictionaries_names)):
             if self.active_dictionaries[i] == 1:
                 header.append(self.dictionaries_names[i])
+        header.append("sums")
         header.append("total_word_count")
         header.append("score")
         matrix = []
@@ -211,9 +223,15 @@ class WordCount(object):
                 row.append(self.corpora_names[i])
                 for x in self.counters[i]:
                     row.append(x)
+                row.append(self.sums[i])
                 row.append(self.total_word_counts[i])
                 row.append(self.scores[i])
                 matrix.append(row)
+        lrow = [] #last row 
+        for i in range(len(self.average)):
+            lrow.append(self.average[i])
+        matrix.append(lrow)
+                
         return matrix
 
     def save_to_csv(self):
