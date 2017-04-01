@@ -156,23 +156,23 @@ class WordCount(object):
         math.ceil(avg)
         math.ceil(avg2)
         math.ceil(avg3)
-        print(avg)
-        print(avg2)
-        print(avg3)
-        empty_list = []
+        #print(avg)
+        #print(avg2)
+        #print(avg3)
+        #empty_list = []
         cat_count = 0
         self.average.append("Averages")
-        print(self.counters)
+        #print(self.counters)
         for x in range(len(self.dictionaries)):
             for i in range(len(self.counters)):
                 cat_count += self.counters[i][x]
-            empty_list.append(cat_count)
+            #empty_list.append(cat_count)
             self.average.append((float(cat_count)/len(self.counters)))
             cat_count = 0
         self.average.append(avg3)
         self.average.append(avg2)
         self.average.append(avg)
-        print(self.average)
+        #print(self.average)
 
     def to_html(self):
         result = "<table id='analyze_table'><tr id='header'>"
@@ -194,8 +194,7 @@ class WordCount(object):
                 result += "<td align='center'>" + self.corpora_labels[i] + "</td>"
                 for counts in self.counters[i] + [self.sums[i]] + [self.total_word_counts[i]] + [self.scores[i]]:
                     result += "<td align='center'>" + str(counts) + "</td>"
-        result += "</tr>"
-        result += "<tr>"
+        result += "</tr><tr>"
         for x in range(len(self.average)):
             result += "<td align='center'>" + str(self.average[x]) + "</td>"
         result += "</tr></table>"
