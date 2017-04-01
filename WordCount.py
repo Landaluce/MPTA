@@ -150,12 +150,9 @@ class WordCount(object):
             sum += self.scores[i]
             sum2 += self.total_word_counts[i]
             sum3 += self.sums[i]
-        avg = (float(sum)/len(self.scores))
-        avg2 = (float(sum2)/(len(self.total_word_counts)))
-        avg3 = (float(sum3)/len(self.sums))
-        math.ceil(avg)
-        math.ceil(avg2)
-        math.ceil(avg3)
+        avg = round((float(sum)/len(self.scores)), 3)
+        avg2 = round((float(sum2)/(len(self.total_word_counts))), 1)
+        avg3 = round((float(sum3)/len(self.sums)), 1)
         #print(avg)
         #print(avg2)
         #print(avg3)
@@ -167,7 +164,7 @@ class WordCount(object):
             for i in range(len(self.counters)):
                 cat_count += self.counters[i][x]
             #empty_list.append(cat_count)
-            self.average.append((float(cat_count)/len(self.counters)))
+            self.average.append(round(float(cat_count)/len(self.counters), 1))
             cat_count = 0
         self.average.append(avg3)
         self.average.append(avg2)
