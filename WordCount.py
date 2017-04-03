@@ -75,6 +75,7 @@ class WordCount(object):
     def delete_dictionary(self, index):
         del self.dictionaries[index]
         del self.dictionaries_names[index]
+        del self.dictionaries_labels[index]
         del self.active_dictionaries[index]
         del self.dictionaries_extensions[index]
 

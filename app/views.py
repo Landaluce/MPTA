@@ -3,7 +3,6 @@ from flask import render_template, request, redirect, url_for, Response
 from werkzeug import secure_filename
 from WordCount import WordCount
 from TwitterAPI import get_tweets, scrub_tweets
-from TwitterAPI2 import get_tweets2
 from app import app
 from time import time
 import csv
@@ -149,9 +148,9 @@ def FileManager():
                     app.config['check_all_corpora'] = True
                     app.config['obj'].activate_corpus(i)
         elif 'label' and 'label_index' in request.form:
-            label = request.form['label']
-            label_index = int(request.form['label_index'])
-            app.config['obj'].corpora_labels[label_index] = label
+            new_label_list = request.form['new_label_list'].split()
+            for i in range(len(app.config['obj'].corpora_labels)):
+                app.config['obj'].corpora_labels[i] = new_label_list[i]
     return render_template("fileManager.html",
                            title='File Manager',
                            active_corpora=app.config['active_corpora'],
@@ -335,6 +334,7 @@ def DictionaryManager():
                            check_all_oh=app.config['check_all_oh'],
                            active_oh=app.config['active_oh'],
                            dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+
 
 
 @app.route('/Analyze', methods=['GET', 'POST'])

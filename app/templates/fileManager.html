@@ -5,25 +5,21 @@
     {% if corpora is defined and corpora|length > 0 %}
         {% set count = 0 %}
 <script>
-window.onload=function(){
-  //document.getElementById("edit_button").style.visibility= "hidden";
-
-  let buttons = document.getElementsByName("edit_button");//.style.visibility= "hidden";
-  for(let x=0; x < buttons.length; x++)   // comparison should be "<" not "<="
-  {
-        buttons[x].style.visibility= "hidden";
-  }
-}
-
-function showButton(index){
-    let buttons = document.getElementsByName("edit_button");
-    let new_labels = dodument.getElementsByName("label");
-    //{% set new_labels = new_labels%}
-    //for(let x=0; x < new_labels.length;){}
-    buttons[index].style.visibility=  "visible";
-}
+    function showButton(){
+        let buttons = document.getElementsByName("edit_button");
+        let new_labels = document.getElementsByName("label");
+        let new_label_list = document.getElementsByName("new_label_list");
+        var new_labels_values = '';
+        for(let x = 0;x < new_labels.length;x++) {
+            new_labels_values += new_labels[x].value + ' ';
+        }
+        for(let x = 0;x < new_label_list.length;x++) {
+            new_label_list[x].value = new_labels_values;
+        }
+        buttons[0].style.visibility=  "visible";
+    }
 </script>
-        <table id="manager_table">
+        <table id="manager_table" border="0px">
             <tr>
                 <td>
                     <form method='POST'>
@@ -57,16 +53,24 @@ function showButton(index){
                     </form>
                 </td>
                 <td>
-                    <form method='POST'>
-                        <input type='text' name='label' value='{{labels[count]}}' onkeyup="showButton({{count}})">
+                    <form id="edit_label" method='POST'>
+                        <input type='text' name='label' value='{{labels[count]}}' onkeyup="showButton()">
                         <input type='hidden' name='label_index' value={{count}}>
-                        <input type='hidden' name='new_labels'>
-                        <input class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden">
+                        <input type='hidden' name='new_label_list'>
+                        <!--<input class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden">-->
                     </form>
                 </td>
             </tr>
+
             {% set count = count + 1 %}
             {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input form="edit_label" class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
+            </tr>
         </table>
     {% else %}
             <p>Upload a file</p>
