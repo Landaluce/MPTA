@@ -9,7 +9,7 @@
         <tr>
 
         {% for dictionary in dictionaries %}
-        <td>{{dictionary}}
+        <td align="right">{{dictionary}}
             {% if count < dictionaries|length and active_dictionaries[count] == True %}
 
             <select form="test" name="op{{count}}1">
