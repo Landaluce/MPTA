@@ -341,18 +341,14 @@ def Test():
     active_dictionaries = app.config['active_dictionaries'] + app.config['active_oh']
     labels = app.config['obj'].dictionaries_labels
     if request.method == 'POST':
-        print request.form
-        print request.form['op31']
         formula = []
         print (len(labels))
         for i in range(0, len(labels)):
-            print i
             if i == len(labels):
                 formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
             else:
                 formula.append([labels[i], request.form['op'+str(i)+'1'], request.form['quantity'+str(i)], request.form['op' + str(i) + '2']])
-
-            print formula
+            app.config['formula'] = formula
     return render_template("test.html",
                            title='Test',
                            active_page='Test',
@@ -380,7 +376,7 @@ def Analyze():
             headers={"Content-disposition": "attachment; filename=" + file_name})
     os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
     app.config['obj'].count_words()
-    app.config['obj'].generate_scores()
+    app.config['obj'].generate_scores(app.config['formula'])
     os.chdir(app.config['TMP_DIRECTORY'])
     content = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
                    "<input class='button' id='download_scores' type='submit' value='Download'>" \

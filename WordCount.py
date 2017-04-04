@@ -131,34 +131,29 @@ class WordCount(object):
                     counts.append(count)
             self.counters.append(counts)
 
-    def generate_scores(self):
-        formulas = [['Opportunity', '*', '2', '-'], ['Threat', '*', '1', '+'], ['Enactment', '*', '1', '+'], ['Org_Identity', '*', '2', ' ']]
+    def generate_scores(self, formulas):
         index = 0
         for i in range(len(self.counters)):
             sum = 0
-            formula = formulas[i]
-            next= formula[3]
-            for count in self.counters[i]:
-                op = eval(str(count) + str(formula[1])+str(formula[2]))
-                print op
-                if next == "" or "+":
-                    sum += eval(str(count) + str(formula[1])+str(formula[2]))
-                elif next == "-":
-                    sum -= eval(str(count) + str(formula[1])+str(formula[2]))
-                elif next == "*":
-                    sum *= eval(count + formula[1] + formula[2])
-                elif next == "/":
-                    sum = sum/eval(count + formula[1] + formula[2])
+            for x in range(len(self.counters[i])):
+                formula = formulas[x]
+                if x == 0:
+                    next = '+'
+                else:
+                    next = formulas[x-1][3]
+                op = eval(str(self.counters[i][x]) + str(formula[1])+str(formula[2]))
+                self.counters[i][x] = op
+                sum = eval(str(sum) + next + str(op))
             self.scores.append(float(sum)/self.total_word_counts[index])
             self.sums.append(sum)
             index += 1
         self.average_scores()
-    
-    
+
     def average_scores(self):
-        sum = 0 #total hardiness score
-        sum2 = 0 #total word count score
-        sum3 = 0 #sum
+        self.average = []
+        sum = 0   # total hardiness score
+        sum2 = 0  # total word count score
+        sum3 = 0  # sum
         for i in range(len(self.scores)):
             sum += self.scores[i]
             sum2 += self.total_word_counts[i]
@@ -166,23 +161,16 @@ class WordCount(object):
         avg = round((float(sum)/len(self.scores)), 3)
         avg2 = round((float(sum2)/(len(self.total_word_counts))), 1)
         avg3 = round((float(sum3)/len(self.sums)), 1)
-        #print(avg)
-        #print(avg2)
-        #print(avg3)
-        #empty_list = []
         cat_count = 0
         self.average.append("Averages")
-        #print(self.counters)
         for x in range(len(self.dictionaries)):
             for i in range(len(self.counters)):
                 cat_count += self.counters[i][x]
-            #empty_list.append(cat_count)
             self.average.append(round(float(cat_count)/len(self.counters), 1))
             cat_count = 0
         self.average.append(avg3)
         self.average.append(avg2)
         self.average.append(avg)
-        #print(self.average)
 
     def to_html(self):
         result = "<table id='analyze_table'><tr id='header'>"
