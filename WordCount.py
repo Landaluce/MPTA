@@ -133,20 +133,30 @@ class WordCount(object):
 
     def generate_scores(self, formulas):
         index = 0
-        for i in range(len(self.counters)):
-            sum = 0
-            for x in range(len(self.counters[i])):
-                formula = formulas[x]
-                if x == 0:
-                    next = '+'
-                else:
-                    next = formulas[x-1][3]
-                op = eval(str(self.counters[i][x]) + str(formula[1])+str(formula[2]))
-                self.counters[i][x] = op
-                sum = eval(str(sum) + next + str(op))
-            self.scores.append(float(sum)/self.total_word_counts[index])
-            self.sums.append(sum)
-            index += 1
+        if len(formulas) > 0:
+            for i in range(len(self.counters)):
+                sum = 0
+                for x in range(len(self.counters[i])):
+                    formula = formulas[x]
+                    if x == 0:
+                        next = '+'
+                    else:
+                        next = formulas[x-1][3]
+                    op = eval(str(self.counters[i][x]) + str(formula[1])+str(formula[2]))
+                    self.counters[i][x] = op
+                    sum = eval(str(sum) + next + str(op))
+                self.scores.append(float(sum)/self.total_word_counts[index])
+                self.sums.append(sum)
+                index += 1
+        else:
+            for counts in self.counters:
+                sum = 0
+                index = 0
+                for count in counts:
+                    sum += count
+                self.scores.append(float(sum) / self.total_word_counts[index])
+                self.sums.append(sum)
+                index += 1
         self.average_scores()
 
     def average_scores(self):

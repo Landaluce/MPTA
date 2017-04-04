@@ -340,7 +340,6 @@ def DictionaryManager():
 def Test():
     active_dictionaries = app.config['obj'].active_dictionaries
     labels = app.config['obj'].dictionaries_labels
-    print labels
     if request.method == 'POST':
         formula = []
         print (len(labels))
