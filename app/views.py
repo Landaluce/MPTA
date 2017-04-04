@@ -4,7 +4,6 @@ from werkzeug import secure_filename
 from WordCount import WordCount
 from TwitterAPI import get_tweets, scrub_tweets
 from app import app
-from time import time
 import csv
 import os
 
@@ -271,7 +270,7 @@ def DictionaryManager():
             label = request.form['label']
             label_index = int(request.form['label_index'])
             app.config['obj'].dictionaries_labels[label_index] = label
-        elif 'check_oh' in request.form:
+        elif 'check_all_oh' in request.form:
             first_oh_index = 0
             for i in range(0, len(app.config['obj'].dictionaries_names)):
                 if app.config['obj'].dictionaries_names[i] == "Opportunity.txt":
@@ -342,12 +341,12 @@ def Test():
     labels = app.config['obj'].dictionaries_labels
     if request.method == 'POST':
         formula = []
-        print (len(labels))
         for i in range(0, len(labels)):
-            if i == len(labels):
-                formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
-            else:
-                formula.append([labels[i], request.form['op'+str(i)+'1'], request.form['quantity'+str(i)], request.form['op' + str(i) + '2']])
+            if app.config['obj'].active_dictionaries[i] == True:
+                if i == len(labels):
+                    formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
+                else:
+                    formula.append([labels[i], request.form['op'+str(i)+'1'], request.form['quantity'+str(i)], request.form['op' + str(i) + '2']])
             app.config['formula'] = formula
     return render_template("test.html",
                            title='Test',
