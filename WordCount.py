@@ -130,11 +130,23 @@ class WordCount(object):
             self.counters.append(counts)
 
     def generate_scores(self):
+        formulas = [['Opportunity', '*', '2', '-'], ['Threat', '*', '1', '+'], ['Enactment', '*', '1', '+'], ['Org_Identity', '*', '2', ' ']]
         index = 0
-        for counts in self.counters:
+        for i in range(len(self.counters)):
             sum = 0
-            for count in counts:
-                sum += count
+            formula = formulas[i]
+            next= formula[3]
+            for count in self.counters[i]:
+                op = eval(str(count) + str(formula[1])+str(formula[2]))
+                print op
+                if next == "" or "+":
+                    sum += eval(str(count) + str(formula[1])+str(formula[2]))
+                elif next == "-":
+                    sum -= eval(str(count) + str(formula[1])+str(formula[2]))
+                elif next == "*":
+                    sum *= eval(count + formula[1] + formula[2])
+                elif next == "/":
+                    sum = sum/eval(count + formula[1] + formula[2])
             self.scores.append(float(sum)/self.total_word_counts[index])
             self.sums.append(sum)
             index += 1

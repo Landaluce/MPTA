@@ -336,6 +336,29 @@ def DictionaryManager():
                            dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
 
 
+@app.route('/Test', methods=['GET', 'POST'])
+def Test():
+    active_dictionaries = app.config['active_dictionaries'] + app.config['active_oh']
+    labels = app.config['obj'].dictionaries_labels
+    if request.method == 'POST':
+        print request.form
+        print request.form['op31']
+        formula = []
+        print (len(labels))
+        for i in range(0, len(labels)):
+            print i
+            if i == len(labels):
+                formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
+            else:
+                formula.append([labels[i], request.form['op'+str(i)+'1'], request.form['quantity'+str(i)], request.form['op' + str(i) + '2']])
+
+            print formula
+    return render_template("test.html",
+                           title='Test',
+                           active_page='Test',
+                           dictionaries=labels,
+                           active_dictionaries=active_dictionaries)
+
 
 @app.route('/Analyze', methods=['GET', 'POST'])
 def Analyze():

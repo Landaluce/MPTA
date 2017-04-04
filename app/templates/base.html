@@ -31,8 +31,10 @@
         ('/', 'index', 'Upload'),
         ('/FileManager', 'FileManager', 'File Manager'),
         ('/DictionaryManager', 'DictionaryManager', 'Dictionary Manager'),
+        ('/Test', 'Test', 'Test'),
         ('/Analyze', 'Analyze', 'Analyze'),
         ('/Reset', 'Reset', 'Reset')
+
         ] -%}
       {% set active_page = active_page|default('index') -%}
   </head>
@@ -40,8 +42,8 @@
     <div id="app_name">OHA</div>
     <ul id="navigation">
         {% for href, id, caption in navigation_bar %}
-        <li{% if id == active_page %} class="active"{% endif
-        %}><a href="{{ href|e }}">{{ caption|e }}</a>
+        <li{% if id == active_page %} class="active"{% endif%}>
+        <a href="{{ href|e }}">{{ caption|e }}</a>
         </li>
         {% endfor %}
     </ul>

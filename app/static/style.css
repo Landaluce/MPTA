@@ -144,7 +144,7 @@ input[type='file'] {
     width: 100%;
 }
 
-#manager_table, #analyze_table {
+#manager_table, #analyze_table, #test {
     margin: 0 auto 0 auto;
     margin-top: 50px;
 }
@@ -255,4 +255,10 @@ textarea:focus{
 #error_message {
     color: red;
     width: 80%;
+}
+
+
+.number {
+    width: 100px;
+
 }
