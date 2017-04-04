@@ -159,7 +159,7 @@ class WordCount(object):
                 index += 1
         self.average_scores()
 
-    def average_scores(self):
+    def generate_averages(self):
         self.average = []
         sum = 0   # total hardiness score
         sum2 = 0  # total word count score
