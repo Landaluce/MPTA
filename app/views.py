@@ -335,24 +335,41 @@ def DictionaryManager():
                            dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
 
 
-@app.route('/Test', methods=['GET', 'POST'])
-def Test():
-    active_dictionaries = app.config['obj'].active_dictionaries
-    labels = app.config['obj'].dictionaries_labels
-    if request.method == 'POST':
+def Generate_formula(is_default=0):
+    if is_default == 0:
+        active_dictionaries = app.config['obj'].active_dictionaries
+        labels = app.config['obj'].dictionaries_labels
+        if request.method == 'POST':
+            formula = []
+            for i in range(0, len(labels)):
+                if active_dictionaries[i]:
+                    if i == len(labels):
+                        formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
+                    else:
+                        formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)],
+                                        request.form['op' + str(i) + '2']])
+                app.config['formula'] = formula
+    else:
+        active_dictionaries = app.config['obj'].active_dictionaries
+        labels = app.config['obj'].dictionaries_labels
         formula = []
         for i in range(0, len(labels)):
-            if app.config['obj'].active_dictionaries[i] == True:
+            if active_dictionaries[i]:
                 if i == len(labels):
-                    formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
+                    formula.append([labels[i], "*", "1"])
                 else:
-                    formula.append([labels[i], request.form['op'+str(i)+'1'], request.form['quantity'+str(i)], request.form['op' + str(i) + '2']])
+                    formula.append([labels[i], "*", "1", "+"])
             app.config['formula'] = formula
+
+
+@app.route('/Test', methods=['GET', 'POST'])
+def Test():
+    Generate_formula()
     return render_template("test.html",
                            title='Test',
                            active_page='Test',
-                           dictionaries=labels,
-                           active_dictionaries=active_dictionaries)
+                           dictionaries=app.config['obj'].dictionaries_labels,
+                           active_dictionaries=app.config['obj'].active_dictionaries)
 
 
 @app.route('/Analyze', methods=['GET', 'POST'])
@@ -373,6 +390,8 @@ def Analyze():
             file_content,
             mimetype="text/csv",
             headers={"Content-disposition": "attachment; filename=" + file_name})
+    if len(app.config['formula']) == 0:
+        Generate_formula(1)
     os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
     app.config['obj'].count_words()
     app.config['obj'].generate_scores(app.config['formula'])
