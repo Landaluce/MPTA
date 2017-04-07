@@ -4,7 +4,7 @@ import shutil
 import os
 
 
-def allowed_file(file_name):
+def allowed_extension(file_name):
     """
     Checks if the given file name extension is allowed
     :param file_name: String.
@@ -12,6 +12,13 @@ def allowed_file(file_name):
     """
     file_extension = file_name.rsplit('.', 1)[1]
     if file_extension in app.config['ALLOWED_EXTENSIONS']:
+        return True
+    return False
+
+
+def allowed_size(file_name):
+    file_size = get_file_size(file_name, in_bytes=True)
+    if file_size <= 262144000:  # 250MB in bytes
         return True
     return False
 
@@ -50,14 +57,18 @@ def humanize_file_size(size):
     return "%.1f %s" % (size / math.pow(1000, p), units[int(p)])
 
 
-def get_file_size(file_path):
+def get_file_size(file_path, in_bytes=False):
     """
     Gets the size of the given file
     :param file_path: path of a file (String)
+    :param in_bytes: True if want ro return size in bytes (Boolean)
     :return: size of file (Float)
     """
     size = os.stat(file_path).st_size
-    return humanize_file_size(size)
+    if in_bytes:
+        return size
+    else:
+        return humanize_file_size(size)
 
 
 def get_file_extension(file_path):

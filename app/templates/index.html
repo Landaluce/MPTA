@@ -5,11 +5,11 @@
         <tr>
             <td align="center">
                 <div id="upload_title">File Upload</div>
-                <div id="formats">Formats Supported: .txt, .csv, .docx</div>
+                <div id="formats">Max. file size: 250 MB | Formats Supported: .txt, .csv, .docx</div>
             </td>
             <td align="center">
                 <div id="upload_title">Dictionary Upload</div>
-                <div id="formats">Formats Supported: .txt, .csv, .docx</div>
+                <div id="formats">Max. file size: 250 MB | Formats Supported: .txt, .csv, .docx</div>
             </td>
         <tr>
             <td align="center">
@@ -30,15 +30,27 @@
         <tr>
             <td align="center">
                 <div id="error_message">
-                    {% if corpus_errors|length > 0 %}
-                        Error uploading {{corpus_errors}}: Unsoprted file format
+                    {% if corpus_extension_errors|length > 0 and corpus_size_errors|length == 0 %}
+                        Error uploading {{corpus_extension_errors}}: Unsoprted file format
+                    {% elif corpus_extension_errors|length == 0 and corpus_size_errors|length > 0 %}
+                        Error uploading {{corpus_size_errors}}: Exceeded 250MB
+                    {% elif corpus_extension_errors|length > 0 and corpus_size_errors|length > 0 %}
+                        Error uploading {{corpus_extension_errors}}: Unsoprted file format
+                        <br>
+                        Error uploading {{corpus_size_errors}}: Exceeded 250MB
                     {% endif %}
                 </div>
             </td>
              <td align="center">
                 <div id="error_message">
-                    {% if dictionary_errors|length > 0 %}
-                        Error uploading {{dictionary_errors}}: Unsoprted file format
+                    {% if dictionary_extension_errors|length > 0 and dictionary_size_errors|length == 0 %}
+                        Error uploading {{dictionary_extension_errors}}: Unsoprted file format
+                    {% elif dictionary_extension_errors|length == 0 and dictionary_size_errors|length > 0 %}
+                        Error uploading {{dictionary_size_errors}}: Exceeded 250MB
+                    {% elif dictionary_extension_errors|length > 0 and dictionary_size_errors|length > 0 %}
+                        Error uploading {{dictionary_extension_errors}}: Unsoprted file format
+                        <br>
+                        Error uploading {{dictionary_size_errors}}: Exceeded 250MB
                     {% endif %}
                 </div>
             </td>
