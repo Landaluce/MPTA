@@ -381,9 +381,12 @@ def Generate_formula(is_default=0):
 @app.route('/Test', methods=['GET', 'POST'])
 def Test():
     Generate_formula()
+    if len(app.config['formula']) > 0:
+        print app.config['formula'][0][1]
     return render_template("test.html",
                            title='Test',
                            active_page='Test',
+                           formula=app.config['formula'],
                            dictionaries=app.config['obj'].dictionaries_labels,
                            active_dictionaries=app.config['obj'].active_dictionaries)
 

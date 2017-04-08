@@ -30,7 +30,6 @@ class WordCount(object):
         self.corpora_names.append(file_name)
         self.corpora_labels.append(ntpath.basename(strip_file_extension(file_name)))
         file_extension = get_file_extension(file_path)
-        print file_extension
         if file_extension == ".csv":
             new_corpus = read_csv(file_path)
         elif file_extension == ".txt" or " ":
