@@ -359,7 +359,7 @@ def Generate_formula(is_default=0):
             formula = []
             for i in range(0, len(labels)):
                 if active_dictionaries[i]:
-                    if i == len(labels):
+                    if i == len(labels) - 1:
                         formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
                     else:
                         formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)],
@@ -381,8 +381,7 @@ def Generate_formula(is_default=0):
 @app.route('/Test', methods=['GET', 'POST'])
 def Test():
     Generate_formula()
-    if len(app.config['formula']) > 0:
-        print app.config['formula'][0][1]
+
     return render_template("test.html",
                            title='Test',
                            active_page='Test',

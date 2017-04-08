@@ -19,20 +19,21 @@
                 <option value="-" {% if formula|length > 0  %}{% if formula[count][1] == '-' %}selected='selected'{% endif %}{% endif %}>-</option>
             </select>
             <input type="number" class="number" name="quantity{{count}}" min="1" max="500" placeholder="1-500" value="{% if formula|length > 0  %}{{ formula[count][2] }}{% endif %}">
-
+            {% if dictionary != dictionaries[dictionaries|length - 1] %}
                 <select form="test" name="op{{count}}2">
-                    <option value="+" {% if formula|length > 0  %}{% if formula[count][3] == '+' %}selected='selected'{% endif %}{% endif %}>+</option>
-                    <option value="-" {% if formula|length > 0  %}{% if formula[count][1] == '-' %}selected='selected'{% endif %}{% endif %}>-</option>
-                    <option value="*" {% if formula|length > 0  %}{% if formula[count][1] == '*' %}selected='selected'{% endif %}{% endif %}>x</option>
-                    <option value="/" {% if formula|length > 0  %}{% if formula[count][1] == '/' %}selected='selected'{% endif %}{% endif %}>/</option>
+                    <option value="+" {% if formula|length > 0 %}{% if formula[count][3] == '+' %}selected='selected'{% endif %}{% endif %}>+</option>
+                    <option value="-" {% if formula|length > 0 %}{% if formula[count][3] == '-' %}selected='selected'{% endif %}{% endif %}>-</option>
+                    <option value="*" {% if formula|length > 0 %}{% if formula[count][3] == '*' %}selected='selected'{% endif %}{% endif %}>x</option>
+                    <option value="/" {% if formula|length > 0 %}{% if formula[count][3] == '/' %}selected='selected'{% endif %}{% endif %}>/</option>
                 </select>
-            </td>
             {% endif %}
-            {% set count = count + 1 %}
-            {% set count2 = count2 + 1 %}
-            {% if count2 == 4 %}
-                {% set count2 = 0%}
-        </tr><tr>
+        </td>
+        {% endif %}
+        {% set count = count + 1 %}
+        {% set count2 = count2 + 1 %}
+        {% if count2 == 4 %}
+            {% set count2 = 0%}
+                </tr><tr>
             {% endif %}
         {% endfor %}
 
