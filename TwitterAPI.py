@@ -1,65 +1,60 @@
+from TwitterAPI_Constants import *
 import tweepy
 import unicodedata
 import re
 
 
 def get_tweets(search_query, number_tweets=15):
+    return get_tweets_recursive(search_query, number_tweets, 0, None)
+
+
+def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
     """
     Gets a list of tweets
     :param search_query: search query used to find tweets (String)
     :param number_tweets: number of tweets to get (Integer)
+    :param index: determines which twitter_id to use (Integer)
+    :param recursive_tweets: tweets from the recursive call (List)
     :return: List of tweet objects
     """
-    consumer_key = 'WCG4FAJ0w8wwe8mFPieZ7vH4k'
-    consumer_secret = '5MwDTXZ7vQ78K2YUTHkDejwF9tAy5ALB53YW9DmO39Q1u3ERal'
-
-    access_token = '79021712-518H54Rj7JZIEw9fPOWmo9OlovAhb5rZrYkfUIbqt'
-    access_token_secret = 'wEBL3hRPAAxnOIh9JnVi9NKqWAwUXxblFceWYvi9ekv2V'
-
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-
+    auth = tweepy.OAuthHandler(TWITTER_IDS[index][0], TWITTER_IDS[index][1])
+    auth.set_access_token(TWITTER_IDS[index][2], TWITTER_IDS[index][3])
     api = tweepy.API(auth)
-
-    tweetsPerQry = 100  # this is the max the API permits
-
-    # If results from a specific ID onwards are reqd, set since_id to that ID.
-    # else default to no lower limit, go as far back as API allows
-    sinceId = None
-
-    # If results only below a specific ID are, set max_id to that ID.
-    # else default to no upper limit, start from the most recent tweet matching the search query.
-    max_id = -1L
-    tweets = []
-    tweetCount = 0
-    while tweetCount < number_tweets:
+    if recursive_tweets is None:
+        tweets = []
+        tweet_count = 0
+    else:
+        tweets = recursive_tweets
+        tweet_count = len(recursive_tweets)
+    while tweet_count < number_tweets:
         try:
-            if max_id <= 0:
-                if not sinceId:
-                    new_tweets = api.search(q=search_query, count=tweetsPerQry)
+            if MAX_ID <= 0:
+                if not SINCE_ID:
+                    new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY)
                 else:
-                    new_tweets = api.search(q=search_query, count=tweetsPerQry,
-                                            since_id=sinceId)
+                    new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY,
+                                            since_id=SINCE_ID)
             else:
-                if not sinceId:
-                    new_tweets = api.search(q=search_query, count=tweetsPerQry,
-                                            max_id=str(max_id - 1))
+                if not SINCE_ID:
+                    new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY,
+                                            max_id=str(MAX_ID - 1))
                 else:
-                    new_tweets = api.search(q=search_query, count=tweetsPerQry,
-                                            max_id=str(max_id - 1),
-                                            since_id=sinceId)
+                    new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY,
+                                            max_id=str(MAX_ID - 1),
+                                            since_id=SINCE_ID)
             if not new_tweets:
                 print("No more tweets found")
                 break
             for tweet in new_tweets:
                 tweets.append(tweet)
-            tweetCount += len(new_tweets)
-            max_id = new_tweets[-1].id
-        except tweepy.TweepError as e:
-            # Just exit if any error
-            print("some error : " + str(e))
+            tweet_count += len(new_tweets)
+            MAX_ID = new_tweets[-1].id
+        except tweepy.TweepError as error:
+            print 'Rate limit exceeded, changing id '
+            if error.message[0]['code'] == LIMIT_EXCEEDED_ERROR_CODE:
+                if index < len(TWITTER_IDS):
+                    get_tweets_recursive(search_query, number_tweets, index+1, tweets)
             break
-
     return tweets
 
 
@@ -73,7 +68,6 @@ def scrub_tweets(tweets):
     for tweet in tweets:
         tweet = unicodedata.normalize('NFKD', tweet).encode('ascii', 'ignore')
         tweet = tweet.lower()
-        #print '{'+tweet+'}'
         tweet = re.sub(r'https://.*', '', tweet)
 
         tweet = re.sub(r'rt.*?:', '', tweet)
@@ -103,9 +97,4 @@ def scrub_tweets(tweets):
         tweet = tweet.replace('-', ' ')
         tweet = ' '.join(tweet.split())
         scrubed_tweets.append(tweet)
-        #print '[' + tweet + ']'
     return scrubed_tweets
-
-#tweets = get_tweets("Trump", 100)
-#for tweet in tweets:
-#    print tweet.text
