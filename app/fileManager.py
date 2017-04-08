@@ -10,6 +10,8 @@ def allowed_extension(file_name):
     :param file_name: String.
     :return: Boolean.
     """
+    if '.' not in file_name:
+        return True
     file_extension = file_name.rsplit('.', 1)[1]
     if file_extension in app.config['ALLOWED_EXTENSIONS']:
         return True
@@ -77,6 +79,8 @@ def get_file_extension(file_path):
     :param file_path: path of a file (String)
     :return: extension of file (Float)
     """
+    if '.' not in file_path:
+        return ' '
     return os.path.splitext(file_path)[1]
 
 

@@ -30,9 +30,10 @@ class WordCount(object):
         self.corpora_names.append(file_name)
         self.corpora_labels.append(ntpath.basename(strip_file_extension(file_name)))
         file_extension = get_file_extension(file_path)
+        print file_extension
         if file_extension == ".csv":
             new_corpus = read_csv(file_path)
-        elif file_extension == ".txt":
+        elif file_extension == ".txt" or " ":
             new_corpus = read_txt(file_path)
             new_corpus = self.utf8_to_ascii(new_corpus).decode('unicode_escape').encode('ascii', 'ignore')
         elif file_extension == ".docx":
@@ -55,7 +56,7 @@ class WordCount(object):
                 for cell in row:
                     cell = cell.strip()
                     new_list.append(cell)
-        elif file_extension == ".txt":
+        elif file_extension == ".txt" or " ":
             new_list = read_txt(file_path)
             new_list = new_list.split(", ")
             new_list = map(lambda x: x.encode("utf-8"), new_list)
