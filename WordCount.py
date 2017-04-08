@@ -112,7 +112,6 @@ class WordCount(object):
         # delete previous results
         self.counts = []
         self.counters = []
-        self.scores = []
         corpora = self.corpora
         for corpus in corpora:
             counts = []
@@ -133,6 +132,8 @@ class WordCount(object):
 
     def generate_scores(self, formulas):
         index = 0
+        self.sums = []
+        self.scores = []
         if len(formulas) > 0:
             for i in range(len(self.counters)):
                 sum = 0
@@ -142,11 +143,14 @@ class WordCount(object):
                         next = '+'
                     else:
                         next = formulas[x-1][3]
-                    op = eval(str(self.counters[i][x]) + str(formula[1])+str(formula[2]))
+                    if self.counters[i][x] != 0:
+                        op = eval(str(float(self.counters[i][x])) + str(formula[1])+str(formula[2]))
+                    else:
+                        op = 0
                     self.counters[i][x] = op
-                    sum = eval(str(sum) + next + str(op))
-                self.scores.append(float(sum)/self.total_word_counts[index])
-                self.sums.append(sum)
+                    sum = eval(str(float(sum)) + next + str(op))
+                self.scores.append(round(float(sum)/self.total_word_counts[index], 3))
+                self.sums.append(float(sum))
                 index += 1
         else:
             for counts in self.counters:
@@ -155,7 +159,7 @@ class WordCount(object):
                 for count in counts:
                     sum += count
                 self.scores.append(round(float(sum) / self.total_word_counts[index]), 1)
-                self.sums.append(sum)
+                self.sums.append(float(sum))
                 index += 1
         self.generate_averages()
 
