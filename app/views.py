@@ -30,27 +30,29 @@ def Upload():
                 size = allowed_size(os.path.join(app.config['TMP_DIRECTORY'], file_name))
                 if extension and size:
                     if request.form['upload'] == "corpus":
-                        #file.save(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
                         os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name), os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
                         app.config['obj'].add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
                         app.config['active_corpora'].append("checked")
                     elif request.form['upload'] == "dictionary":
-                        #file.save(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name), os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         app.config['active_dictionaries'].append("checked")
                 else:
                     os.remove(os.path.join(app.config['TMP_DIRECTORY'], file_name))
                     if request.form['upload'] == "corpus":
-                        if extension:
-                            corpus_extension_errors += file.filename + ", "
-                        elif size:
-                            corpus_size_errors += file.filename + ", "
+                        if not size:
+                            corpus_size_errors += file.filename
+                            corpus_size_errors += ", "
+                        if not extension:
+                            corpus_extension_errors += file.filename
+                            corpus_extension_errors += ", "
                     elif request.form['upload'] == "dictionary":
-                        if extension:
-                            dictionary_extension_errors += file.filename + ", "
-                        elif size:
-                            dictionary_size_errors += file.filename + ", "
+                        if not size:
+                            dictionary_size_errors += file.filename
+                            dictionary_size_errors += ", "
+                        if not extension:
+                            dictionary_extension_errors += file.filename
+                            dictionary_extension_errors += ", "
         elif 'search_query' and 'quantity' in request.form:
             search_query = request.form['search_query']
             quantity = request.form['quantity']
@@ -81,7 +83,6 @@ def Upload():
     dictionaries_sizes = []
     for filename in os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']):
         dictionaries_sizes.append(get_file_size(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + filename))
-
     return render_template("index.html",
                            title='Upload',
                            corpus_extension_errors=corpus_extension_errors[:-2],
