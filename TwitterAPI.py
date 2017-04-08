@@ -1,3 +1,5 @@
+from TwitterAPI_Credentials import CREDENTIALS
+# list of credentials. A credential = [consumer_key, consumer_secret, access_token, access_token_secret]
 from TwitterAPI_Constants import *
 import tweepy
 import unicodedata
@@ -17,9 +19,10 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
     :param recursive_tweets: tweets from the recursive call (List)
     :return: List of tweet objects
     """
-    auth = tweepy.OAuthHandler(TWITTER_IDS[index][0], TWITTER_IDS[index][1])
-    auth.set_access_token(TWITTER_IDS[index][2], TWITTER_IDS[index][3])
+    auth = tweepy.OAuthHandler(CREDENTIALS[index][0], CREDENTIALS[index][1])
+    auth.set_access_token(CREDENTIALS[index][2], CREDENTIALS[index][3])
     api = tweepy.API(auth)
+    max_id = -1L  # If results only below a specific ID are, set max_id to that ID, else default to no upper limit
     if recursive_tweets is None:
         tweets = []
         tweet_count = 0
@@ -28,7 +31,7 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
         tweet_count = len(recursive_tweets)
     while tweet_count < number_tweets:
         try:
-            if MAX_ID <= 0:
+            if max_id <= 0:
                 if not SINCE_ID:
                     new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY)
                 else:
@@ -37,10 +40,10 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
             else:
                 if not SINCE_ID:
                     new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY,
-                                            max_id=str(MAX_ID - 1))
+                                            max_id=str(max_id - 1))
                 else:
                     new_tweets = api.search(q=search_query, count=TWEETS_PER_QUERY,
-                                            max_id=str(MAX_ID - 1),
+                                            max_id=str(max_id - 1),
                                             since_id=SINCE_ID)
             if not new_tweets:
                 print("No more tweets found")
@@ -48,7 +51,7 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
             for tweet in new_tweets:
                 tweets.append(tweet)
             tweet_count += len(new_tweets)
-            MAX_ID = new_tweets[-1].id
+            max_id = new_tweets[-1].id
         except tweepy.TweepError as error:
             print 'Rate limit exceeded, changing id '
             if error.message[0]['code'] == LIMIT_EXCEEDED_ERROR_CODE:
