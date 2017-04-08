@@ -1,5 +1,5 @@
 from TwitterAPI_Credentials import CREDENTIALS
-# list of credentials. A credential = [consumer_key, consumer_secret, access_token, access_token_secret]
+# CREDENTIALS = list of credentials, a credential = [consumer_key, consumer_secret, access_token, access_token_secret]
 from TwitterAPI_Constants import *
 import tweepy
 import unicodedata
