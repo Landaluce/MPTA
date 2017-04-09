@@ -164,26 +164,38 @@ class WordCount(object):
 
     def generate_averages(self):
         self.average = []
-        sum = 0   # total hardiness score
-        sum2 = 0  # total word count score
-        sum3 = 0  # sum
+        scores_sum = 0
+        total_word_counts_sum = 0
+        sums_sum = 0
         for i in range(len(self.scores)):
-            sum += self.scores[i]
-            sum2 += self.total_word_counts[i]
-            sum3 += self.sums[i]
-        avg = round((float(sum)/len(self.scores)), 3)
-        avg2 = round((float(sum2)/(len(self.total_word_counts))), 1)
-        avg3 = round((float(sum3)/len(self.sums)), 1)
+            scores_sum += self.scores[i]
+            total_word_counts_sum += self.total_word_counts[i]
+            sums_sum += self.sums[i]
+        if len(self.scores) != 0:
+            scores_avg = round((float(scores_sum)/len(self.scores)), 3)
+        else:
+            scores_avg = 0
+        if len(self.total_word_counts) != 0:
+            total_word_counts_avg = round((float(total_word_counts_sum)/(len(self.total_word_counts))), 1)
+        else:
+            total_word_counts_avg = 0
+        if len(self.sums) != 0:
+            sums_avg = round((float(sums_sum)/len(self.sums)), 1)
+        else:
+            sums_avg = 0
         cat_count = 0
         self.average.append("Averages")
         for x in range(len(self.dictionaries)):
             for i in range(len(self.counters)):
                 cat_count += self.counters[i][x]
-            self.average.append(round(float(cat_count)/len(self.counters), 1))
+            if len(self.counters) != 0:
+                self.average.append(round(float(cat_count)/len(self.counters), 1))
+            else:
+                self.average.append(0)
             cat_count = 0
-        self.average.append(avg3)
-        self.average.append(avg2)
-        self.average.append(avg)
+        self.average.append(sums_avg)
+        self.average.append(total_word_counts_avg)
+        self.average.append(scores_avg)
 
     def to_html(self):
         result = "<table id='analyze_table'><tr id='header'>"
