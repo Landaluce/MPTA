@@ -37,6 +37,10 @@ def Upload():
                         os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name), os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         app.config['active_dictionaries'].append("checked")
+                        print app.config['formula']
+                        app.config['formula'][-1].append("+")
+                        app.config['formula'].append([app.config['obj'].dictionaries_labels[-1], "", "", "+"])
+                        print app.config['formula']
                 else:
                     os.remove(os.path.join(app.config['TMP_DIRECTORY'], file_name))
                     if request.form['upload'] == "corpus":
