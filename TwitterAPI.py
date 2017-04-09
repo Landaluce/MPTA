@@ -55,7 +55,7 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
         except tweepy.TweepError as error:
             print 'Rate limit exceeded, changing id '
             if error.message[0]['code'] == LIMIT_EXCEEDED_ERROR_CODE:
-                if index < len(TWITTER_IDS):
+                if index < len(CREDENTIALS):
                     get_tweets_recursive(search_query, number_tweets, index+1, tweets)
             break
     return tweets
