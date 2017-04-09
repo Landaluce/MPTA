@@ -9,7 +9,11 @@
         <tr>
 
         {% for dictionary in dictionaries %}
-        <td align="right">{{dictionary}}
+            {% if dictionary != dictionaries[dictionaries|length - 1] %}
+                <td align="right">{{dictionary}}
+            {% else %}
+                <td align="left">{{dictionary}}
+            {% endif %}
             {% if count < dictionaries|length and active_dictionaries[count] == True %}
 
             <select form="test" name="op{{count}}1">
@@ -39,7 +43,7 @@
 
         </tr>
         <tr>
-            <td>
+            <td colspan="4" align="center">
                 <input class='button' id='edit_button' type='submit' value='Save formula'>
             </td>
         </tr>
