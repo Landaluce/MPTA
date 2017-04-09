@@ -1,10 +1,9 @@
 from app.fileManager import get_file_extension, strip_file_extension
-#from docx import opendocx, getdocumenttext
+from docx import opendocx, getdocumenttext
 import unicodedata
 import ntpath
 import csv
 import re
-import math
 
 
 class WordCount(object):
@@ -150,7 +149,7 @@ class WordCount(object):
                     self.counters[i][x] = op
                     sum = eval(str(float(sum)) + next + str(op))
                 self.scores.append(round(float(sum)/self.total_word_counts[index], 3))
-                self.sums.append(float(sum))
+                self.sums.append(sum)
                 index += 1
         else:
             for counts in self.counters:

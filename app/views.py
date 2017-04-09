@@ -442,4 +442,5 @@ def Reset():
     app.config['check_all_oh'] = False
     app.config['active_oh'] = [False, False, False, False]
     app.config['oh_uploaded'] = False
+    app.config['formula'] = []
     return redirect(url_for('Upload'))
