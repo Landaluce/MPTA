@@ -381,23 +381,6 @@ def Generate_formula(is_default=0):
             app.config['formula'] = formula
 
 
-""""@app.route('/Test', methods=['GET', 'POST'])
-def Test():
-    Generate_formula()
-    temp_labels = []
-    for label in app.config['obj'].dictionaries_labels:
-        if len(label) > 18:
-            temp_labels.append(label[:16] + "...")
-        else:
-            temp_labels.append(label)
-    return render_template("test.html",
-                           title='Test',
-                           active_page='Test',
-                           formula=app.config['formula'],
-                           dictionaries=temp_labels,
-                           active_dictionaries=app.config['obj'].active_dictionaries)"""
-
-
 @app.route('/Analyze', methods=['GET', 'POST'])
 def Analyze():
     """
