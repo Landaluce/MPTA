@@ -144,7 +144,7 @@ input[type='file'] {
     width: 100%;
 }
 
-#manager_table, #analyze_table, #test {
+#manager_table, #formula, #analyze_table_container, #analyze_table{
     margin: 0 auto 0 auto;
     margin-top: 50px;
 }
@@ -157,9 +157,15 @@ input[type='file'] {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+#analyze_table_container {
+    width: 100%;
+}
+
 #analyze_table{
+    margin-top: 0;
     width: 90%;
-    border: 1px solid #111;
+    border: 5px solid black;
 }
 
 #analyze_table #header{
@@ -261,4 +267,23 @@ textarea:focus{
 .number {
     width: 100px;
 
+}
+
+.se-pre-con {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    /*visibility: hidden;*/
+	width: 100px;
+	height: 100px;
+	z-index: 9999;
+    /*border: 1px solid black;*/
+	background: url(loading.gif) center no-repeat #fff;
+}
+
+#formula {
+    border-radius: 10px;
+    border: 5px solid black;
 }

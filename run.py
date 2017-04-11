@@ -20,6 +20,6 @@ app.config['active_oh'] = [False, False, False, False]
 app.config['obj'] = WordCount()
 app.config['oh_uploaded'] = False
 app.config['formula'] = []
-
+app.config['content'] = ''
 
 app.run(debug=True)

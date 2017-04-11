@@ -381,7 +381,7 @@ def Generate_formula(is_default=0):
             app.config['formula'] = formula
 
 
-@app.route('/Test', methods=['GET', 'POST'])
+""""@app.route('/Test', methods=['GET', 'POST'])
 def Test():
     Generate_formula()
     temp_labels = []
@@ -395,7 +395,7 @@ def Test():
                            active_page='Test',
                            formula=app.config['formula'],
                            dictionaries=temp_labels,
-                           active_dictionaries=app.config['obj'].active_dictionaries)
+                           active_dictionaries=app.config['obj'].active_dictionaries)"""
 
 
 @app.route('/Analyze', methods=['GET', 'POST'])
@@ -405,33 +405,63 @@ def Analyze():
     each corpus and its final score.
     :return: a render_template call.
     """
+
+    print request.form
     if request.method == 'POST':
-        file_name = request.form['results']
-        file_content = ""
-        with open(app.config['TMP_DIRECTORY'] + '/results.csv', 'rb') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            for row in spamreader:
-                file_content += ', '.join(row) + '\n'
-        return Response(
-            file_content,
-            mimetype="text/csv",
-            headers={"Content-disposition": "attachment; filename=" + file_name})
-    if len(app.config['formula']) == 0:
-        Generate_formula(1)
-    os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
-    app.config['obj'].count_words()
-    app.config['obj'].generate_scores(app.config['formula'])
-    os.chdir(app.config['TMP_DIRECTORY'])
-    content = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
-                   "<input class='button' id='download_scores' type='submit' value='Download'>" \
-                   "</form>"
-    app.config['obj'].save_to_csv()
+        print "in"
+        if "results" in request.form:
+            file_name = request.form['results']
+            file_content = ""
+            with open(app.config['TMP_DIRECTORY'] + '/results.csv', 'rb') as csvfile:
+                spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+                for row in spamreader:
+                    file_content += ', '.join(row) + '\n'
+            return Response(
+                file_content,
+                mimetype="text/csv",
+                headers={"Content-disposition": "attachment; filename=" + file_name})
+        if 'analyze' in request.form:
+            if len(app.config['formula']) == 0:
+                Generate_formula(1)
+            os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
+            app.config['obj'].count_words()
+            app.config['obj'].generate_scores(app.config['formula'])
+            os.chdir(app.config['TMP_DIRECTORY'])
+            app.config['content'] = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
+                           "<input class='button' id='download_scores' type='submit' value='Download'>" \
+                           "</form>"
+            app.config['obj'].save_to_csv()
+            temp_labels = []
+            for label in app.config['obj'].dictionaries_labels:
+                if len(label) > 18:
+                    temp_labels.append(label[:16] + "...")
+                else:
+                    temp_labels.append(label)
+            return render_template("analyze.html",
+                                   formula=app.config['formula'],
+                                   dictionaries=temp_labels,
+                                   title='Analyze',
+                                   active_page='Analyze',
+                                   corpus_count=len(app.config['obj'].corpora),
+                                   dictionary_count=len(app.config['obj'].dictionaries),
+                                   content=app.config['content'],
+                                   active_dictionaries=app.config['obj'].active_dictionaries)
+    Generate_formula()
+    temp_labels = []
+    for label in app.config['obj'].dictionaries_labels:
+        if len(label) > 18:
+            temp_labels.append(label[:16] + "...")
+        else:
+            temp_labels.append(label)
     return render_template("analyze.html",
+                           formula=app.config['formula'],
+                           dictionaries=temp_labels,
                            title='Analyze',
                            active_page='Analyze',
                            corpus_count=len(app.config['obj'].corpora),
                            dictionary_count=len(app.config['obj'].dictionaries),
-                           content=content)
+                           content=app.config['content'],
+                           active_dictionaries=app.config['obj'].active_dictionaries)
 
 
 @app.route('/Reset')
@@ -451,4 +481,5 @@ def Reset():
     app.config['active_oh'] = [False, False, False, False]
     app.config['oh_uploaded'] = False
     app.config['formula'] = []
+    app.config['content'] = ""
     return redirect(url_for('Upload'))

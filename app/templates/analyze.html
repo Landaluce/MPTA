@@ -1,13 +1,80 @@
 {% extends "base.html" %}
 {% set active_page = active_page %}
 {% block content %}
-    {% if corpus_count > 0 and dictionary_count > 0 %}
-        <div>{{ content|safe }}</div>
-    {% elif corpus_count > 0%}
-        <p>Upload at least a dictionary</p>
-    {% elif dictionary_count > 0%}
-        <p>Upload at least a file</p>
-    {% else %}
-        <p>Must have at least one active file and dictionary</p>
+    <div id="loading"></div>
+    {% set count = 0 %}
+    {% set count2 = 0 %}
+    {% if dictionaries|length > 0 %}
+    <form method='POST' id="test">
+    <table id="formula" align="center">
+        <tr>
+        {% for dictionary in dictionaries %}
+            {% if dictionary != dictionaries[dictionaries|length - 1] %}
+                <td align="right">{{dictionary}}
+            {% else %}
+                <td align="left">{{dictionary}}
+            {% endif %}
+            {% if count < dictionaries|length and active_dictionaries[count] == True %}
+
+            <select form="test" name="op{{count}}1">
+                <option value="*" {% if formula|length > 0  %}{% if formula[count][1] == '*' %}selected='selected'{% endif %}{% endif %}>x</option>
+                <option value="/" {% if formula|length > 0  %}{% if formula[count][1] == '/' %}selected='selected'{% endif %}{% endif %}>/</option>
+                <option value="+" {% if formula|length > 0  %}{% if formula[count][1] == '+' %}selected='selected'{% endif %}{% endif %}>+</option>
+                <option value="-" {% if formula|length > 0  %}{% if formula[count][1] == '-' %}selected='selected'{% endif %}{% endif %}>-</option>
+            </select>
+            <input type="number" class="number" name="quantity{{count}}" value="{% if formula|length > 0  %}{{ formula[count][2] }}{% else %}1{% endif %}">
+            {% if dictionary != dictionaries[dictionaries|length - 1] %}
+                <select form="test" name="op{{count}}2">
+                    <option value="+" {% if formula|length > 0 %}{% if formula[count][3] == '+' %}selected='selected'{% endif %}{% endif %}>+</option>
+                    <option value="-" {% if formula|length > 0 %}{% if formula[count][3] == '-' %}selected='selected'{% endif %}{% endif %}>-</option>
+                    <option value="*" {% if formula|length > 0 %}{% if formula[count][3] == '*' %}selected='selected'{% endif %}{% endif %}>x</option>
+                    <option value="/" {% if formula|length > 0 %}{% if formula[count][3] == '/' %}selected='selected'{% endif %}{% endif %}>/</option>
+                </select>
+            {% endif %}
+        </td>
+        {% endif %}
+        {% set count = count + 1 %}
+        {% set count2 = count2 + 1 %}
+        {% if count2 == 4 %}
+            {% set count2 = 0%}
+                </tr><tr>
+            {% endif %}
+        {% endfor %}
+
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <input class='button' id='edit_button' type='submit' value='Save formula'>
+            </td>
+        </tr>
+    </table>
+    </form>
+    {% endif %}
+    <!--------------------------------------------------->
+
+    {% if content is defined %}
+        {% if corpus_count > 0 and dictionary_count > 0 %}
+            <table id='analyze_table_container' align="center">
+            <tr>
+                <td colspan="100" align="center">
+                    <form method='POST'>
+                        <input type='hidden' name='analyze' value='analyze'>
+                        <input class='button' id='edit_button' type='submit' value='Get results'>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>{{ content|safe }}</div>
+                </td>
+            </tr>
+            </table>
+        {% elif corpus_count > 0%}
+            <p>Upload at least a dictionary</p>
+        {% elif dictionary_count > 0%}
+            <p>Upload at least a file</p>
+        {% else %}
+            <p>Must have at least one active file and dictionary</p>
+        {% endif %}
     {% endif %}
 {% endblock %}
