@@ -95,7 +95,9 @@ class WordCount(object):
     def utf8_to_ascii(self, text):
         text = text.replace(u'\u2014', '-')
         text = text.replace(u'\u2013', '-')
-        exclude = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']#, u'\u2018', u'\u2019', u'\u201c', u'\u201d', u'\u2022', u'\u2026']
+        exclude = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@',
+                   '[', '\\', ']', '^', '_', '`', '{', '|', '}',
+                   '~']  # , u'\u2018', u'\u2019', u'\u201c', u'\u201d', u'\u2022', u'\u2026']
         exclude.append(u'\u2018')  # '
         exclude.append(u'\u2019')  # '
         exclude.append(u'\u201c')  # "
@@ -103,7 +105,7 @@ class WordCount(object):
         exclude.append(u'\u2022')  # bullet point
         exclude.append(u'\u2026')  # ...
 
-        for c in exclude: #---------------------------------------
+        for c in exclude:  # ---------------------------------------
             text = text.replace(c, ' ')
         return ' '.join(text.split())
 
@@ -129,26 +131,27 @@ class WordCount(object):
                     counts.append(count)
             self.counters.append(counts)
 
-    def generate_scores(self, formulas):
+    def generate_scores(self, labels, op1_list, quantities, op2_list):
         index = 0
         self.sums = []
         self.scores = []
-        if len(formulas) > 0:
+        for i in range(len(op1_list)):
+            if op1_list[i] == 'x':
+                op1_list[i] = '*'
+            if op2_list[i] == 'x':
+                op2_list[i] = '*'
+        if len(labels) > 0:
             for i in range(len(self.counters)):
                 sum = 0
                 for x in range(len(self.counters[i])):
-                    formula = formulas[x]
-                    if x == 0:
-                        next = '+'
-                    else:
-                        next = formulas[x-1][3]
+                    next = op2_list[x]
                     if self.counters[i][x] != 0:
-                        op = eval(str(float(self.counters[i][x])) + str(formula[1])+str(formula[2]))
+                        op = eval(str(float(self.counters[i][x])) + op1_list[x] + (quantities[x]))
                     else:
                         op = 0
                     self.counters[i][x] = op
                     sum = eval(str(float(sum)) + next + str(op))
-                self.scores.append(round(float(sum)/self.total_word_counts[index], 3))
+                self.scores.append(round(float(sum) / self.total_word_counts[index], 3))
                 self.sums.append(sum)
                 index += 1
         else:
@@ -172,15 +175,15 @@ class WordCount(object):
             total_word_counts_sum += self.total_word_counts[i]
             sums_sum += self.sums[i]
         if len(self.scores) != 0:
-            scores_avg = round((float(scores_sum)/len(self.scores)), 3)
+            scores_avg = round((float(scores_sum) / len(self.scores)), 3)
         else:
             scores_avg = 0
         if len(self.total_word_counts) != 0:
-            total_word_counts_avg = round((float(total_word_counts_sum)/(len(self.total_word_counts))), 1)
+            total_word_counts_avg = round((float(total_word_counts_sum) / (len(self.total_word_counts))), 1)
         else:
             total_word_counts_avg = 0
         if len(self.sums) != 0:
-            sums_avg = round((float(sums_sum)/len(self.sums)), 1)
+            sums_avg = round((float(sums_sum) / len(self.sums)), 1)
         else:
             sums_avg = 0
         cat_count = 0
@@ -189,7 +192,7 @@ class WordCount(object):
             for i in range(len(self.counters)):
                 cat_count += self.counters[i][x]
             if len(self.counters) != 0:
-                self.average.append(round(float(cat_count)/len(self.counters), 1))
+                self.average.append(round(float(cat_count) / len(self.counters), 1))
             else:
                 self.average.append(0)
             cat_count = 0
@@ -249,11 +252,11 @@ class WordCount(object):
                 row.append(self.total_word_counts[i])
                 row.append(self.scores[i])
                 matrix.append(row)
-        lrow = [] #last row 
+        lrow = []  # last row
         for i in range(len(self.average)):
             lrow.append(self.average[i])
         matrix.append(lrow)
-                
+
         return matrix
 
     def save_to_csv(self):

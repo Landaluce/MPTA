@@ -354,33 +354,6 @@ def DictionaryManager():
                            dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
 
 
-def Generate_formula(is_default=0):
-    if is_default == 0:
-        active_dictionaries = app.config['obj'].active_dictionaries
-        labels = app.config['obj'].dictionaries_labels
-        if request.method == 'POST':
-            formula = []
-            for i in range(0, len(labels)):
-                if active_dictionaries[i]:
-                    if i == len(labels) - 1:
-                        formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)]])
-                    else:
-                        formula.append([labels[i], request.form['op' + str(i) + '1'], request.form['quantity' + str(i)],
-                                        request.form['op' + str(i) + '2']])
-                app.config['formula'] = formula
-    else:
-        active_dictionaries = app.config['obj'].active_dictionaries
-        labels = app.config['obj'].dictionaries_labels
-        formula = []
-        for i in range(0, len(labels)):
-            if active_dictionaries[i]:
-                if i == len(labels):
-                    formula.append([labels[i], "*", "1"])
-                else:
-                    formula.append([labels[i], "*", "1", "+"])
-            app.config['formula'] = formula
-
-
 @app.route('/Analyze', methods=['GET', 'POST'])
 def Analyze():
     """
@@ -388,10 +361,7 @@ def Analyze():
     each corpus and its final score.
     :return: a render_template call.
     """
-
-    print request.form
     if request.method == 'POST':
-        print "in"
         if "results" in request.form:
             file_name = request.form['results']
             file_content = ""
@@ -403,42 +373,79 @@ def Analyze():
                 file_content,
                 mimetype="text/csv",
                 headers={"Content-disposition": "attachment; filename=" + file_name})
-        if 'analyze' in request.form:
-            if len(app.config['formula']) == 0:
-                Generate_formula(1)
-            os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
-            app.config['obj'].count_words()
-            app.config['obj'].generate_scores(app.config['formula'])
-            os.chdir(app.config['TMP_DIRECTORY'])
-            app.config['content'] = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
-                           "<input class='button' id='download_scores' type='submit' value='Download'>" \
-                           "</form>"
-            app.config['obj'].save_to_csv()
-            temp_labels = []
+        elif 'Save formula' in request.form:
+            op1 = request.form.getlist('op1[]')
+            quantity = request.form.getlist('quantity[]')
+            op2 = request.form.getlist('op2[]')
+
+            for i in range(len(op1)-1):
+                if op1[i] == '*':
+                    op1[i] = 'x'
+                if op2[i] == '*':
+                    op2[i] = 'x'
+                op1[i] = op1[i].encode('ascii', 'ignore')
+                op2[i] = op2[i].encode('ascii', 'ignore')
+                quantity[i] = quantity[i].encode('ascii', 'ignore')
+
+            labels = []
             for label in app.config['obj'].dictionaries_labels:
                 if len(label) > 18:
-                    temp_labels.append(label[:16] + "...")
+                    labels.append(label[:16] + "...")
                 else:
-                    temp_labels.append(label)
+                    labels.append(label)
+            app.config['formula'] = zip(labels, op1, quantity, op2)
+
+            app.config['tem_labels'] = labels
+            app.config['op1'] = op1
+            app.config['quantity'] = quantity
+            app.config['op2'] = op2
             return render_template("analyze.html",
-                                   formula=app.config['formula'],
-                                   dictionaries=temp_labels,
+                                   zipped_data=app.config['formula'],
+                                   labels=labels,
                                    title='Analyze',
                                    active_page='Analyze',
                                    corpus_count=len(app.config['obj'].corpora),
                                    dictionary_count=len(app.config['obj'].dictionaries),
                                    content=app.config['content'],
                                    active_dictionaries=app.config['obj'].active_dictionaries)
-    Generate_formula()
-    temp_labels = []
-    for label in app.config['obj'].dictionaries_labels:
-        if len(label) > 18:
-            temp_labels.append(label[:16] + "...")
-        else:
-            temp_labels.append(label)
+        elif 'analyze' in request.form:
+            os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
+            app.config['obj'].count_words()
+            app.config['obj'].generate_scores(app.config['tem_labels'], app.config['op1'], app.config['quantity'], app.config['op2'])
+            os.chdir(app.config['TMP_DIRECTORY'])
+            app.config['content'] = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
+                           "<input class='button' id='download_scores' type='submit' value='Download'>" \
+                           "</form>"
+            app.config['obj'].save_to_csv()
+
+    if len(app.config['op1']) == 0:
+        labels = []
+        for label in app.config['obj'].dictionaries_labels:
+            if len(label) > 18:
+                labels.append(label[:16] + "...")
+            else:
+                labels.append(label)
+        op1 = []
+        quantity = []
+        op2 = []
+
+        active_dictionaries = app.config['obj'].active_dictionaries
+        labels = app.config['obj'].dictionaries_labels
+        for i in range(len(labels)):
+            if active_dictionaries[i]:
+                op1.append('x')
+                quantity.append('1')
+                op2.append('+')
+
+        app.config['formula'] = zip(labels, op1, quantity, op2)
+        app.config['tem_labels'] = labels
+        app.config['op1'] = op1
+        app.config['quantity'] = quantity
+        app.config['op2'] = op2
+
     return render_template("analyze.html",
-                           formula=app.config['formula'],
-                           dictionaries=temp_labels,
+                           zipped_data=app.config['formula'],
+                           labels=app.config['tem_labels'],
                            title='Analyze',
                            active_page='Analyze',
                            corpus_count=len(app.config['obj'].corpora),
@@ -463,6 +470,10 @@ def Reset():
     app.config['check_all_oh'] = False
     app.config['active_oh'] = [False, False, False, False]
     app.config['oh_uploaded'] = False
+    app.config['tem_labels'] = []
+    app.config['op1'] = []
+    app.config['quantity'] = []
+    app.config['op2'] = []
     app.config['formula'] = []
     app.config['content'] = ""
     return redirect(url_for('Upload'))

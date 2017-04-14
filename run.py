@@ -19,7 +19,10 @@ app.config['active_dictionaries'] = []
 app.config['active_oh'] = [False, False, False, False]
 app.config['obj'] = WordCount()
 app.config['oh_uploaded'] = False
+app.config['tem_labels'] = []
+app.config['op1'] = []
+app.config['quantity'] = []
+app.config['op2'] = []
 app.config['formula'] = []
 app.config['content'] = ''
-
-app.run(debug=True)
+app.run(debug=False)
