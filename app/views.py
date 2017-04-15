@@ -1,8 +1,8 @@
 from fileManager import allowed_extension, allowed_size, get_file_size, files_to_html_table, delete_tmp_folder, create_tmp_folder
 from flask import render_template, request, redirect, url_for, Response
+from TwitterAPI import get_tweets, scrub_tweets
 from werkzeug import secure_filename
 from WordCount import WordCount
-from TwitterAPI import get_tweets, scrub_tweets
 from app import app
 import csv
 import os
@@ -121,11 +121,11 @@ def FileManager():
                 app.config['obj'].activate_corpus(obj_index)
 
             temp = app.config['active_corpora'][0]
-            all_chacked = True
+            all_checked = True
             for i in app.config['active_corpora']:
                 if i != temp:
-                    all_chacked = False
-            if all_chacked:
+                    all_checked = False
+            if all_checked:
                 if temp == "checked":
                     app.config['check_all_corpora'] = True
             else:
@@ -146,7 +146,7 @@ def FileManager():
                 i += 1
             return Response(file_content,
                             mimetype="text/plain",
-                            headers={"Content-disposition":"attachment; filename=" + file_name})
+                            headers={"Content-disposition": "attachment; filename=" + file_name})
         elif 'delete' and 'del_index' in request.form:
             file_name = request.form['delete']
             index = int(request.form['del_index'].encode("utf-8"))
@@ -155,7 +155,7 @@ def FileManager():
             app.config['obj'].delete_corpus(index)
             os.remove(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name)
         elif 'check_all' in request.form:
-            if app.config['check_all_corpora'] == True:
+            if app.config['check_all_corpora']:
                 for i in range(len(app.config['active_corpora'])):
                     app.config['active_corpora'][i] = ''
                     app.config['check_all_corpora'] = False
@@ -169,8 +169,10 @@ def FileManager():
             new_label_list = request.form['new_label_list'].split()
             for i in range(len(app.config['obj'].corpora_labels)):
                 app.config['obj'].corpora_labels[i] = new_label_list[i]
+    zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels, sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
     return render_template("fileManager.html",
                            title='File Manager',
+                           zipped_data=zipped_data,
                            active_corpora=app.config['active_corpora'],
                            check_all=app.config['check_all_corpora'],
                            labels=app.config['obj'].corpora_labels,
@@ -202,11 +204,11 @@ def DictionaryManager():
                 app.config['obj'].activate_dictionary(obj_index)
 
             temp = app.config['active_dictionaries'][0]
-            all_chacked = True
+            all_checked = True
             for i in app.config['active_dictionaries']:
                 if i != temp:
-                    all_chacked = False
-            if all_chacked:
+                    all_checked = False
+            if all_checked:
                 if temp == "checked":
                     app.config['check_all_dictionaries'] = True
             else:
@@ -232,7 +234,7 @@ def DictionaryManager():
                 file_content,
                 mimetype="text/plain",
                 headers={"Content-disposition":
-                             "attachment; filename=" + file_name})
+                         "attachment; filename=" + file_name})
         elif 'delete' and 'del_index' in request.form:
             file_name = request.form['delete']
             index = int(request.form['del_index'].encode("utf-8"))
@@ -275,7 +277,7 @@ def DictionaryManager():
             file.write(file_content)
             file.close()
         elif 'check_all' in request.form:
-            if app.config['check_all_dictionaries'] == True:
+            if app.config['check_all_dictionaries']:
                 for i in range(len(app.config['active_dictionaries'])):
                     app.config['active_dictionaries'][i] = ''
                     app.config['check_all_dictionaries'] = False
@@ -336,11 +338,11 @@ def DictionaryManager():
                 app.config['active_oh'][index - first_oh_index] = False
                 app.config['obj'].deactivate_dictionary(index)
             temp = app.config['active_oh'][0]
-            all_chacked = True
+            all_checked = True
             for i in app.config['active_oh']:
                 if i != temp:
-                    all_chacked = False
-            if all_chacked:
+                    all_checked = False
+            if all_checked:
                 if temp != "checked":
                     app.config['check_all_oh'] = False
 
@@ -413,9 +415,7 @@ def Analyze():
             app.config['obj'].count_words()
             app.config['obj'].generate_scores(app.config['tem_labels'], app.config['op1'], app.config['quantity'], app.config['op2'])
             os.chdir(app.config['TMP_DIRECTORY'])
-            app.config['content'] = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'>" \
-                           "<input class='button' id='download_scores' type='submit' value='Download'>" \
-                           "</form>"
+            app.config['content'] = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'><input class='button' id='download_scores' type='submit' value='Download'></form>"
             app.config['obj'].save_to_csv()
 
     if len(app.config['op1']) == 0:

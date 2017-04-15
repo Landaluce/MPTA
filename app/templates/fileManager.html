@@ -29,16 +29,16 @@
                 </td>
                 <td align="left">Active files</td>
             </tr>
-            {% for corpus in corpora %}
+            {% for active, label, corpus in zipped_data %}
             <tr>
                 <td>
                     <form method='POST'>
-                        <input type='hidden' name='corpus' value='{{corpus}}'>
-                        <input type='hidden' name='index' value={{count}}>
-                        <input type='checkbox' id='file' {{'checked' if active_corpora[count] != ''}} onclick='this.form.submit();'>
+                        <input type='hidden' name='corpus' value='{{label}}'>
+                        <input type='hidden' name='index' value='{{count}}'>
+                        <input type='checkbox' id='file' {{'checked' if active != ''}} onclick='this.form.submit();'>
                     </form>
                 </td>
-                <td align="left">{{corpus}}</td>
+                <td align="left">{{label}}</td>
                 <td>
                     <form method='POST'>
                         <input type='hidden' name='download' value='{{corpus}}'>
@@ -48,14 +48,14 @@
                 <td>
                     <form method='POST'>
                         <input type='hidden' name='delete' value='{{corpus}}'>
-                        <input type='hidden' name='del_index' value={{count}}>
+                        <input type='hidden' name='del_index' value='{{count}}'>
                         <input class='button' id='delete_button' type='submit' value='Delete'>
                     </form>
                 </td>
                 <td>
                     <form id="edit_label" method='POST'>
-                        <input type='text' name='label' value='{{labels[count]}}' onkeyup="showButton()">
-                        <input type='hidden' name='label_index' value={{count}}>
+                        <input type='text' name='label' value='{{label}}' onkeyup="showButton()">
+                        <input type='hidden' name='label_index' value='{{count}}'>
                         <input type='hidden' name='new_label_list'>
                         <!--<input class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden">-->
                     </form>
