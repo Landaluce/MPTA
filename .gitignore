@@ -4,3 +4,22 @@ tmp/*
 TestSuite/*
 TwitterAPI_Credentials*
 *.pyc
+
+TestSuite/BB&T/*
+TestSuite/BNY Mellon/*
+TestSuite/Capital One/*
+TestSuite/Citigroup/*
+TestSuite/Fifth Third/*
+TestSuite/Huntington/*
+TestSuite/JP Morgan/*
+TestSuite/Keycorp/*
+TestSuite/M&I/*
+TestSuite/M&T/*
+TestSuite/Northern Trust/*
+TestSuite/PNC Financial/*
+TestSuite/State Street/*
+TestSuite/Sun Trust/*
+TestSuite/Synovus/*
+TestSuite/US Bancorp/*
+TestSuite/WellsFargo/*
+TestSuite/Zions/*
