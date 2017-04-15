@@ -104,36 +104,41 @@ def FileManager():
     :return: a render_template call.
     """
     if request.method == 'POST':
-        if 'index' and 'corpus' in request.form:
-            index = int(request.form['index'].encode("utf-8"))
-            corpus = request.form['corpus'].encode("utf-8")
+        print request.form
+        if 'corpus[]' in request.form:
+            corpus = ''.join(request.form.getlist('corpus[]'))
             obj_index = 0
             count = 0
-            for name in app.config['obj'].corpora_names:
+            for name in app.config['obj'].corpora_labels:
                 if name == corpus:
                     obj_index = count
                 count += 1
-            if app.config['active_corpora'][index] == "checked":
-                app.config['active_corpora'][index] = ""
+            if app.config['active_corpora'][obj_index] == "checked":
+                app.config['active_corpora'][obj_index] = ""
                 app.config['obj'].deactivate_corpus(obj_index)
             else:
-                app.config['active_corpora'][index] = "checked"
+                app.config['active_corpora'][obj_index] = "checked"
                 app.config['obj'].activate_corpus(obj_index)
 
             temp = app.config['active_corpora'][0]
-            all_checked = True
-            for i in app.config['active_corpora']:
-                if i != temp:
-                    all_checked = False
-            if all_checked:
-                if temp == "checked":
-                    app.config['check_all_corpora'] = True
+            all_same = True
+            for i in range(len(app.config['active_corpora'])):
+                if app.config['active_corpora'][i] != temp:
+                    all_same = False
+            print all_same, temp
+            if all_same and temp == "checked":
+                print "in"
+                app.config['check_all_corpora'] = True
             else:
                 app.config['check_all_corpora'] = False
+
+            zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels,
+                              sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
             return render_template("fileManager.html",
                                    title='File Manager',
-                                   check_all=app.config['check_all_corpora'],
+                                   zipped_data=zipped_data,
                                    active_corpora=app.config['active_corpora'],
+                                   check_all=app.config['check_all_corpora'],
                                    labels=app.config['obj'].corpora_labels,
                                    corpora=sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
         elif 'download' in request.form:

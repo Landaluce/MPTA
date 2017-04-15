@@ -6,14 +6,14 @@
         {% set count = 0 %}
 <script>
     function showButton(){
-        let buttons = document.getElementsByName("edit_button");
-        let new_labels = document.getElementsByName("label");
-        let new_label_list = document.getElementsByName("new_label_list");
+        var buttons = document.getElementsByName("edit_button");
+        var new_labels = document.getElementsByName("label");
+        var new_label_list = document.getElementsByName("new_label_list");
         var new_labels_values = '';
-        for(let x = 0;x < new_labels.length;x++) {
+        for(var x = 0;x < new_labels.length;x++) {
             new_labels_values += new_labels[x].value + ' ';
         }
-        for(let x = 0;x < new_label_list.length;x++) {
+        for(var x = 0;x < new_label_list.length;x++) {
             new_label_list[x].value = new_labels_values;
         }
         buttons[0].style.visibility=  "visible";
@@ -24,7 +24,7 @@
                 <td>
                     <form method='POST'>
                         <input type='hidden' name='check_all'>
-                        <input type="checkbox" {{'checked' if check_all == 1}} onclick="toggle(this);" onchange='this.form.submit();'>
+                        <input type="checkbox" {{'checked' if check_all == True}} onchange="toggle(this); this.form.submit();">
                     </form>
                 </td>
                 <td align="left">Active files</td>
@@ -33,8 +33,7 @@
             <tr>
                 <td>
                     <form method='POST'>
-                        <input type='hidden' name='corpus' value='{{label}}'>
-                        <input type='hidden' name='index' value='{{count}}'>
+                        <input type='hidden' name='corpus[]' value='{{label}}'>
                         <input type='checkbox' id='file' {{'checked' if active != ''}} onclick='this.form.submit();'>
                     </form>
                 </td>
@@ -48,14 +47,14 @@
                 <td>
                     <form method='POST'>
                         <input type='hidden' name='delete' value='{{corpus}}'>
-                        <input type='hidden' name='del_index' value='{{count}}'>
+                        <input type='hidden' name='del_index' value={{count}}>
                         <input class='button' id='delete_button' type='submit' value='Delete'>
                     </form>
                 </td>
                 <td>
                     <form id="edit_label" method='POST'>
                         <input type='text' name='label' value='{{label}}' onkeyup="showButton()">
-                        <input type='hidden' name='label_index' value='{{count}}'>
+                        <input type='hidden' name='label_index' value={{count}}>
                         <input type='hidden' name='new_label_list'>
                     </form>
                 </td>
