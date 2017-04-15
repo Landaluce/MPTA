@@ -184,7 +184,8 @@ def DictionaryManager():
     :return: a render_template call.
     """
     if request.method == 'POST':
-        if 'dictionary[]' in request.form:
+        print request.form
+        if 'dictionary[]'  in request.form and 'label[]' not in request.form:
             dictionary = ''.join(request.form.getlist('dictionary[]'))
             obj_index = 0
             count = 0
@@ -287,10 +288,20 @@ def DictionaryManager():
                     app.config['active_dictionaries'][i] = "checked"
                     app.config['check_all_dictionaries'] = True
                     app.config['obj'].activate_dictionary(i)
-        elif 'label' and 'label_index' in request.form:
-            label = request.form['label']
-            label_index = int(request.form['label_index'])
-            app.config['obj'].dictionaries_labels[label_index] = label
+        elif 'label[]' and 'dictionary[]' in request.form:
+            label = ''.join(request.form.getlist('label[]'))
+            dictionary = ''.join(request.form.getlist('dictionary[]'))
+            print label
+            print dictionary
+            count = 0
+            index = 0
+            for name in app.config['obj'].dictionaries_names:
+                print name
+                if name == dictionary:
+                    index = count
+                count += 1
+            print index
+            app.config['obj'].dictionaries_labels[index] = label
         elif 'check_all_oh' in request.form:
             first_oh_index = 0
             for i in range(0, len(app.config['obj'].dictionaries_names)):
