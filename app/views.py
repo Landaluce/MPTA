@@ -104,7 +104,6 @@ def FileManager():
     :return: a render_template call.
     """
     if request.method == 'POST':
-        print request.form
         if 'corpus[]' in request.form:
             corpus = ''.join(request.form.getlist('corpus[]'))
             obj_index = 0
@@ -125,9 +124,7 @@ def FileManager():
             for i in range(len(app.config['active_corpora'])):
                 if app.config['active_corpora'][i] != temp:
                     all_same = False
-            print all_same, temp
             if all_same and temp == "checked":
-                print "in"
                 app.config['check_all_corpora'] = True
             else:
                 app.config['check_all_corpora'] = False
@@ -187,22 +184,23 @@ def DictionaryManager():
     :return: a render_template call.
     """
     if request.method == 'POST':
-        if 'index' and 'dictionary' in request.form:
-            index = int(request.form['index'].encode("utf-8"))
-            dictionary = request.form['dictionary'].encode("utf-8")
+        if 'dictionary[]' in request.form:
+            dictionary = ''.join(request.form.getlist('dictionary[]'))
             obj_index = 0
             count = 0
+            print dictionary
             for name in app.config['obj'].dictionaries_names:
                 if name == dictionary:
                     obj_index = count
                 count += 1
-            if app.config['active_dictionaries'][index] == "checked":
-                app.config['active_dictionaries'][index] = ""
+            print app.config['active_dictionaries'], obj_index
+            if app.config['active_dictionaries'][obj_index] == "checked":
+                app.config['active_dictionaries'][obj_index] = ""
                 app.config['obj'].deactivate_dictionary(obj_index)
             else:
-                app.config['active_dictionaries'][index] = "checked"
+                app.config['active_dictionaries'][obj_index] = "checked"
                 app.config['obj'].activate_dictionary(obj_index)
-
+            print app.config['active_dictionaries']
             temp = app.config['active_dictionaries'][0]
             all_checked = True
             for i in app.config['active_dictionaries']:
@@ -213,8 +211,10 @@ def DictionaryManager():
                     app.config['check_all_dictionaries'] = True
             else:
                 app.config['check_all_dictionaries'] = False
+            zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
             return render_template("dictionaryManager.html",
                                    title='Dictionary Manager',
+                                   zipped_data=zipped_data,
                                    active_dictionaries=app.config['active_dictionaries'],
                                    check_all=app.config['check_all_dictionaries'],
                                    labels=app.config['obj'].dictionaries_labels,
@@ -345,9 +345,10 @@ def DictionaryManager():
             if all_checked:
                 if temp != "checked":
                     app.config['check_all_oh'] = False
-
+    zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
     return render_template("dictionaryManager.html",
                            title='Dictionary Manager',
+                           zipped_data=zipped_data,
                            active_dictionaries=app.config['active_dictionaries'],
                            check_all=app.config['check_all_dictionaries'],
                            labels=app.config['obj'].dictionaries_labels,

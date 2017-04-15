@@ -17,13 +17,12 @@
                             </td>
                             <td align="left" id="bold">Active dictionaries</td>
                         </tr>
-                        {% for dictionary in dictionaries %}
+                        {% for active, label, dictionary in zipped_data %}
                         <tr>
                             <td>
                                 <form method='POST'>
-                                    <input type='hidden' name='dictionary' value='{{dictionary}}'>
-                                    <input type='hidden' name='index' value={{count}}>
-                                    <input type='checkbox' id='file' {{'checked' if active_dictionaries[count] != ''}} onclick='this.form.submit();'>
+                                    <input type='hidden' name='dictionary[]' value='{{dictionary}}'>
+                                    <input type='checkbox' id='file' {{'checked' if active != ''}} onclick='this.form.submit();'>
                                 </form>
                             </td>
                             <td align="left">{{dictionary}}</td>
@@ -48,8 +47,7 @@
                             </td>
                             <td>
                                 <form method='POST'>
-                                    <input type='hidden' name='label_index' value={{count}}>
-                                    <input type='text' name='label' value='{{labels[count]}}'>
+                                    <input type='text' name='label[]' value='{{label}}'>
                                     <input class='button' id='edit_button' type='submit' value='Save label'>
                                 </form>
                             </td>
