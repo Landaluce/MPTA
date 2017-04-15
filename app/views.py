@@ -132,14 +132,11 @@ def FileManager():
             else:
                 app.config['check_all_corpora'] = False
 
-            zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels,
-                              sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
+            zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels, sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
             return render_template("fileManager.html",
                                    title='File Manager',
                                    zipped_data=zipped_data,
-                                   active_corpora=app.config['active_corpora'],
                                    check_all=app.config['check_all_corpora'],
-                                   labels=app.config['obj'].corpora_labels,
                                    corpora=sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
         elif 'download' in request.form:
             file_name = request.form['download']
@@ -178,9 +175,7 @@ def FileManager():
     return render_template("fileManager.html",
                            title='File Manager',
                            zipped_data=zipped_data,
-                           active_corpora=app.config['active_corpora'],
                            check_all=app.config['check_all_corpora'],
-                           labels=app.config['obj'].corpora_labels,
                            corpora=sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
 
 
