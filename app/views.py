@@ -146,13 +146,18 @@ def FileManager():
             return Response(file_content,
                             mimetype="text/plain",
                             headers={"Content-disposition": "attachment; filename=" + file_name})
-        elif 'delete' and 'del_index' in request.form:
-            file_name = request.form['delete']
-            index = int(request.form['del_index'].encode("utf-8"))
+        elif 'delete[]' in request.form:
+            corpus = request.form['delete[]']
+            index = 0
+            count = 0
+            for name in app.config['obj'].corpora_names:
+                if name == corpus:
+                    index = count
+                count += 1
             del app.config['active_corpora'][index]
             del app.config['obj'].corpora_labels[index]
             app.config['obj'].delete_corpus(index)
-            os.remove(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + file_name)
+            os.remove(app.config['CORPORA_UPLOAD_FOLDER'] + "/" + corpus)
         elif 'check_all' in request.form:
             if app.config['check_all_corpora']:
                 for i in range(len(app.config['active_corpora'])):
@@ -185,7 +190,7 @@ def DictionaryManager():
     """
     if request.method == 'POST':
         print request.form
-        if 'dictionary[]'  in request.form and 'label[]' not in request.form:
+        if 'dictionary[]' in request.form and 'label[]' not in request.form:
             dictionary = ''.join(request.form.getlist('dictionary[]'))
             obj_index = 0
             count = 0
