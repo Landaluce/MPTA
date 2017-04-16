@@ -1,4 +1,5 @@
-from fileManager import allowed_extension, allowed_size, get_file_size, files_to_html_table, delete_tmp_folder, create_tmp_folder
+from fileManager import allowed_extension, allowed_size, get_file_size, files_to_html_table, delete_tmp_folder, \
+    create_tmp_folder
 from flask import render_template, request, redirect, url_for, Response
 from TwitterAPI import get_tweets, scrub_tweets
 from werkzeug import secure_filename
@@ -30,12 +31,15 @@ def Upload():
                 size = allowed_size(os.path.join(app.config['TMP_DIRECTORY'], file_name))
                 if extension and size:
                     if request.form['upload'] == "corpus":
-                        os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name), os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
+                        os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name),
+                                  os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
                         app.config['obj'].add_corpus(os.path.join(app.config['CORPORA_UPLOAD_FOLDER'], file_name))
                         app.config['active_corpora'].append("checked")
                     elif request.form['upload'] == "dictionary":
-                        os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name), os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
-                        app.config['obj'].add_dictionary(os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
+                        os.rename(os.path.join(app.config['TMP_DIRECTORY'], file_name),
+                                  os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
+                        app.config['obj'].add_dictionary(
+                            os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         app.config['active_dictionaries'].append("checked")
                         if len(app.config['formula']) > 0:
                             app.config['formula'][-1].append("+")
@@ -93,7 +97,8 @@ def Upload():
                            dictionary_extension_errors=dictionary_extension_errors[:-2],
                            dictionary_size_errors=dictionary_size_errors[:-2],
                            corpora=files_to_html_table(os.listdir(app.config['CORPORA_UPLOAD_FOLDER']), corpora_sizes),
-                           dictionaries=files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']), dictionaries_sizes))
+                           dictionaries=files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']),
+                                                            dictionaries_sizes))
 
 
 @app.route('/FileManager', methods=['GET', 'POST'])
@@ -129,7 +134,8 @@ def FileManager():
             else:
                 app.config['check_all_corpora'] = False
 
-            zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels, sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
+            zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels,
+                              sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
             return render_template("fileManager.html",
                                    title='File Manager',
                                    zipped_data=zipped_data,
@@ -173,7 +179,8 @@ def FileManager():
             new_label_list = request.form['new_label_list'].split()
             for i in range(len(app.config['obj'].corpora_labels)):
                 app.config['obj'].corpora_labels[i] = new_label_list[i]
-    zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels, sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
+    zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels,
+                      sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
     return render_template("fileManager.html",
                            title='File Manager',
                            zipped_data=zipped_data,
@@ -192,20 +199,18 @@ def DictionaryManager():
         print request.form
         if 'dictionary[]' in request.form and 'label[]' not in request.form:
             dictionary = ''.join(request.form.getlist('dictionary[]'))
-            obj_index = 0
+            index = 0
             count = 0
             for name in app.config['obj'].dictionaries_names:
                 if name == dictionary:
-                    obj_index = count
+                    index = count
                 count += 1
-            print app.config['active_dictionaries'], obj_index
-            if app.config['active_dictionaries'][obj_index] == "checked":
-                app.config['active_dictionaries'][obj_index] = ""
-                app.config['obj'].deactivate_dictionary(obj_index)
+            if app.config['active_dictionaries'][index] == "checked":
+                app.config['active_dictionaries'][index] = ""
+                app.config['obj'].deactivate_dictionary(index)
             else:
-                app.config['active_dictionaries'][obj_index] = "checked"
-                app.config['obj'].activate_dictionary(obj_index)
-            print app.config['active_dictionaries']
+                app.config['active_dictionaries'][index] = "checked"
+                app.config['obj'].activate_dictionary(index)
             temp = app.config['active_dictionaries'][0]
             all_checked = True
             for i in app.config['active_dictionaries']:
@@ -216,7 +221,8 @@ def DictionaryManager():
                     app.config['check_all_dictionaries'] = True
             else:
                 app.config['check_all_dictionaries'] = False
-            zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+            zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels,
+                              sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
             return render_template("dictionaryManager.html",
                                    title='Dictionary Manager',
                                    zipped_data=zipped_data,
@@ -234,20 +240,22 @@ def DictionaryManager():
                 if name == file_name:
                     file_content = app.config['obj'].dictionaries[i]
                 i += 1
-
             return Response(
                 file_content,
                 mimetype="text/plain",
                 headers={"Content-disposition":
-                         "attachment; filename=" + file_name})
+                             "attachment; filename=" + file_name})
         elif 'delete[]' in request.form:
             dictionary = request.form['delete[]']
+            oh_init_index = 0
             index = 0
-            count = 0
-            for name in app.config['obj'].dictionaries_names:
-                if name == dictionary:
-                    index = count
-                count += 1
+            for i in range(len(app.config['obj'].dictionaries_names)):
+                if app.config['obj'].dictionaries_names[i] == dictionary:
+                    index = i
+                elif app.config['obj'].dictionaries_names[i] == 'Opportunity.txt':
+                    oh_init_index = i
+            if index > oh_init_index >= 0:
+                index -= oh_init_index + 4
             del app.config['active_dictionaries'][index]
             app.config['obj'].delete_dictionary(index)
             os.remove(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + dictionary)
@@ -292,16 +300,12 @@ def DictionaryManager():
         elif 'label[]' and 'dictionary[]' in request.form:
             label = ''.join(request.form.getlist('label[]'))
             dictionary = ''.join(request.form.getlist('dictionary[]'))
-            print label
-            print dictionary
             count = 0
             index = 0
             for name in app.config['obj'].dictionaries_names:
-                print name
                 if name == dictionary:
                     index = count
                 count += 1
-            print index
             app.config['obj'].dictionaries_labels[index] = label
         elif 'check_all_oh' in request.form:
             first_oh_index = 0
@@ -339,7 +343,9 @@ def DictionaryManager():
             first_oh_index = 0
             for i in range(0, len(app.config['obj'].dictionaries_names)):
                 if app.config['obj'].dictionaries_names[i] == "Opportunity.txt":
-                    if app.config['obj'].dictionaries_names[i + 1] == "Threat.txt" and app.config['obj'].dictionaries_names[i + 2] == "Enactment.txt" and app.config['obj'].dictionaries_names[i + 3] == "Org_Identity.txt":
+                    if app.config['obj'].dictionaries_names[i + 1] == "Threat.txt" and \
+                                    app.config['obj'].dictionaries_names[i + 2] == "Enactment.txt" and \
+                                    app.config['obj'].dictionaries_names[i + 3] == "Org_Identity.txt":
                         first_oh_index = i
                 if app.config['obj'].dictionaries_names[i].lower() == oh + ".txt":
                     index = i
@@ -357,7 +363,8 @@ def DictionaryManager():
             if all_checked:
                 if temp != "checked":
                     app.config['check_all_oh'] = False
-    zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+    zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels,
+                      sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
     return render_template("dictionaryManager.html",
                            title='Dictionary Manager',
                            zipped_data=zipped_data,
@@ -393,7 +400,7 @@ def Analyze():
             quantity = request.form.getlist('quantity[]')
             op2 = request.form.getlist('op2[]')
 
-            for i in range(len(op1)-1):
+            for i in range(len(op1) - 1):
                 if op1[i] == '*':
                     op1[i] = 'x'
                 if op2[i] == '*':
@@ -426,9 +433,11 @@ def Analyze():
         elif 'analyze' in request.form:
             os.chdir(app.config['CORPORA_UPLOAD_FOLDER'])
             app.config['obj'].count_words()
-            app.config['obj'].generate_scores(app.config['tem_labels'], app.config['op1'], app.config['quantity'], app.config['op2'])
+            app.config['obj'].generate_scores(app.config['tem_labels'], app.config['op1'], app.config['quantity'],
+                                              app.config['op2'])
             os.chdir(app.config['TMP_DIRECTORY'])
-            app.config['content'] = app.config['obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'><input class='button' id='download_scores' type='submit' value='Download'></form>"
+            app.config['content'] = app.config[
+                                        'obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'><input class='button' id='download_scores' type='submit' value='Download'></form>"
             app.config['obj'].save_to_csv()
 
     if len(app.config['op1']) == 0:
