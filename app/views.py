@@ -236,15 +236,17 @@ def DictionaryManager():
             file_name = request.form['download']
             i = 0
             file_content = ""
+            print app.config['obj'].dictionaries_names
+            print file_name
             for name in app.config['obj'].dictionaries_names:
                 if name == file_name:
                     file_content = app.config['obj'].dictionaries[i]
+                    print file_content
                 i += 1
             return Response(
                 file_content,
                 mimetype="text/plain",
-                headers={"Content-disposition":
-                             "attachment; filename=" + file_name})
+                headers={'Content-disposition': "attachment; filename=" + file_name})
         elif 'delete[]' in request.form:
             dictionary = request.form['delete[]']
             oh_init_index = 0
@@ -254,10 +256,10 @@ def DictionaryManager():
                     index = i
                 elif app.config['obj'].dictionaries_names[i] == 'Opportunity.txt':
                     oh_init_index = i
+            app.config['obj'].delete_dictionary(index)
             if index > oh_init_index >= 0:
                 index -= oh_init_index + 4
             del app.config['active_dictionaries'][index]
-            app.config['obj'].delete_dictionary(index)
             os.remove(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + dictionary)
         elif 'edit' in request.form:
             file_name = request.form['edit']
