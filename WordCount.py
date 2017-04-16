@@ -13,11 +13,12 @@ class WordCount(object):
         self.dictionaries_labels = []
         self.active_dictionaries = []
         self.dictionaries_extensions = []
+
         self.corpora = []
         self.corpora_names = []
         self.corpora_labels = []
         self.active_corpora = []
-        self.counts = []
+
         self.counters = []
         self.total_word_counts = []
         self.sums = []
@@ -111,7 +112,6 @@ class WordCount(object):
 
     def count_words(self):
         # delete previous results
-        self.counts = []
         self.counters = []
         corpora = self.corpora
         for corpus in corpora:
