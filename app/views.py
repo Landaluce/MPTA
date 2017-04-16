@@ -194,7 +194,6 @@ def DictionaryManager():
             dictionary = ''.join(request.form.getlist('dictionary[]'))
             obj_index = 0
             count = 0
-            print dictionary
             for name in app.config['obj'].dictionaries_names:
                 if name == dictionary:
                     obj_index = count
@@ -241,20 +240,17 @@ def DictionaryManager():
                 mimetype="text/plain",
                 headers={"Content-disposition":
                          "attachment; filename=" + file_name})
-        elif 'delete' and 'del_index' in request.form:
-            file_name = request.form['delete']
-            index = int(request.form['del_index'].encode("utf-8"))
+        elif 'delete[]' in request.form:
+            dictionary = request.form['delete[]']
+            index = 0
+            count = 0
+            for name in app.config['obj'].dictionaries_names:
+                if name == dictionary:
+                    index = count
+                count += 1
             del app.config['active_dictionaries'][index]
-            del app.config['obj'].dictionaries_labels[index]
             app.config['obj'].delete_dictionary(index)
-            os.remove(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + file_name)
-            return render_template("dictionaryManager.html",
-                                   title='Dictionary Manager',
-                                   active_dictionaries=app.config['active_dictionaries'],
-                                   labels=app.config['obj'].dictionaries_labels,
-                                   check_all_oh=app.config['check_all_oh'],
-                                   active_oh=app.config['active_oh'],
-                                   dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+            os.remove(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + dictionary)
         elif 'edit' in request.form:
             file_name = request.form['edit']
             file_content = ""
