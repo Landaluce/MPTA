@@ -41,9 +41,9 @@ def Upload():
                         app.config['obj'].add_dictionary(
                             os.path.join(app.config['DICTIONARIES_UPLOAD_FOLDER'], file_name))
                         app.config['active_dictionaries'].append("checked")
-                        if len(app.config['formula']) > 0:
+                        """if len(app.config['formula']) > 0:
                             app.config['formula'][-1].append("+")
-                            app.config['formula'].append([app.config['obj'].dictionaries_labels[-1], "", "", "+"])
+                            app.config['formula'].append([app.config['obj'].dictionaries_labels[-1], "", "", "+"])"""
                 else:
                     os.remove(os.path.join(app.config['TMP_DIRECTORY'], file_name))
                     if request.form['upload'] == "corpus":
@@ -196,7 +196,6 @@ def DictionaryManager():
     :return: a render_template call.
     """
     if request.method == 'POST':
-        print request.form
         if 'dictionary[]' in request.form and 'label[]' not in request.form:
             dictionary = ''.join(request.form.getlist('dictionary[]'))
             index = 0
@@ -236,8 +235,6 @@ def DictionaryManager():
             file_name = request.form['download']
             i = 0
             file_content = ""
-            print app.config['obj'].dictionaries_names
-            print file_name
             for name in app.config['obj'].dictionaries_names:
                 if name == file_name:
                     file_content = app.config['obj'].dictionaries[i]
@@ -299,29 +296,33 @@ def DictionaryManager():
                     app.config['active_dictionaries'][i] = "checked"
                     app.config['check_all_dictionaries'] = True
                     app.config['obj'].activate_dictionary(i)
-        elif 'label[]' and 'dictionary[]' in request.form:
-            label = ''.join(request.form.getlist('label[]'))
-            dictionary = ''.join(request.form.getlist('dictionary[]'))
-            count = 0
-            index = 0
-            for name in app.config['obj'].dictionaries_names:
-                if name == dictionary:
-                    index = count
-                count += 1
-            app.config['obj'].dictionaries_labels[index] = label
+        elif ('label[]' and 'dictionary[]' in request.form) or ('oh_label' and 'dictionary' in request.form):
+
+            if 'label[]' in request.form:
+                label = ''.join(request.form.getlist('label[]'))
+                dictionary = ''.join(request.form.getlist('dictionary[]'))
+                count = 0
+                index = 0
+                for name in app.config['obj'].dictionaries_names:
+                    if name == dictionary:
+                        index = count
+                    count += 1
+                app.config['obj'].dictionaries_labels[index] = label
+            else:
+                label = ''.join(request.form.getlist('oh_label'))
+                dictionary = ''.join(request.form.getlist('dictionary'))
+                oh_dictionaries = ['Oportunity.txt', 'Threat.txt', 'Enactment.txt', 'Org_Identity.txt']
+                for i in range(len(oh_dictionaries)):
+                    if dictionary == oh_dictionaries[i]:
+                        index = i
+                app.config['obj'].dictionaries_labels[app.config['first_oh_index'] + index] = label
         elif 'check_all_oh' in request.form:
-            first_oh_index = 0
-            for i in range(0, len(app.config['obj'].dictionaries_names)):
-                if app.config['obj'].dictionaries_names[i] == "Opportunity.txt":
-                    if app.config['obj'].dictionaries_names[i + 1] == "Threat.txt" and \
-                                    app.config['obj'].dictionaries_names[i + 2] == "Enactment.txt" and \
-                                    app.config['obj'].dictionaries_names[i + 3] == "Org_Identity.txt":
-                        first_oh_index = i
-            if app.config['oh_uploaded'] == False:
+            if not app.config['oh_uploaded']:
                 app.config['oh_uploaded'] = True
                 app.config['check_all_oh'] = True
                 app.config['active_oh'] = [True, True, True, True]
-                if 'opportunity' not in app.config['obj'].corpora_names:
+                if 'opportunity' not in app.config['obj'].dictionaries_names:
+                    app.config['first_oh_index'] = len(app.config['obj'].dictionaries_names)
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Opportunity.txt'))
                 if 'threat' not in app.config['obj'].corpora_names:
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Threat.txt'))
@@ -329,33 +330,27 @@ def DictionaryManager():
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Enactment.txt'))
                 if 'Org_Id' not in app.config['obj'].corpora_names:
                     app.config['obj'].add_dictionary(os.path.join(app.config['OH_UPLOAD_FOLDER'], 'Org_Identity.txt'))
-            elif app.config['check_all_oh'] == True:
+            elif app.config['check_all_oh']:
                 app.config['check_all_oh'] = False
                 app.config['active_oh'] = [False, False, False, False]
                 for i in range(0, 4):
-                    app.config['obj'].deactivate_dictionary(first_oh_index + i)
-            elif app.config['check_all_oh'] == False:
+                    app.config['obj'].deactivate_dictionary(app.config['first_oh_index'] + i)
+            elif not app.config['check_all_oh']:
                 app.config['check_all_oh'] = True
                 app.config['active_oh'] = [True, True, True, True]
                 for i in range(0, 4):
-                    app.config['obj'].activate_dictionary(first_oh_index + i)
+                    app.config['obj'].activate_dictionary(app.config['first_oh_index'] + i)
         elif 'oh' in request.form:
             oh = request.form['oh']
             index = 0
-            first_oh_index = 0
             for i in range(0, len(app.config['obj'].dictionaries_names)):
-                if app.config['obj'].dictionaries_names[i] == "Opportunity.txt":
-                    if app.config['obj'].dictionaries_names[i + 1] == "Threat.txt" and \
-                                    app.config['obj'].dictionaries_names[i + 2] == "Enactment.txt" and \
-                                    app.config['obj'].dictionaries_names[i + 3] == "Org_Identity.txt":
-                        first_oh_index = i
                 if app.config['obj'].dictionaries_names[i].lower() == oh + ".txt":
                     index = i
-            if not app.config['active_oh'][index - first_oh_index]:
-                app.config['active_oh'][index - first_oh_index] = True
+            if not app.config['active_oh'][index - app.config['first_oh_index']]:
+                app.config['active_oh'][index - app.config['first_oh_index']] = True
                 app.config['obj'].activate_dictionary(index)
-            elif app.config['active_oh'][index - first_oh_index]:
-                app.config['active_oh'][index - first_oh_index] = False
+            elif app.config['active_oh'][index - app.config['first_oh_index']]:
+                app.config['active_oh'][index - app.config['first_oh_index']] = False
                 app.config['obj'].deactivate_dictionary(index)
             temp = app.config['active_oh'][0]
             all_checked = True
@@ -365,14 +360,24 @@ def DictionaryManager():
             if all_checked:
                 if temp != "checked":
                     app.config['check_all_oh'] = False
-    zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels,
-                      sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+
+    zipped_data = zip(app.config['active_dictionaries'], app.config['obj'].dictionaries_labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+    labels = app.config['obj'].dictionaries_labels
+    oh_labels = ['Oportunity', 'Threat', 'Enactment', 'Org_Identity']
+    if app.config['first_oh_index'] > -1:
+        labels = app.config['obj'].dictionaries_labels[:app.config['first_oh_index']] + app.config['obj'].dictionaries_labels[app.config['first_oh_index']+4:]
+        labels = sorted(labels)
+        zipped_data = zip(app.config['active_dictionaries'], labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
+        oh_labels = app.config['obj'].dictionaries_labels[app.config['first_oh_index']:app.config['first_oh_index']+4]
+
     return render_template("dictionaryManager.html",
                            title='Dictionary Manager',
                            zipped_data=zipped_data,
                            active_dictionaries=app.config['active_dictionaries'],
                            check_all=app.config['check_all_dictionaries'],
-                           labels=app.config['obj'].dictionaries_labels,
+                           labels=labels,
+                           oh_labels=oh_labels,
+                           oh_index=app.config['first_oh_index'],
                            check_all_oh=app.config['check_all_oh'],
                            active_oh=app.config['active_oh'],
                            dictionaries=sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))

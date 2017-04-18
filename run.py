@@ -25,4 +25,5 @@ app.config['quantity'] = []
 app.config['op2'] = []
 app.config['formula'] = []
 app.config['content'] = ''
+app.config['first_oh_index'] = -1
 app.run(debug=False)
