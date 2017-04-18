@@ -245,18 +245,15 @@ def DictionaryManager():
                 headers={'Content-disposition': "attachment; filename=" + file_name})
         elif 'delete[]' in request.form:
             dictionary = request.form['delete[]']
-            oh_init_index = 0
             index = 0
-            print dictionary
-            app.config['obj'].dictionaries_names
             for i in range(len(app.config['obj'].dictionaries_names)):
                 if app.config['obj'].dictionaries_names[i] == dictionary:
                     index = i
-                elif app.config['obj'].dictionaries_names[i] == 'Opportunity.txt':
-                    oh_init_index = i
             app.config['obj'].delete_dictionary(index)
-            if index > oh_init_index >= 0:
-                index -= oh_init_index + 4
+            if index > app.config['first_oh_index'] >= 0:
+                index -= app.config['first_oh_index'] + 4
+            else:
+                app.config['first_oh_index'] -= 1
             del app.config['active_dictionaries'][index]
             os.remove(app.config['DICTIONARIES_UPLOAD_FOLDER'] + "/" + dictionary)
         elif 'edit' in request.form:
@@ -366,7 +363,7 @@ def DictionaryManager():
     labels = app.config['obj'].dictionaries_labels
     oh_labels = ['Oportunity', 'Threat', 'Enactment', 'Org_Identity']
     if app.config['first_oh_index'] > -1:
-        labels = app.config['obj'].dictionaries_labels[:app.config['first_oh_index']+1] + app.config['obj'].dictionaries_labels[app.config['first_oh_index']+4:]
+        labels = app.config['obj'].dictionaries_labels[:app.config['first_oh_index']] + app.config['obj'].dictionaries_labels[app.config['first_oh_index']+4:]
         labels = sorted(labels)
         zipped_data = zip(app.config['active_dictionaries'], labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
         oh_labels = app.config['obj'].dictionaries_labels[app.config['first_oh_index']:app.config['first_oh_index']+4]
