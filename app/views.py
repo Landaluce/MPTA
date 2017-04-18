@@ -238,7 +238,6 @@ def DictionaryManager():
             for name in app.config['obj'].dictionaries_names:
                 if name == file_name:
                     file_content = app.config['obj'].dictionaries[i]
-                    print file_content
                 i += 1
             return Response(
                 file_content,
@@ -248,6 +247,8 @@ def DictionaryManager():
             dictionary = request.form['delete[]']
             oh_init_index = 0
             index = 0
+            print dictionary
+            app.config['obj'].dictionaries_names
             for i in range(len(app.config['obj'].dictionaries_names)):
                 if app.config['obj'].dictionaries_names[i] == dictionary:
                     index = i
@@ -365,7 +366,7 @@ def DictionaryManager():
     labels = app.config['obj'].dictionaries_labels
     oh_labels = ['Oportunity', 'Threat', 'Enactment', 'Org_Identity']
     if app.config['first_oh_index'] > -1:
-        labels = app.config['obj'].dictionaries_labels[:app.config['first_oh_index']] + app.config['obj'].dictionaries_labels[app.config['first_oh_index']+4:]
+        labels = app.config['obj'].dictionaries_labels[:app.config['first_oh_index']+1] + app.config['obj'].dictionaries_labels[app.config['first_oh_index']+4:]
         labels = sorted(labels)
         zipped_data = zip(app.config['active_dictionaries'], labels, sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])))
         oh_labels = app.config['obj'].dictionaries_labels[app.config['first_oh_index']:app.config['first_oh_index']+4]
