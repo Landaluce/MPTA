@@ -34,9 +34,22 @@
           $(window).submit(function() {
               $(".se-pre-con").fadeIn("slow");
           });
+          function showButton(){
+                var buttons = document.getElementsByName("edit_button");
+                var new_labels = document.getElementsByName("label");
+                var new_label_list = document.getElementsByName("new_label_list");
+                var new_labels_values = '';
+                for(var x = 0;x < new_labels.length;x++) {
+                    new_labels_values += new_labels[x].value + ' ';
+                }
+                for(var x = 0;x < new_label_list.length;x++) {
+                    new_label_list[x].value = new_labels_values;
+                }
+                buttons[0].style.visibility=  "visible";
+            }
       </script>
       {% set navigation_bar = [
-        ('/', 'index', 'Upload'),
+        ('/index', 'index', 'Upload'),
         ('/FileManager', 'FileManager', 'File Manager'),
         ('/DictionaryManager', 'DictionaryManager', 'Dictionary Manager'),
         ('/Analyze', 'Analyze', 'Analyze'),
