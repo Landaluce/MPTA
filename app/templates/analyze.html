@@ -22,7 +22,7 @@
                 <option value="+" {% if oper1 == '+' %} selected='selected'{% endif %}>+</option>
                 <option value="-" {% if oper1 == '-' %} selected='selected'{% endif %}>-</option>
             </select>
-            <input type="number" class="number" name="quantity[]" value="{{ quant }}">
+            <input type="number" class="number" name="quantity[]" value="{{ quant }}" required>
 
             {% if temp_label != labels[labels|length - 1] %}
                 <select form="test" name="op2[]">
