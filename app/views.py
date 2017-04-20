@@ -239,6 +239,7 @@ def DictionaryManager():
                 if name == file_name:
                     file_content = app.config['obj'].dictionaries[i]
                 i += 1
+            file_content = ', '.join(file_content)
             return Response(
                 file_content,
                 mimetype="text/plain",
