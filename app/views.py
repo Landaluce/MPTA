@@ -176,7 +176,7 @@ def FileManager():
                     app.config['check_all_corpora'] = True
                     app.config['obj'].activate_corpus(i)
         elif 'label' and 'label_index' in request.form:
-            new_label_list = request.form['new_label_list'].split()
+            new_label_list = request.form['new_label_list'].split(', ')
             for i in range(len(app.config['obj'].corpora_labels)):
                 app.config['obj'].corpora_labels[i] = new_label_list[i]
     zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels,
@@ -297,23 +297,23 @@ def DictionaryManager():
         elif ('label[]' and 'dictionary[]' in request.form) or ('oh_label' and 'dictionary' in request.form):
 
             if 'label[]' in request.form:
-                label = ''.join(request.form.getlist('label[]'))
-                dictionary = ''.join(request.form.getlist('dictionary[]'))
+                new_label_list = request.form['new_label_array'].split(', ')
                 count = 0
-                index = 0
-                for name in app.config['obj'].dictionaries_names:
-                    if name == dictionary:
-                        index = count
-                    count += 1
-                app.config['obj'].dictionaries_labels[index] = label
+                if app.config['first_oh_index'] > -1:
+                    for i in range(0, app.config['first_oh_index']):
+                        app.config['obj'].dictionaries_labels[i] = new_label_list[count]
+                        count += 1
+                    for i in range(app.config['first_oh_index'] + 4, len(app.config['obj'].dictionaries_labels)):
+                        app.config['obj'].dictionaries_labels[i] = new_label_list[count]
+                        count += 1
+                else:
+                    for i in range(len(app.config['obj'].dictionaries_labels)):
+                        app.config['obj'].dictionaries_labels[i] = new_label_list[i]
+
             else:
-                label = ''.join(request.form.getlist('oh_label'))
-                dictionary = ''.join(request.form.getlist('dictionary'))
-                oh_dictionaries = ['Oportunity.txt', 'Threat.txt', 'Enactment.txt', 'Org_Identity.txt']
-                for i in range(len(oh_dictionaries)):
-                    if dictionary == oh_dictionaries[i]:
-                        index = i
-                app.config['obj'].dictionaries_labels[app.config['first_oh_index'] + index] = label
+                new_oh_label_list = request.form['new_oh_label_list'].split(', ')
+                for i in range(4):
+                    app.config['obj'].dictionaries_labels[app.config['first_oh_index'] + i] = new_oh_label_list[i]
         elif 'check_all_oh' in request.form:
             if not app.config['oh_uploaded']:
                 app.config['oh_uploaded'] = True

@@ -45,15 +45,22 @@
                                 </form>
                             </td>
                             <td>
-                                <form method='POST'>
+                                <form id="edit_label" method='POST'>
                                     <input type='hidden' name='dictionary[]' value='{{dictionary}}'>
-                                    <input type='text' name='label[]' value='{{label}}'>
-                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                    <input type='text' name='label[]' value='{{label}}' onkeyup="showButton(); updateLabelArray();">
+                                    <input type='hidden' name='new_label_array'>
                                 </form>
                             </td>
                         </tr>
                         {% set count = count + 1 %}
                         {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input form="edit_label" class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
+                        </tr>
             </tr>
 
     {% else %}
@@ -90,10 +97,11 @@
                             </td>
                             <td></td>
                             <td align="left" colspan="4">
-                                <form method='POST'>
+                                <form id="oh_edit_button" method='POST'>
                                     <input type='hidden' name='dictionary' value='Oportunity.txt'>
-                                    <input type='text' name='oh_label' value='{{oh_labels[0]}}'>
-                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                    <input type='text' name='oh_label' value='{{oh_labels[0]}}' onkeyup="showOHButton(); updateOHLabelList();">
+                                    <input type='hidden' name='label_index' value='0'>
+                                    <input type='hidden' name='new_oh_label_list'>
                                 </form>
                             </td>
 
@@ -119,10 +127,11 @@
                             </td>
                             <td></td>
                             <td align="left" colspan="4">
-                                <form method='POST'>
+                                <form id="oh_edit_button" method='POST'>
                                     <input type='hidden' name='dictionary' value='Threat.txt'>
-                                    <input type='text' name='oh_label' value='{{oh_labels[1]}}'>
-                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                    <input type='text' name='oh_label' value='{{oh_labels[1]}}' onkeyup="showOHButton(); updateOHLabelList();">
+                                    <input type='hidden' name='label_index' value='1'>
+                                    <input type='hidden' name='new_oh_label_list'>
                                 </form>
                             </td>
                         </tr>
@@ -147,10 +156,11 @@
                             </td>
                             <td></td>
                             <td align="left" colspan="4">
-                                <form method='POST'>
+                                <form id="oh_edit_button" method='POST'>
                                     <input type='hidden' name='dictionary' value='Enactment.txt'>
-                                    <input type='text' name='oh_label' value='{{oh_labels[2]}}'>
-                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                    <input type='text' name='oh_label' value='{{oh_labels[2]}}' onkeyup="showOHButton(); updateOHLabelList();">
+                                    <input type='hidden' name='label_index' value='2'>
+                                    <input type='hidden' name='new_oh_label_list'>
                                 </form>
                             </td>
                         </tr>
@@ -175,12 +185,20 @@
                             </td>
                             <td></td>
                             <td align="left" colspan="4">
-                                <form method='POST'>
+                                <form id="oh_edit_button" method='POST'>
                                     <input type='hidden' name='dictionary' value='Org_Identity.txt'>
-                                    <input type='text' name='oh_label' value='{{oh_labels[3]}}'>
-                                    <input class='button' id='edit_button' type='submit' value='Save label'>
+                                    <input type='text' name='oh_label' value='{{oh_labels[3]}}' onkeyup="showOHButton(); updateOHLabelList();">
+                                    <input type='hidden' name='label_index' value='3'>
+                                    <input type='hidden' name='new_oh_label_list'>
                                 </form>
                             </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input form="oh_edit_button" class='button' name='oh_edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
                         </tr>
                     </table>
                 </td>

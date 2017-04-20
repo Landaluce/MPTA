@@ -36,17 +36,45 @@
           });
           function showButton(){
                 var buttons = document.getElementsByName("edit_button");
-                var new_labels = document.getElementsByName("label");
+                buttons[0].style.visibility=  "visible";
+          }
+          function showOHButton(){
+                var buttons = document.getElementsByName("oh_edit_button");
+                buttons[0].style.visibility=  "visible";
+          }
+          function updateLabelList(){
+              var new_labels = document.getElementsByName("label");
                 var new_label_list = document.getElementsByName("new_label_list");
                 var new_labels_values = '';
                 for(var x = 0;x < new_labels.length;x++) {
-                    new_labels_values += new_labels[x].value + ' ';
+                    new_labels_values += new_labels[x].value + ', ';
                 }
                 for(var x = 0;x < new_label_list.length;x++) {
                     new_label_list[x].value = new_labels_values;
                 }
-                buttons[0].style.visibility=  "visible";
-            }
+          }
+          function updateLabelArray(){
+              var new_labels = document.getElementsByName("label[]");
+                var new_label_list = document.getElementsByName("new_label_array");
+                var new_labels_values = '';
+                for(var x = 0;x < new_labels.length;x++) {
+                    new_labels_values += new_labels[x].value + ', ';
+                }
+                for(var x = 0;x < new_label_list.length;x++) {
+                    new_label_list[x].value = new_labels_values;
+                }
+          }
+          function updateOHLabelList(){
+              var new_labels = document.getElementsByName("oh_label");
+                var new_label_list = document.getElementsByName("new_oh_label_list");
+                var new_labels_values = '';
+                for(var x = 0;x < new_labels.length;x++) {
+                    new_labels_values += new_labels[x].value + ', ';
+                }
+                for(var x = 0;x < new_label_list.length;x++) {
+                    new_label_list[x].value = new_labels_values;
+                }
+          }
       </script>
       {% set navigation_bar = [
         ('/index', 'index', 'Upload'),

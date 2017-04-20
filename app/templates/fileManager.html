@@ -5,19 +5,7 @@
     {% if corpora is defined and corpora|length > 0 %}
         {% set count = 0 %}
 <script>
-    function showButton(){
-        var buttons = document.getElementsByName("edit_button");
-        var new_labels = document.getElementsByName("label");
-        var new_label_list = document.getElementsByName("new_label_list");
-        var new_labels_values = '';
-        for(var x = 0;x < new_labels.length;x++) {
-            new_labels_values += new_labels[x].value + ' ';
-        }
-        for(var x = 0;x < new_label_list.length;x++) {
-            new_label_list[x].value = new_labels_values;
-        }
-        buttons[0].style.visibility=  "visible";
-    }
+
 </script>
         <table id="manager_table" border="0px">
             <tr>
@@ -52,7 +40,7 @@
                 </td>
                 <td>
                     <form id="edit_label" method='POST'>
-                        <input type='text' name='label' value='{{label}}' onkeyup="showButton()">
+                        <input type='text' name='label' value='{{label}}' onkeyup="showButton(); updateLabelList();">
                         <input type='hidden' name='label_index' value={{count}}>
                         <input type='hidden' name='new_label_list'>
                     </form>
