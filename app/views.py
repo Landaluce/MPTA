@@ -452,8 +452,7 @@ def Analyze():
             app.config['obj'].generate_scores(app.config['tem_labels'], app.config['op1'], app.config['quantity'],
                                               app.config['op2'])
             os.chdir(app.config['TMP_DIRECTORY'])
-            app.config['content'] = app.config[
-                                        'obj'].to_html() + "<form method='POST'><input type='hidden' name='results' type='text' value='results'><input class='button' id='download_scores' type='submit' value='Download'></form>"
+            app.config['content'] = "<form method='POST'><input type='hidden' name='results' type='text' value='results'><input class='button' id='download_scores' type='submit' value='Download'></form>" + app.config['obj'].to_html()
             app.config['obj'].save_to_csv()
 
     if len(app.config['op1']) == 0:
