@@ -4,9 +4,20 @@
 
     <table id="index_table">
         <tr>
+            <td>
+                <label class="switch"><input type="checkbox" id="togBtn" ><div class="slider round" onclick="flip();"><span class="on">File Upload</span><span class="off">Tweet Search</span></div></label>
+            </td>
+        </tr>
+        <tr>
             <td align="center">
-                <div id="upload_title">File Upload</div>
-                <div id="formats">Max. file size: 250 MB | Formats Supported: .txt, .csv, .docx</div>
+                <span class="on_">
+                <div  id="upload_title" >File Upload</div>
+                <div  id="formats">Max. file size: 250 MB | Formats Supported: .txt, .csv, .docx</div>
+                </span>
+                <span name="off_" style="display: none">
+                <div  id="upload_title" >Tweet Search</div>
+                <div  id="formats">Specifications:...</div>
+                </span>
             </td>
             <td align="center">
                 <div id="upload_title">Dictionary Upload</div>
@@ -14,11 +25,35 @@
             </td>
         <tr>
             <td align="center">
-                <form action="index" method="post" enctype="multipart/form-data">
+                <form class="on_" action="index" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="upload" value="corpus">
                     <input id="uploadbutton" type="file" multiple="multiple" name="file[]" onchange="this.form.submit();">
                     <div id="dragndrop"><p>or drop files here</p></div>
                 </form>
+                <table id="tw_table" name="off_" style="display: none">
+
+                    <tr>
+                        <td align="center">
+                            Number of tweets:
+                            <input  form="tw" type="number" id="quantity" name="quantity" min="1" max="1000" placeholder="1-1000" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <form id="tw" method='POST'>
+                                query:
+                                <input type='text' name='search_query' placeholder="" required>
+
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <input form="tw" class='button' id='download_button' type='submit' value='Search'>
+                        </td>
+                    </tr>
+
+                </table>
             </td>
             <td align="center">
                 <form action="index" method="post" enctype="multipart/form-data">
@@ -62,38 +97,6 @@
                 {{dictionaries|safe}}
             </td>
         </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <table id="tw_table">
-                    <tr>
-                        <td align="center">
-                            <div id="upload_title">Tweet Search</div>
-                            <div id="formats">Specifications:...</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Number of tweets:
-                            <input  form="tw" type="number" id="quantity" name="quantity" min="1" placeholder="1-500" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <form id="tw" method='POST'>
-                                query:
-                                <input type='text' name='search_query' placeholder="" required>
-
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <input form="tw" class='button' id='download_button' type='submit' value='Search'>
-                        </td>
-                    </tr>
-
-                </table>
-            </td>
-        </tr>
     </table>
+
 {% endblock %}

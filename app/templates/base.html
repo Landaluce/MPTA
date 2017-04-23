@@ -75,6 +75,28 @@
                     new_label_list[x].value = new_labels_values;
                 }
           }
+          function flip(){
+              var on = document.querySelectorAll(".on_");
+              var off = document.getElementsByName("off_");
+
+              if(off[0].style.display == 'none') {
+                  for(var x = 0;x < off.length;x++) {
+                      off[x].style.display = 'inline-block';
+                  }
+                  for(var x = 0;x < on.length;x++) {
+                      on[x].style.display = 'none';
+                  }
+              }
+              else {
+                  for(var x = 0;x < off.length;x++) {
+                      off[x].style.display = 'none';
+                  }
+                  for(var x = 0;x < on.length;x++) {
+                      on[x].style.display = 'inline-block';
+                  }
+              }
+          }
+
       </script>
       {% set navigation_bar = [
         ('/index', 'index', 'Upload'),
