@@ -288,6 +288,6 @@ textarea:focus{
     border: 5px solid black;
 }
 
-#las_op {
+#last_op {
     visibility: hidden;
 }
