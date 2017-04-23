@@ -421,7 +421,17 @@ def Analyze():
                     labels.append(label[:16] + "...")
                 else:
                     labels.append(label)
-            app.config['formula'] = zip(labels, op1, quantity, op2)
+
+            count = 0
+            rows = []
+            for i in range(len(labels)):
+                if count == 3:
+                    rows.append("</tr><tr>")
+                    count = -1
+                else:
+                    rows.append("")
+                count += 1
+            app.config['formula'] = zip(labels, op1, quantity, op2, rows)
 
             app.config['tem_labels'] = labels
             app.config['op1'] = op1
@@ -465,12 +475,20 @@ def Analyze():
                 quantity.append('1')
                 op2.append('+')
 
-        app.config['formula'] = zip(labels, op1, quantity, op2)
+        count = 0
+        rows = []
+        for i in range(len(labels)):
+            if count == 3:
+                rows.append("new row")
+                count = -1
+            else:
+                rows.append("")
+            count += 1
+        app.config['formula'] = zip(labels, op1, quantity, op2, rows)
         app.config['tem_labels'] = labels
         app.config['op1'] = op1
         app.config['quantity'] = quantity
         app.config['op2'] = op2
-
     return render_template("analyze.html",
                            zipped_data=app.config['formula'],
                            labels=app.config['tem_labels'],

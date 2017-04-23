@@ -8,7 +8,7 @@
     <form method='POST' id="test">
     <table id="formula" align="center">
         <tr>
-        {% for temp_label,oper1,quant,oper2 in zipped_data %}
+        {% for temp_label,oper1,quant,oper2,row in zipped_data %}
             {% if temp_label != labels[labels|length - 1] %}
                 <td align="right">{{temp_label}}
             {% else %}
@@ -31,6 +31,10 @@
                     <option value="*" {% if oper2 =='*' %} selected='selected'{% endif %}>x</option>
                     <option value="/" {% if oper2 =='/' %} selected='selected'{% endif %}>/</option>
                 </select>
+            {% else %}
+                <select id="las_op">
+                    <option>=</option>
+                </select>
             {% endif %}
             {% if temp_label == labels[labels|length - 1] %}
                 <input type="hidden" name="quantity[]" value="'1'">
@@ -40,11 +44,9 @@
         </td>
         {% endif %}
         {% set count = count + 1 %}
-        {% set count2 = count2 + 1 %}
-        {% if count2 == 4 %}
-            {% set count2 = 0%}
-                </tr><tr>
-            {% endif %}
+        {% if row != "" %}
+            </tr><tr>
+        {% endif %}
         {% endfor %}
 
         </tr>
