@@ -206,7 +206,7 @@ class WordCount(object):
         for i in range(len(self.dictionaries_names)):
             if self.active_dictionaries[i] == 1:
                 result += "<td align='center'>" + self.dictionaries_labels[i] + "</td>"
-        result += "<td align='center'>Sums</td>"
+        result += "<td align='center'>Formula</td>"
         result += "<td align='center'>Total Word Counts</td>"
         result += "<td align='center'>Scores</td>"
         result += "</tr><tr>"

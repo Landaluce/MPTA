@@ -287,7 +287,3 @@ textarea:focus{
     border-radius: 10px;
     border: 5px solid black;
 }
-
-#last_op {
-    visibility: hidden;
-}
