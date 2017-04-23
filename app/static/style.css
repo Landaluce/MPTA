@@ -294,7 +294,7 @@ textarea:focus{
 	width: 100px;
 	height: 100px;
 	z-index: 9999;
-	background: url(loading.gif) center no-repeat #fff;
+	background: url(loading.gif) center no-repeat ;
 }
 
 #formula {
