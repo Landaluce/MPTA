@@ -35,12 +35,9 @@ class WordCount(object):
             new_corpus = ' '.join(new_corpus.split())
         elif file_extension == ".txt" or "":
             new_corpus = read_txt(file_path)
-            #new_corpus = self.utf8_to_ascii(new_corpus).decode('unicode_escape').encode('ascii', 'ignore')
         elif file_extension == ".docx":
             new_corpus = read_docx(file_path)
         new_corpus = new_corpus.strip()
-        print file_extension
-        print new_corpus
         self.corpora.append(new_corpus)
         self.active_corpora.append(1)
         self.total_word_counts.append(len(str(new_corpus).split(" ")))
