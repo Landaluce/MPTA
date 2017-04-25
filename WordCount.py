@@ -32,11 +32,15 @@ class WordCount(object):
         file_extension = get_file_extension(file_path)
         if file_extension == ".csv":
             new_corpus = read_csv(file_path)
-        elif file_extension == ".txt" or " ":
+            new_corpus = ' '.join(new_corpus.split())
+        elif file_extension == ".txt" or "":
             new_corpus = read_txt(file_path)
-            new_corpus = self.utf8_to_ascii(new_corpus).decode('unicode_escape').encode('ascii', 'ignore')
+            #new_corpus = self.utf8_to_ascii(new_corpus).decode('unicode_escape').encode('ascii', 'ignore')
         elif file_extension == ".docx":
             new_corpus = read_docx(file_path)
+        new_corpus = new_corpus.strip()
+        print file_extension
+        print new_corpus
         self.corpora.append(new_corpus)
         self.active_corpora.append(1)
         self.total_word_counts.append(len(str(new_corpus).split(" ")))
@@ -47,24 +51,15 @@ class WordCount(object):
         self.dictionaries_labels.append(ntpath.basename(strip_file_extension(file_name)))
         file_extension = get_file_extension(file_path)
         if file_extension == ".csv":
-            with open(file_path, 'rb') as f:
-                reader = csv.reader(f)
-                rows = list(reader)
-            new_list = []
-            for row in rows:
-                for cell in row:
-                    cell = cell.strip()
-                    new_list.append(cell)
-        elif file_extension == ".txt" or " ":
+            new_list = read_csv(file_path)
+            new_list = ' '.join(new_list.split())
+        elif file_extension == ".txt" or "":
             new_list = read_txt(file_path)
-            new_list = new_list.split(", ")
-            new_list = map(lambda x: x.encode("utf-8"), new_list)
         elif file_extension == ".docx":
             new_list = read_docx(file_path)
-            new_list = new_list.split(", ")
-            new_list = map(lambda x: x.encode("utf-8"), new_list)
-        new_list.sort(key=lambda x: len(x.split()), reverse=True)
+        new_list = new_list.split(", ")
         new_list = list(map(lambda x: x.lower(), new_list))
+        new_list.sort(key=lambda x: len(x.split()), reverse=True)
         self.dictionaries.append(new_list)
         self.active_dictionaries.append(1)
         self.dictionaries_extensions.append(file_extension)
