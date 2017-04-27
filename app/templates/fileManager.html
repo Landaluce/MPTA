@@ -9,6 +9,11 @@
 </script>
         <table id="manager_table" border="0px">
             <tr>
+                <td></td>
+                <td></td>
+
+            </tr>
+            <tr>
                 <td>
                     <form method='POST'>
                         <input type='hidden' name='check_all'>
@@ -16,6 +21,9 @@
                     </form>
                 </td>
                 <td align="left">Active files</td>
+                <td></td>
+                <td></td>
+                <td><input form="edit_label" class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
             </tr>
             {% for active, label, corpus in zipped_data %}
             <tr>
@@ -49,13 +57,6 @@
 
             {% set count = count + 1 %}
             {% endfor %}
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input form="edit_label" class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
-            </tr>
         </table>
     {% else %}
             <p>Upload a file</p>
