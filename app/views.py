@@ -152,8 +152,8 @@ def FileManager():
             return Response(file_content,
                             mimetype="text/plain",
                             headers={"Content-disposition": "attachment; filename=" + file_name})
-        elif 'delete[]' in request.form:
-            corpus = request.form['delete[]']
+        elif 'delete' in request.form:
+            corpus = request.form['delete']
             index = 0
             count = 0
             for name in app.config['obj'].corpora_names:
@@ -179,7 +179,7 @@ def FileManager():
             new_label_list = request.form['new_label_list'].split(', ')
             for i in range(len(app.config['obj'].corpora_labels)):
                 app.config['obj'].corpora_labels[i] = new_label_list[i]
-    zipped_data = zip(app.config['active_corpora'], app.config['obj'].corpora_labels,
+    zipped_data = zip(app.config['active_corpora'], sorted(app.config['obj'].corpora_labels),
                       sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])))
     return render_template("fileManager.html",
                            title='File Manager',
