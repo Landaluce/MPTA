@@ -455,39 +455,39 @@ def Analyze():
             app.config['content'] = "<form method='POST'><input type='hidden' name='results' type='text' value='results'><input class='button' id='download_scores' type='submit' value='Download'></form>" + app.config['obj'].to_html()
             app.config['obj'].save_to_csv()
 
-    if len(app.config['op1']) == 0:
-        labels = []
-        for label in app.config['obj'].dictionaries_labels:
-            if len(label) > 18:
-                labels.append(label[:16] + "...")
-            else:
-                labels.append(label)
-        op1 = []
-        quantity = []
-        op2 = []
+    #if len(app.config['op1']) == 0:
+    labels = []
+    for label in app.config['obj'].dictionaries_labels:
+        if len(label) > 18:
+            labels.append(label[:16] + "...")
+        else:
+            labels.append(label)
+    op1 = []
+    quantity = []
+    op2 = []
 
-        active_dictionaries = app.config['obj'].active_dictionaries
-        labels = app.config['obj'].dictionaries_labels
-        for i in range(len(labels)):
-            if active_dictionaries[i]:
-                op1.append('x')
-                quantity.append('1')
-                op2.append('+')
+    active_dictionaries = app.config['obj'].active_dictionaries
+    labels = app.config['obj'].dictionaries_labels
+    for i in range(len(labels)):
+        if active_dictionaries[i]:
+            op1.append('x')
+            quantity.append('1')
+            op2.append('+')
 
-        count = 0
-        rows = []
-        for i in range(len(labels)):
-            if count == 3:
-                rows.append("new row")
-                count = -1
-            else:
-                rows.append("")
-            count += 1
-        app.config['formula'] = zip(labels, op1, quantity, op2, rows)
-        app.config['tem_labels'] = labels
-        app.config['op1'] = op1
-        app.config['quantity'] = quantity
-        app.config['op2'] = op2
+    count = 0
+    rows = []
+    for i in range(len(labels)):
+        if count == 3:
+            rows.append("new row")
+            count = -1
+        else:
+            rows.append("")
+        count += 1
+    app.config['formula'] = zip(labels, op1, quantity, op2, rows)
+    app.config['tem_labels'] = labels
+    app.config['op1'] = op1
+    app.config['quantity'] = quantity
+    app.config['op2'] = op2
     return render_template("analyze.html",
                            zipped_data=app.config['formula'],
                            labels=app.config['tem_labels'],
