@@ -16,6 +16,10 @@
                                 </form>
                             </td>
                             <td align="left" id="bold">Active dictionaries</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td align="center"><input form="edit_label" class='button' name='edit_button' id='edit_button' type='submit' value='Save labels' style="visibility: hidden"></td>
                         </tr>
                         {% for active, label, dictionary in zipped_data %}
                         <tr>
@@ -54,13 +58,7 @@
                         </tr>
                         {% set count = count + 1 %}
                         {% endfor %}
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><input form="edit_label" class='button' name='edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
-                        </tr>
+
             </tr>
 
     {% else %}
@@ -74,7 +72,9 @@
                                     <input type="checkbox" onchange="toggle_oh(this,'oh'); this.form.submit();" {{'checked' if check_all_oh == 1}}>
                                 </form>
                             </td>
-                            <td align="left" colspan="5" id="bold">Organizational Hardiness</td>
+                            <td align="left" colspan="4" id="bold">Organizational Hardiness</td>
+
+                            <td align="center"><input form="oh_edit_button" class='button' name='oh_edit_button' id='edit_button' type='submit' value='Save labels' style="visibility: hidden"></td>
                         </tr>
                         {% if check_all_oh == 0 %}
                             <tr class='oh' style="visibility:hidden">
@@ -192,13 +192,6 @@
                                     <input type='hidden' name='new_oh_label_list'>
                                 </form>
                             </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><input form="oh_edit_button" class='button' name='oh_edit_button' id='edit_button' type='submit' value='Save label' style="visibility: hidden"></td>
                         </tr>
                     </table>
                 </td>
