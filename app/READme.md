@@ -1,4 +1,4 @@
-### Organizational Hardiness
+### Multi Purpose Text Analyzer 
 
 ### The contents of this app folder are the following:
    * app
