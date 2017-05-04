@@ -1,6 +1,6 @@
-# COMP-401
+# MPTA
 
-### The Organizational Hardiness Application is designed to scan text files such as letters to shareholders, tweets, and word documents in order to produce an additive composition score based on words pertaining to organizational hardiness. It provides a quicker and more efficient way of locating and counting hardiness words in text files. 
+### The Multi Purpose Text Analyzer is designed to scan text files such as letters to shareholders, tweets, and word documents in order to produce an additive composition score based on words pertaining to organizational hardiness. It provides a quicker and more efficient way of locating and counting hardiness words in text files. 
 
 ### The contents of this repository are the following:
    * Organizational Hardiness Folder
