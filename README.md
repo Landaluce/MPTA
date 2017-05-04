@@ -14,5 +14,4 @@
    * TwitterAPI.py - file needed for Twitter integration
    * TwitterAPI_Constants.py - Twitter integration constants
    * WordCount.py - WordCount class and methods
-   * pdf_to_txt.py
    * run.py - Flask variables needed to run this application
