@@ -1,4 +1,4 @@
-### Organizational Hardiness
+### Multi Purpose Text Analyzer 
 
 ### TestSuite Folder contains testing files used in regression testing
 

@@ -1,4 +1,4 @@
-### OrganizationalHardiness
+### Multi Purpose Text Analyzer 
 
 ## Inside this folder contains:
   * Enactment.txt - .txt file containing the "Enactment" dictionary
