@@ -6,7 +6,6 @@
    * index.html - HTML template needed to display the home ("index") tab in application
    * dictionaryManager.html - HTML template needed to display the dictionary Manager tab in application
    * fileManager.html - HTML template needed to display the file Manager tab in application
-   * test.html - HTML template needed to display the test tab in application 
    * edit.html - HTML template used in editing contents in the application
    
    
