@@ -1,4 +1,4 @@
-### Organizational Hardiness
+### Multi Purpose Text Analyzer 
 
 ### The contents of this folder are the following:
    * base.html - Common framework shared by the following HTML files
