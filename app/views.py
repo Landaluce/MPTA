@@ -91,8 +91,8 @@ def Upload():
                            corpus_size_errors=corpus_size_errors[:-2],
                            dictionary_extension_errors=dictionary_extension_errors[:-2],
                            dictionary_size_errors=dictionary_size_errors[:-2],
-                           corpora=files_to_html_table(os.listdir(app.config['CORPORA_UPLOAD_FOLDER']), corpora_sizes),
-                           dictionaries=files_to_html_table(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER']),
+                           corpora=files_to_html_table(sorted(os.listdir(app.config['CORPORA_UPLOAD_FOLDER'])), corpora_sizes),
+                           dictionaries=files_to_html_table(sorted(os.listdir(app.config['DICTIONARIES_UPLOAD_FOLDER'])),
                                                             dictionaries_sizes))
 
 
