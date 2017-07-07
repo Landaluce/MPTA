@@ -1,7 +1,7 @@
 from fileManager import allowed_extension, allowed_size, get_file_size, files_to_html_table, delete_tmp_folder, \
     create_tmp_folder
 from flask import render_template, request, redirect, url_for, Response
-from TwitterAPI import get_tweets, scrub_tweets
+from TwitterAPI import get_tweets
 from werkzeug import secure_filename
 from WordCount import WordCount
 from app import app
@@ -64,15 +64,10 @@ def Upload():
             search_query = request.form['search_query']
             quantity = request.form['quantity']
             tweets = get_tweets(search_query, int(quantity))
-            tweets = tweets[:int(quantity)]
-            tw_text = []
-            for tweet in tweets:
-                tw_text.append(tweet.text)
-            tw_texts = scrub_tweets(tw_text)
             default_name = search_query + "_tw_"
             count = 1
 
-            for tweet in tw_texts:
+            for tweet in tweets:
                 number_of_zeros = len(str(len(tweets))) - len(str(count))
                 left_zeros = ""
                 for i in range(number_of_zeros):

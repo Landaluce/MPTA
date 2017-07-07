@@ -2,12 +2,11 @@ from TwitterAPI_Credentials import CREDENTIALS
 # CREDENTIALS = list of credentials, a credential = [consumer_key, consumer_secret, access_token, access_token_secret]
 from TwitterAPI_Constants import *
 import tweepy
-import unicodedata
 import re
 
 
 def get_tweets(search_query, number_tweets=15):
-    return get_tweets_recursive(search_query, number_tweets, 0, None)
+    return scrub_tweets(get_tweets_recursive(search_query, number_tweets, 0, None))
 
 
 def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
@@ -49,16 +48,27 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
                 print("No more tweets found")
                 break
             for tweet in new_tweets:
-                tweets.append(tweet)
+                tweets.append(tweet.text)
             tweet_count += len(new_tweets)
             max_id = new_tweets[-1].id
         except tweepy.TweepError as error:
-            print 'Rate limit exceeded, changing id '
+            print error.message
             if error.message[0]['code'] == LIMIT_EXCEEDED_ERROR_CODE:
-                if index < len(CREDENTIALS):
+                print 'Rate limit exceeded, changing id '
+                if index < len(CREDENTIALS) - 1:
                     get_tweets_recursive(search_query, number_tweets, index+1, tweets)
+                else:
+                    get_tweets_recursive(search_query, number_tweets, 0, tweets)
             break
-    return tweets
+    result = tweets
+    scrubbed_result = scrub_tweets(result)
+
+    if len(scrubbed_result) < number_tweets:
+        if index < len(CREDENTIALS) - 1:
+            get_tweets_recursive(search_query, number_tweets, index+1, scrubbed_result)
+        else:
+            get_tweets_recursive(search_query, number_tweets, 0, scrubbed_result)
+    return scrubbed_result[:number_tweets]
 
 
 def scrub_tweets(tweets):
@@ -67,9 +77,9 @@ def scrub_tweets(tweets):
     :param tweets: List of tweets (List of Strings)
     :return: scrubed_tweets: Scrubbed list of tweets (List of Strings)
     """
-    scrubed_tweets = []
+    scrubbed_tweets = []
     for tweet in tweets:
-        tweet = unicodedata.normalize('NFKD', tweet).encode('ascii', 'ignore')
+        tweet = tweet.encode('ascii', 'ignore')
         tweet = tweet.lower()
         tweet = re.sub(r'https://.*', '', tweet)
 
@@ -99,5 +109,6 @@ def scrub_tweets(tweets):
         tweet.replace("\n", " ")
         tweet = tweet.replace('-', ' ')
         tweet = ' '.join(tweet.split())
-        scrubed_tweets.append(tweet)
-    return scrubed_tweets
+        scrubbed_tweets.append(tweet)
+    scrubbed_tweets = filter(None, scrubbed_tweets)  # delete empty strings
+    return scrubbed_tweets
