@@ -1,4 +1,4 @@
-from fileManager import allowed_extension, allowed_size, get_file_size, files_to_html_table, delete_tmp_folder, \
+from app.fileManager import allowed_extension, allowed_size, get_file_size, files_to_html_table, delete_tmp_folder, \
     create_tmp_folder
 from flask import render_template, request, redirect, url_for, Response
 from TwitterAPI import get_tweets

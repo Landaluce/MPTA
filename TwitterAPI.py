@@ -21,7 +21,7 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
     auth = tweepy.OAuthHandler(CREDENTIALS[index][0], CREDENTIALS[index][1])
     auth.set_access_token(CREDENTIALS[index][2], CREDENTIALS[index][3])
     api = tweepy.API(auth)
-    max_id = -1L  # If results only below a specific ID are, set max_id to that ID, else default to no upper limit
+    max_id = -1  # If results only below a specific ID are, set max_id to that ID, else default to no upper limit
     if recursive_tweets is None:
         tweets = []
         tweet_count = 0
@@ -52,9 +52,9 @@ def get_tweets_recursive(search_query, number_tweets, index, recursive_tweets):
             tweet_count += len(new_tweets)
             max_id = new_tweets[-1].id
         except tweepy.TweepError as error:
-            print error.message
+            print(error.message)
             if error.message[0]['code'] == LIMIT_EXCEEDED_ERROR_CODE:
-                print 'Rate limit exceeded, changing id '
+                print('Rate limit exceeded, changing id ')
                 if index < len(CREDENTIALS) - 1:
                     get_tweets_recursive(search_query, number_tweets, index+1, tweets)
                 else:
