@@ -1,5 +1,4 @@
 from app.fileManager import get_file_extension, strip_file_extension
-#from docx import opendocx, getdocumenttext
 from docx import Document
 import unicodedata
 import ntpath
@@ -268,7 +267,7 @@ def read_txt(file_path):
     try:
         with open(file_path, 'r') as txt_file:
             text = txt_file.read().encode()
-            return unicodedata.normalize('NFKD', str(text))#.encode('ascii', 'ignore')
+            return unicodedata.normalize('NFKD', str(text))
     except IOError:
         print("could not read", file_path)
 
