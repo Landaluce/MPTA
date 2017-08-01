@@ -1,5 +1,6 @@
 from app.fileManager import get_file_extension, strip_file_extension
-from docx import opendocx, getdocumenttext
+#from docx import opendocx, getdocumenttext
+from docx import Document
 import unicodedata
 import ntpath
 import csv
@@ -30,6 +31,7 @@ class WordCount(object):
         self.corpora_names.append(file_name)
         self.corpora_labels.append(ntpath.basename(strip_file_extension(file_name)))
         file_extension = get_file_extension(file_path)
+        new_corpus = ""
         if file_extension == ".csv":
             new_corpus = read_csv(file_path)
             new_corpus = ' '.join(new_corpus.split())
@@ -47,6 +49,7 @@ class WordCount(object):
         self.dictionaries_names.append(file_name)
         self.dictionaries_labels.append(ntpath.basename(strip_file_extension(file_name)))
         file_extension = get_file_extension(file_path)
+        new_list = ""
         if file_extension == ".csv":
             new_list = read_csv(file_path)
             new_list = ' '.join(new_list.split())
@@ -252,19 +255,20 @@ class WordCount(object):
         return matrix
 
     def save_to_csv(self):
-        matrix = self.to_matrix()
+        """matrix = self.to_matrix()
         with open('results.csv', 'wb') as csv_file:
             spam_writer = csv.writer(csv_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for row in matrix:
                 spam_writer.writerow(row)
-        csv_file.close()
+        csv_file.close()"""
+        pass
 
 
 def read_txt(file_path):
     try:
         with open(file_path, 'r') as txt_file:
-            text = txt_file.read().decode("latin")
-            return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
+            text = txt_file.read().encode()
+            return unicodedata.normalize('NFKD', str(text))#.encode('ascii', 'ignore')
     except IOError:
         print("could not read", file_path)
 
@@ -282,5 +286,8 @@ def read_csv(file_path):
 
 
 def read_docx(file_path):
-    document = opendocx(file_path)
-    return " ".join(getdocumenttext(document)).encode("utf-8")
+    document = Document(file_path)
+    full_text = []
+    for paragraph in document.paragraphs:
+        full_text.append(paragraph.text)
+    return ' '.join(full_text).encode("utf-8")
