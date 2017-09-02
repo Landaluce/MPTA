@@ -117,7 +117,7 @@ class WordCount(object):
                         if corpus.endswith(" " + word + "\n") or corpus.endswith(" " + word) or corpus.endswith(word):
                             count += 1
                         else:
-                            count += len(re.findall(" " + word + " ", corpus))
+                            count += len(corpus.split(" " + word + " ")) - 1
                         if ' ' in word:
                             corpus = corpus.replace(word, " ")
                     counts.append(count)
