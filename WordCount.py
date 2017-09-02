@@ -131,6 +131,11 @@ class WordCount(object):
                 op1_list[i] = '*'
             if op2_list[i] == 'x':
                 op2_list[i] = '*'
+        # find better fix
+        temp = op2_list[0]
+        for j in range(1, len(op2_list)):
+            op2_list[j - 1] = op2_list[j]
+        op2_list[-1] = temp
         if len(labels) > 0:
             for i in range(len(self.counters)):
                 sum = 0
