@@ -3,7 +3,7 @@ from docx import opendocx, getdocumenttext
 import unicodedata
 import ntpath
 import csv
-import re
+import pandas as pd
 
 
 class WordCount(object):
@@ -223,44 +223,32 @@ class WordCount(object):
         return result
 
     def display(self):
-        matrix = self.to_matrix()
-        for row in matrix:
-            print(row)
+        df = self.generate_data_frame()
+        print df
 
-    def to_matrix(self):
-        header = []
-        header.append("file")
-        for i in range(len(self.dictionaries_names)):
-            if self.active_dictionaries[i] == 1:
-                header.append(self.dictionaries_names[i])
-        header.append("sums")
-        header.append("total_word_count")
-        header.append("score")
-        matrix = []
-        matrix.append(header)
-        for i in range(len(self.corpora_names)):
-            if self.active_corpora[i] == 1:
-                row = []
-                row.append(self.corpora_names[i])
-                for x in self.counters[i]:
-                    row.append(x)
-                row.append(self.sums[i])
-                row.append(self.total_word_counts[i])
-                row.append(self.scores[i])
-                matrix.append(row)
-        lrow = []  # last row
-        for i in range(len(self.average)):
-            lrow.append(self.average[i])
-        matrix.append(lrow)
-
-        return matrix
+    def generate_data_frame(self):
+        columns = ['file'] + self.dictionaries_labels + ['formula', 'total_word_count', 'score']
+        indices = self.corpora_labels + ['averages']
+        df = pd.DataFrame(columns=range(len(columns)), index=range(len(indices)))
+        for i in range(len(self.corpora_labels)):
+            df.xs(i)[0] = self.corpora_labels[i]
+            for j in range(len(self.counters[i])):
+                df.xs(i)[j + 1] = self.counters[i][j]
+            df.xs(i)[j + 2] = self.sums[i]
+            df.xs(i)[j + 3] = self.total_word_counts[i]
+            df.xs(i)[j + 4] = self.scores[i]
+        for j in range(len(self.average)):
+            df.xs(i + 1)[j] = self.average[j]
+        df.columns = columns
+        return df
 
     def save_to_csv(self):
-        matrix = self.to_matrix()
+        df = self.generate_data_frame()
         with open('results.csv', 'wb') as csv_file:
             spam_writer = csv.writer(csv_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for row in matrix:
-                spam_writer.writerow(row)
+            spam_writer.writerow(list(df.columns))
+            for index, row in df.iterrows():
+                spam_writer.writerow(list(row))
         csv_file.close()
 
 
