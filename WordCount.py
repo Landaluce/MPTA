@@ -156,7 +156,7 @@ class WordCount(object):
                 index = 0
                 for count in counts:
                     sum += count
-                self.scores.append(round(float(sum) / self.total_word_counts[index]), 1)
+                self.scores.append(round(float(sum) / self.total_word_counts[index], 1))
                 self.sums.append(float(sum))
                 index += 1
         self.generate_averages()
